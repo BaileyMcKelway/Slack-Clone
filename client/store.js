@@ -3,12 +3,16 @@ import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 import socket from './socket';
 
+//ACTION
 const GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
 const GOT_NEW_MESSAGE_FROM_SERVER = 'GOT_NEW_MESSAGE_FROM_SERVER';
 const GOT_NEW_MESSAGE = 'GOT_NEW_MESSAGE';
 const WRITE_MESSAGE = 'WRITE_MESSAGE';
 const USER_SET = 'USER_SET';
+const GET_CHANNELS = 'GET_CHANNELS';
+const GET_CHANNEL = 'GET_CHANNEL';
 
+//ACTION CREATORS
 export const gotMessagesFromServer = (messages) => ({
   type: GOT_MESSAGES_FROM_SERVER,
   messages,
@@ -34,12 +38,31 @@ export const userSet = (userName) => ({
   payload: userName,
 });
 
+export const getChannels = (channels) => ({
+  type: GET_CHANNELS,
+  channels,
+});
+
+export const getChannel = (channel) => ({
+  type: GET_CHANNEL,
+  channel,
+});
+
+// THUNKS
 export const fetchMessages = () => {
   return async (dispatch) => {
     const response = await axios.get('/api/messages');
     const messages = response.data;
     const action = gotMessagesFromServer(messages);
     dispatch(action);
+  };
+};
+
+export const fetchChannels = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/api/channels');
+    const channels = response.data;
+    dispatch(getChannels(channels));
   };
 };
 
@@ -50,10 +73,20 @@ export const sendMessage = (message) => async (dispatch, getState) => {
   socket.emit('new-message', newMessage);
 };
 
+export const postChannel = (channel) => {
+  return async (dispatch) => {
+    const data = { channel: channel };
+    const response = await axios.post('/api/channels', data);
+    const newChannel = response.data;
+    dispatch(getChannel(newChannel));
+  };
+};
+
 const initialState = {
   messages: [],
   newMessageEntry: '',
   user: 'Bailey',
+  channels: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -69,6 +102,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, messages: [...state.messages, action.message] };
     case USER_SET:
       return { ...state, user: action.payload };
+    case GET_CHANNEL:
+      return { ...state, channels: [...state.channels, action.channel] };
+    case GET_CHANNELS:
+      return { ...state, channels: action.channels };
     default:
       return state;
   }

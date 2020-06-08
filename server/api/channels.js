@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:channelId/messages', async (req, res, next) => {
   try {
     const channelId = req.params.channelId;
-    const messages = await Message.findAll({ where: { channelId } })
+    const messages = await Message.findAll({ where: { channelId } });
     res.json(messages);
   } catch (err) {
     next(err);
@@ -27,7 +27,7 @@ router.get('/:channelId/messages', async (req, res, next) => {
 // POST /api/channels
 router.post('/', async (req, res, next) => {
   try {
-    const channel = await Channel.create(req.body);
+    const channel = await Channel.create(req.body.channel);
     res.json(channel);
   } catch (err) {
     next(err);
