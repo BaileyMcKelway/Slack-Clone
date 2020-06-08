@@ -8,6 +8,10 @@ import NewChannelEntry from './NewChannelEntry';
 import store, { fetchMessages, fetchChannels } from '../store';
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.props.fetchInitialMessages();
     this.props.fetchInitialChannels();
@@ -30,6 +34,12 @@ class Main extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    channels: state.channels,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchInitialMessages: () => dispatch(fetchMessages()),
@@ -37,4 +47,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

@@ -4,14 +4,21 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 export class NewMessageEntry extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(evt) {
     this.props.write(evt.target.value);
+    this.setState({
+      input: this.props.newMessageEntry,
+    });
   }
 
   handleSubmit(event) {
@@ -20,6 +27,9 @@ export class NewMessageEntry extends Component {
     this.props.submitMessage({
       content: message,
       channelId: this.props.channelId,
+    });
+    this.setState({
+      input: '',
     });
   }
 
@@ -31,7 +41,7 @@ export class NewMessageEntry extends Component {
             className="form-control"
             type="text"
             name="content"
-            value={this.props.newMessageEntry}
+            value={this.state.input}
             onChange={this.handleChange}
             placeholder="Say something nice..."
           />
@@ -52,9 +62,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispath) => ({
+const mapDispatchToProps = (dispatch) => ({
   write: (message) => dispatch(writeMessage(message)),
-  submitMessage: (message) => dispath(sendMessage(message)),
+  submitMessage: (message) => dispatch(sendMessage(message)),
 });
 
 export default withRouter(

@@ -3,11 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const RANDOM_CHANNEL = '/channels/1';
-const GENERAL_CHANNEL = '/channels/2';
-const DOGS_CHANNEL = '/channels/3';
-const LUNCH_CHANNEL = '/channels/4';
-
 class ChannelList extends Component {
   render() {
     return (

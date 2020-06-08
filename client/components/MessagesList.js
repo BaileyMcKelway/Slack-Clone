@@ -19,7 +19,7 @@ class MessagesList extends Component {
     const filteredMessages = messages.filter(
       (message) => message.channelId === channelId
     );
-
+    console.log(messages);
     return (
       <div>
         <ul className="media-list">
