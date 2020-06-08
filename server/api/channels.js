@@ -27,7 +27,7 @@ router.get('/:channelId/messages', async (req, res, next) => {
 // POST /api/channels
 router.post('/', async (req, res, next) => {
   try {
-    const channel = await Channel.create(req.body.channel);
+    const channel = await Channel.create({ name: req.body.channel });
     res.json(channel);
   } catch (err) {
     next(err);

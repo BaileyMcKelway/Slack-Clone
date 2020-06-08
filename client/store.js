@@ -79,6 +79,7 @@ export const postChannel = (channel) => {
     const response = await axios.post('/api/channels', data);
     const newChannel = response.data;
     dispatch(getChannel(newChannel));
+    socket.emit('new-channel', newChannel);
   };
 };
 
@@ -90,7 +91,6 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     case GOT_MESSAGES_FROM_SERVER:
       return { ...state, messages: action.messages };
