@@ -11,9 +11,25 @@ router.put('/:authorId', async (req, res, next) => {
       where: { id: authorId },
     });
 
-    await author.update({ saved: [...author.saved, messageId] });
+    if (author.saved.indexOf(messageId.toString()) === -1) {
+      await author.update({ saved: [...author.saved, messageId] });
+    }
 
     res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const author = await Author.findOrCreate({
+      where: {
+        name: req.body.name,
+      },
+    });
+    res.json(author);
   } catch (err) {
     next(err);
   }

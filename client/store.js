@@ -35,9 +35,9 @@ export const gotNewMessageFromServer = (message) => ({
   message,
 });
 
-export const userSet = (userName) => ({
+export const userSet = (user) => ({
   type: USER_SET,
-  payload: userName,
+  payload: user,
 });
 
 export const getChannels = (channels) => ({
@@ -62,6 +62,13 @@ export const addSaved = (userId, messageId) => ({
 });
 
 // THUNKS
+export const createUser = (name) => async (dispatch) => {
+  const user = await axios.post('/api/authors', { name: name });
+
+  dispatch(userSet(user.data[0]));
+  // socket.emit('new-message', newMessage);
+};
+
 export const fetchMessages = () => {
   return async (dispatch) => {
     const response = await axios.get('/api/messages');
@@ -80,7 +87,7 @@ export const fetchChannels = () => {
 };
 
 export const sendMessage = (message) => async (dispatch, getState) => {
-  message.name = getState().user;
+  message.name = getState().user.name;
   const { data: newMessage } = await axios.post('/api/messages', message);
   dispatch(gotNewMessage(newMessage));
   socket.emit('new-message', newMessage);
@@ -109,15 +116,13 @@ export const postSaved = (userId, messageId) => {
   return async (dispatch) => {
     const data = { userId: userId, messageId: messageId };
     const response = await axios.put(`/api/authors/${userId}`, data);
-    // dispatch(addLike(messageId));
-    // socket.emit('new-like', messageId);
   };
 };
 
 const initialState = {
   messages: [],
   newMessageEntry: '',
-  user: 'Bailey',
+  user: { id: 1, name: 'Cody', image: '/images/cody.jpg', saved: [] },
   channels: [],
 };
 

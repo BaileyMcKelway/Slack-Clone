@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 function Message(props) {
   const message = props.message;
+  const user = props.user;
   const [anchorEl, setAnchorEl] = useState(null);
   const [likes, setLikes] = useState(message.likes);
 
@@ -57,7 +58,7 @@ function Message(props) {
           <IconButton
             aria-label="save"
             onClick={() => {
-              handleSave(1, message.id);
+              handleSave(user.id, message.id);
             }}
           >
             <SaveIcon />
@@ -77,9 +78,17 @@ function Message(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => ({
   like: (messageId, channelId) => dispatch(postLikes(messageId, channelId)),
   save: (userId, messageId) => dispatch(postSaved(userId, messageId)),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Message));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Message)
+);

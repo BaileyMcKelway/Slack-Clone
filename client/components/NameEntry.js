@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import store, { userSet } from '../store';
+import store, { createUser, userSet } from '../store';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class NameEntry extends Component {
+class NameEntry extends Component {
   constructor() {
     super();
-    this.state = store.getState();
+    this.state = { store: store.getState() };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -24,12 +26,15 @@ export default class NameEntry extends Component {
     store.dispatch(action);
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const name = event.target.name.value;
+    this.props.createUser(name);
+  }
+
   render() {
     return (
-      <form
-        className="form-inline"
-        onSubmit={(event) => event.preventDefault()}
-      >
+      <form className="form-inline" onSubmit={() => this.handleSubmit(event)}>
         <label htmlFor="name">Your name:</label>
         <input
           type="text"
@@ -42,3 +47,9 @@ export default class NameEntry extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  createUser: (name) => dispatch(createUser(name)),
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(NameEntry));

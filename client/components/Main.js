@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import MessagesList from './MessagesList';
 import NewChannelEntry from './NewChannelEntry';
+import SavedItems from './SavedItems';
 import store, { fetchMessages, fetchChannels } from '../store';
 
 class Main extends Component {
@@ -26,6 +27,7 @@ class Main extends Component {
           <Switch>
             <Route path="/new-channel" component={NewChannelEntry} />
             <Route path="/channels/:channelId" component={MessagesList} />
+            <Route path="/saved" component={SavedItems} />
             <Redirect to="/channels/1" />
           </Switch>
         </main>
