@@ -15,19 +15,18 @@ router.get('/', async (req, res, next) => {
 
 // POST /api/messages
 router.post('/', async (req, res, next) => {
-
   // We don't have proper users yet (we'll get there soon, though!).
   // Instead, we'll findOrCreate an author by name, for simplicity.
   // Of course, you wouldn't want to do this in a real chat app!
   try {
     const [author] = await Author.findOrCreate({
       where: {
-        name: req.body.name || 'Cody'
-      }
-    })
+        name: req.body.name || 'Cody',
+      },
+    });
     const message = Message.build(req.body);
     message.setAuthor(author, { save: false });
-    await message.save()
+    await message.save();
     const returnMessage = message.toJSON();
     returnMessage.author = author;
     res.json(returnMessage);
@@ -39,9 +38,13 @@ router.post('/', async (req, res, next) => {
 // PUT /api/messages
 router.put('/:messageId', async (req, res, next) => {
   try {
-    const messageId = req.params.messageId;
-    const message = await Message.findById(messageId)
-    await message.update(req.body);
+    const messageId = req.body.messageId;
+    let message = await Message.findOne({
+      where: { id: messageId },
+    });
+    await message.update({ likes: message.likes + 1 });
+
+    res.json(message);
     res.status(204).end();
   } catch (err) {
     next(err);
@@ -52,7 +55,7 @@ router.put('/:messageId', async (req, res, next) => {
 router.delete('/:messageId', async (req, res, next) => {
   try {
     const id = req.params.messageId;
-    await Message.destroy({ where: { id } })
+    await Message.destroy({ where: { id } });
     res.status(204).end();
   } catch (err) {
     next(err);

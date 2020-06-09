@@ -11,6 +11,8 @@ const WRITE_MESSAGE = 'WRITE_MESSAGE';
 const USER_SET = 'USER_SET';
 const GET_CHANNELS = 'GET_CHANNELS';
 const GET_CHANNEL = 'GET_CHANNEL';
+const ADD_LIKE = 'ADD_LIKE';
+const ADD_SAVED = 'ADD_SAVED';
 
 //ACTION CREATORS
 export const gotMessagesFromServer = (messages) => ({
@@ -48,6 +50,17 @@ export const getChannel = (channel) => ({
   channel,
 });
 
+export const addLike = (messageid) => ({
+  type: ADD_LIKE,
+  messageid,
+});
+
+export const addSaved = (userId, messageId) => ({
+  type: ADD_SAVED,
+  userId,
+  messageId,
+});
+
 // THUNKS
 export const fetchMessages = () => {
   return async (dispatch) => {
@@ -83,6 +96,24 @@ export const postChannel = (channel) => {
   };
 };
 
+export const postLikes = (messageId, channelId) => {
+  return async (dispatch) => {
+    const data = { messageId: messageId, channelId: channelId };
+    const response = await axios.put(`/api/messages/${messageId}`, data);
+    dispatch(addLike(messageId));
+    socket.emit('new-like', messageId);
+  };
+};
+
+export const postSaved = (userId, messageId) => {
+  return async (dispatch) => {
+    const data = { userId: userId, messageId: messageId };
+    const response = await axios.put(`/api/authors/${userId}`, data);
+    // dispatch(addLike(messageId));
+    // socket.emit('new-like', messageId);
+  };
+};
+
 const initialState = {
   messages: [],
   newMessageEntry: '',
@@ -106,6 +137,14 @@ const reducer = (state = initialState, action) => {
       return { ...state, channels: [...state.channels, action.channel] };
     case GET_CHANNELS:
       return { ...state, channels: action.channels };
+    case ADD_LIKE:
+      const filteredMessages = state.messages.map((message) => {
+        if (message.id === action.messageid) {
+          message.likes = message.likes + 1;
+        }
+        return message;
+      });
+      return { ...state, messages: filteredMessages };
     default:
       return state;
   }
