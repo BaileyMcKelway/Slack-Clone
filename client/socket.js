@@ -1,14 +1,18 @@
 import io from 'socket.io-client';
-import store, { gotNewMessageFromServer } from './store';
+import store, { gotNewMessageFromServer, getChannel, addLike } from './store';
 
 const socket = io(window.location.origin);
 
-socket.on('connect', () => {
-  console.log('I am now connected to the server!');
-});
 socket.on('new-message', (message) => {
-  console.log(message);
   store.dispatch(gotNewMessageFromServer(message));
+});
+
+socket.on('new-channel', (channel) => {
+  store.dispatch(getChannel(channel));
+});
+
+socket.on('new-like', (message) => {
+  store.dispatch(addLike(message));
 });
 
 export default socket;

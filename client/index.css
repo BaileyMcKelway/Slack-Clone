@@ -16,8 +16,8 @@ body {
 /* sidebar */
 
 .sidebar {
-  background-color: #2B303B;
-  color: #AFB1B6;
+  background-color: #2b303b;
+  color: #afb1b6;
   z-index: 2;
 }
 
@@ -58,7 +58,7 @@ body {
 }
 
 .sidebar ul li a {
-  color: #AFB1B6;
+  color: #afb1b6;
   padding-left: 16px;
   padding-top: 3px;
   display: list-item;
@@ -66,15 +66,16 @@ body {
   width: 100%;
 }
 
-.sidebar ul li a:hover, .sidebar ul li a:focus {
-  color: #AFB1B6;
+.sidebar ul li a:hover,
+.sidebar ul li a:focus {
+  color: #afb1b6;
   background-color: #303641;
   text-decoration: none;
 }
 
 .sidebar ul li a.active {
-  background-color: #5294E2;
-  color: #D4D5D8;
+  background-color: #5294e2;
+  color: #d4d5d8;
   border-radius: 0 5px 5px 0;
 }
 
@@ -122,6 +123,10 @@ main .media img {
   height: 64px;
   width: 64px;
 }
+main .media-right {
+  display: flex;
+  justify-content: end;
+}
 
 main .media-object {
   border-radius: 5px;
@@ -134,6 +139,10 @@ main > div {
 }
 
 /* message form */
+
+.message_hover {
+  background-color: whitesmoke;
+}
 
 #new-message-form {
   position: relative;

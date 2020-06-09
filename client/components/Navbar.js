@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import NameEntry from './NameEntry';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-export default function Navbar() {
-  return (
-    <nav>
-      <h3># channelname goes here</h3>
-      <NameEntry />
-    </nav>
-  );
+class NavBar extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <nav>
+        <h3># Channel Name</h3>
+        <NameEntry />
+      </nav>
+    );
+  }
 }
+
+const mapStateToProps = (state) => ({
+  channels: state.channels,
+});
+
+export default withRouter(connect(mapStateToProps)(NavBar));

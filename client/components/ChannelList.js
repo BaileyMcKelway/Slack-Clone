@@ -3,44 +3,28 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-const RANDOM_CHANNEL = '/channels/1';
-const GENERAL_CHANNEL = '/channels/2';
-const DOGS_CHANNEL = '/channels/3';
-const LUNCH_CHANNEL = '/channels/4';
-
 class ChannelList extends Component {
   render() {
-    const filterMessageChannel = (id) =>
-      this.props.messages.filter((message) => message.channelId === id);
-    const randomMessages = filterMessageChannel(1);
-    const generalMessages = filterMessageChannel(2);
-    const dogsMessages = filterMessageChannel(3);
-    const lunchMessages = filterMessageChannel(4);
     return (
       <ul>
+        {this.props.channels.map((channel) => {
+          return (
+            <li key={channel.id}>
+              <NavLink to={`/channels/${channel.id}`} activeClassName="active">
+                <span># {channel.name}</span>
+                <span className="badge">
+                  {
+                    this.props.messages.filter(
+                      (message) => message.channelId === channel.id
+                    ).length
+                  }
+                </span>
+              </NavLink>
+            </li>
+          );
+        })}
         <li>
-          <NavLink to={RANDOM_CHANNEL} activeClassName="active">
-            <span># really_random</span>
-            <span className="badge">{randomMessages.length}</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={GENERAL_CHANNEL} activeClassName="active">
-            <span># generally_speaking</span>
-            <span className="badge">{generalMessages.length}</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={DOGS_CHANNEL} activeClassName="active">
-            <span># dogs_of_fullstack</span>
-            <span className="badge">{dogsMessages.length}</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={LUNCH_CHANNEL} activeClassName="active">
-            <span># lunch_planning</span>
-            <span className="badge">{lunchMessages.length}</span>
-          </NavLink>
+          <NavLink to="/new-channel">Create a channel ...</NavLink>
         </li>
       </ul>
     );
@@ -48,6 +32,7 @@ class ChannelList extends Component {
 }
 const mapStateToProps = (state) => ({
   messages: state.messages,
+  channels: state.channels,
 });
 
 export default withRouter(connect(mapStateToProps)(ChannelList));
