@@ -13,6 +13,7 @@ const GET_CHANNELS = 'GET_CHANNELS';
 const GET_CHANNEL = 'GET_CHANNEL';
 const ADD_LIKE = 'ADD_LIKE';
 const ADD_SAVED = 'ADD_SAVED';
+const GET_SAVED = 'GET_SAVED';
 
 //ACTION CREATORS
 export const gotMessagesFromServer = (messages) => ({
@@ -55,10 +56,14 @@ export const addLike = (messageid) => ({
   messageid,
 });
 
-export const addSaved = (userId, messageId) => ({
+export const addSaved = (messageId) => ({
   type: ADD_SAVED,
-  userId,
   messageId,
+});
+
+export const getSaved = (messages) => ({
+  type: GET_SAVED,
+  messages,
 });
 
 // THUNKS
@@ -116,6 +121,7 @@ export const postSaved = (userId, messageId) => {
   return async (dispatch) => {
     const data = { userId: userId, messageId: messageId };
     const response = await axios.put(`/api/authors/${userId}`, data);
+    dispatch(addSaved(messageId));
   };
 };
 
@@ -150,6 +156,13 @@ const reducer = (state = initialState, action) => {
         return message;
       });
       return { ...state, messages: filteredMessages };
+    case ADD_SAVED:
+      let newSaved = state.user.saved;
+      if (newSaved.indexOf(action.messageId.toString()) === -1) {
+        newSaved = [...newSaved, action.messageId];
+      }
+      state.user.saved = newSaved;
+      return { ...state, user: state.user };
     default:
       return state;
   }
