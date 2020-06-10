@@ -1,6 +1,8 @@
 # StackChat
 
-A chatty chat appy app.
+A Slack Clone
+
+![](https://i.imgur.com/qE5Z85x.png)
 
 ## Setup
 
