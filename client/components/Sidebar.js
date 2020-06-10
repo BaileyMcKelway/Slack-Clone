@@ -1,6 +1,7 @@
 import React from 'react';
 import ChannelList from './ChannelList';
 import ColumnTools from './ColumnTools';
+import DirectMessagesList from './DirectMessagesList';
 
 export default function Sidebar() {
   return (
@@ -15,6 +16,8 @@ export default function Sidebar() {
       <ColumnTools />
       <h5>Channels</h5>
       <ChannelList />
+      <h5>Direct Messages</h5>
+      <DirectMessagesList />
     </section>
   );
 }

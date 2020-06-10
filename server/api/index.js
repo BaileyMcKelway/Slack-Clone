@@ -4,6 +4,7 @@ module.exports = router;
 router.use('/channels', require('./channels'));
 router.use('/messages', require('./messages'));
 router.use('/authors', require('./authors'));
+router.use('/directs', require('./directs'));
 
 router.use((req, res, next) => {
   res.status(404).send('Not found');

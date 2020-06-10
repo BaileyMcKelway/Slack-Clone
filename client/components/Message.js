@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 function Message(props) {
   const message = props.message;
+
   const user = props.user;
   const [anchorEl, setAnchorEl] = useState(null);
   const [likes, setLikes] = useState(message.likes);

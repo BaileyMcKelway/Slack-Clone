@@ -8,7 +8,10 @@ const GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
 const GOT_NEW_MESSAGE_FROM_SERVER = 'GOT_NEW_MESSAGE_FROM_SERVER';
 const GOT_NEW_MESSAGE = 'GOT_NEW_MESSAGE';
 const WRITE_MESSAGE = 'WRITE_MESSAGE';
+const GOT_DIRECT = 'GOT_DIRECT';
+const GOT_NEW_DIRECT = 'GOT_NEW_DIRECT';
 const USER_SET = 'USER_SET';
+const GET_USERS = 'GET_USERS';
 const GET_CHANNELS = 'GET_CHANNELS';
 const GET_CHANNEL = 'GET_CHANNEL';
 const ADD_LIKE = 'ADD_LIKE';
@@ -36,9 +39,24 @@ export const gotNewMessageFromServer = (message) => ({
   message,
 });
 
+export const gotDirect = (messages) => ({
+  type: GOT_DIRECT,
+  messages,
+});
+
+export const gotNewDirect = (message) => ({
+  type: GOT_NEW_DIRECT,
+  message,
+});
+
 export const userSet = (user) => ({
   type: USER_SET,
   payload: user,
+});
+
+export const getUsers = (users) => ({
+  type: GET_USERS,
+  users,
 });
 
 export const getChannels = (channels) => ({
@@ -74,6 +92,25 @@ export const createUser = (name) => async (dispatch) => {
   // socket.emit('new-message', newMessage);
 };
 
+export const fetchUsers = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/api/authors');
+    const users = response.data;
+    const action = getUsers(users);
+    dispatch(action);
+  };
+};
+
+export const fetchDirects = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/api/directs');
+    const messages = response.data;
+
+    const action = gotDirect(messages);
+    dispatch(action);
+  };
+};
+
 export const fetchMessages = () => {
   return async (dispatch) => {
     const response = await axios.get('/api/messages');
@@ -92,10 +129,18 @@ export const fetchChannels = () => {
 };
 
 export const sendMessage = (message) => async (dispatch, getState) => {
-  message.name = getState().user.name;
-  const { data: newMessage } = await axios.post('/api/messages', message);
-  dispatch(gotNewMessage(newMessage));
-  socket.emit('new-message', newMessage);
+  if (message.type === 'message') {
+    message.name = getState().user.name;
+    const { data: newMessage } = await axios.post('/api/messages', message);
+    console.log(newMessage, 'MAIN');
+    dispatch(gotNewMessage(newMessage));
+    socket.emit('new-message', newMessage);
+  } else if (message.type === 'direct') {
+    message.name = getState().user.name;
+    const { data: newMessage } = await axios.post('/api/directs', message);
+    console.log(newMessage, 'directs');
+    dispatch(gotNewDirect(newMessage));
+  }
 };
 
 export const postChannel = (channel) => {
@@ -129,7 +174,9 @@ const initialState = {
   messages: [],
   newMessageEntry: '',
   user: { id: 1, name: 'Cody', image: '/images/cody.jpg', saved: [] },
+  users: [],
   channels: [],
+  directs: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -142,8 +189,14 @@ const reducer = (state = initialState, action) => {
       return { ...state, newMessageEntry: action.newMessageEntry };
     case GOT_NEW_MESSAGE_FROM_SERVER:
       return { ...state, messages: [...state.messages, action.message] };
+    case GOT_DIRECT:
+      return { ...state, directs: action.messages };
+    case GOT_NEW_DIRECT:
+      return { ...state, directs: [...state.directs, action.message] };
     case USER_SET:
       return { ...state, user: action.payload };
+    case GET_USERS:
+      return { ...state, users: action.users };
     case GET_CHANNEL:
       return { ...state, channels: [...state.channels, action.channel] };
     case GET_CHANNELS:

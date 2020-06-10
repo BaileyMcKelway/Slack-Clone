@@ -3,6 +3,15 @@ const { Author, Message } = require('../db/models');
 
 module.exports = router;
 
+router.get('/', async (req, res, next) => {
+  try {
+    const channels = await Author.findAll();
+    res.json(channels);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.put('/:authorId', async (req, res, next) => {
   try {
     const authorId = req.params.authorId;

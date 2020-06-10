@@ -24,6 +24,7 @@ router.post('/', async (req, res, next) => {
     await message.save();
     const returnMessage = message.toJSON();
     returnMessage.author = author;
+
     res.json(returnMessage);
   } catch (err) {
     next(err);

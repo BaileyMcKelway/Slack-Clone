@@ -3,7 +3,7 @@ import { sendMessage, writeMessage } from '../store';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-export class NewMessageEntry extends Component {
+export class NewDirectEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,9 +25,11 @@ export class NewMessageEntry extends Component {
     event.preventDefault();
     const message = event.target.content.value;
     this.props.submitMessage({
+      authorId: this.props.user.id,
       content: message,
-      channelId: this.props.channelId,
-      type: 'message',
+      directId: Number(this.props.match.params.directId),
+      userId: this.props.user.id,
+      type: 'direct',
     });
     this.setState({
       input: '',
@@ -60,6 +62,7 @@ export class NewMessageEntry extends Component {
 const mapStateToProps = (state) => {
   return {
     message: state.newMessageEntry,
+    user: state.user,
   };
 };
 
@@ -69,5 +72,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(NewMessageEntry)
+  connect(mapStateToProps, mapDispatchToProps)(NewDirectEntry)
 );
