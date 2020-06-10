@@ -7,91 +7,91 @@ const Direct = require('./server/db/models/direct');
 const channels = [
   { name: 'really_random' },
   { name: 'generally_speaking' },
-  { name: 'dogs_of_fullstack' },
+  { name: 'a_quiet_place' },
   { name: 'lunch_planning' },
 ];
 
 const authors = [
   {
-    name: 'Cody',
-    image: '/images/cody.jpg',
+    name: 'Cody Hardy',
+    image: '/images/avataaars (1).png',
   },
   {
-    name: 'Ben',
-    image: '/images/ben.jpg',
+    name: 'Antonio Lewis',
+    image: '/images/avataaars (2).png',
   },
   {
-    name: 'Star',
-    image: '/images/star.jpg',
+    name: 'Valentine Bates',
+    image: '/images/avataaars (3).png',
   },
   {
-    name: 'Batman',
-    image: '/images/batman.jpg',
+    name: 'Henry Montgomery',
+    image: '/images/avataaars (4).png',
   },
   {
-    name: 'Elliott',
-    image: '/images/elliott.jpg',
+    name: 'Batman Man',
+    image: '/images/avataaars (5).png',
   },
   {
-    name: 'Fira',
-    image: '/images/fira.jpg',
+    name: 'Paris Talbot',
+    image: '/images/avataaars (6).png',
   },
   {
-    name: 'Henry',
-    image: '/images/henry.jpg',
+    name: 'Victor Ver',
+    image: '/images/avataaars (7).png',
   },
   {
-    name: 'Marcy',
-    image: '/images/marcy.jpg',
+    name: 'Herbert Royale',
+    image: '/images/avataaars (8).png',
   },
   {
-    name: 'Milton',
-    image: '/images/milton.jpg',
+    name: 'Sarah Fang',
+    image: '/images/avataaars (9).png',
   },
   {
-    name: 'Murphy',
-    image: '/images/murphy.jpg',
+    name: 'Viola Montgomery',
+    image: '/images/avataaars (10).png',
   },
   {
-    name: 'Raffi',
-    image: '/images/raffi.jpg',
+    name: 'Delmira Henry',
+    image: '/images/avataaars (11).png',
   },
   {
-    name: 'Tulsi',
-    image: '/images/tulsi.jpg',
+    name: 'Fetid French',
+    image: '/images/avataaars (12).png',
   },
   {
     name: 'Pork Chop',
-    image: '/images/pork_chop.jpg',
+    image: '/images/avataaars (13).png',
   },
   {
-    name: 'Ribs',
-    image: '/images/ribs.jpg',
+    name: 'Doll Lowe',
+    image: '/images/avataaars (14).png',
   },
   {
-    name: 'Stacey',
-    image: '/images/stacey.jpg',
+    name: 'Timothy Xiong',
+    image: '/images/avataaars (15).png',
   },
   {
-    name: 'JD',
-    image: '/images/jd.jpg',
+    name: 'Stanley Foster',
+    image: '/images/avataaars (16).png',
   },
   {
     name: 'BenBen',
-    image: '/images/benben.png',
+    image: '/images/avataaars (17).png',
   },
   {
-    name: 'Odie',
-    image: '/images/odie.jpg',
+    name: 'Kaylum Tanner',
+    image: '/images/avataaars (1).png',
   },
 ];
 
 const id = () => Math.round(Math.random() * (authors.length - 1)) + 1;
 
 const messages = [
-  { authorId: id(), content: 'I like React!', channelId: 1 },
-  { authorId: id(), content: 'I like Redux!', channelId: 1 },
-  { authorId: id(), content: 'I like React-Redux!', channelId: 1 },
+  { authorId: id(), content: 'What is a Slack clone?', channelId: 1 },
+  { authorId: id(), content: 'I think this is a Slack clone.', channelId: 1 },
+  { authorId: id(), content: 'How do you sign in?', channelId: 1 },
   { authorId: id(), content: 'I like writing web apps!', channelId: 2 },
   { authorId: id(), content: 'You should learn JavaScript!', channelId: 2 },
   { authorId: id(), content: 'JavaScript is pretty great!', channelId: 2 },

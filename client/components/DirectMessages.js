@@ -22,7 +22,6 @@ class DirectMessages extends Component {
     const messages = this.props.directs;
     let filteredMessages = [];
     messages.map((message) => {
-      console.log(message);
       if (message.sender === sender || message.sender === receiver) {
         if (message.receiver === receiver || message.receiver === sender) {
           filteredMessages.push(message);
@@ -32,8 +31,6 @@ class DirectMessages extends Component {
 
     return (
       <div>
-        {/* loop over fetched individual messages */}
-
         <ul className="media-list">
           {filteredMessages.map((message) => (
             <Message message={message} key={message.id} />

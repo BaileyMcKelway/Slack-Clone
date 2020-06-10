@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import { postLikes, postSaved } from '../store';
 import { connect } from 'react-redux';
+import Chip from '@material-ui/core/Chip';
 
 function Message(props) {
   const message = props.message;
@@ -34,12 +36,23 @@ function Message(props) {
   const open = Boolean(anchorEl);
 
   return (
-    <li className="media">
-      <div
-        className={open ? 'message_hover' : ''}
-        onMouseEnter={handleHover}
-        onMouseLeave={handleNotHover}
-      >
+    <li
+      className={open ? 'message_hover media' : 'media'}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleNotHover}
+    >
+      <div className="media-date">
+        <h6>{message.date}</h6>
+        <IconButton
+          aria-label="save"
+          onClick={() => {
+            handleSave(user.id, message.id);
+          }}
+        >
+          <BookmarkRoundedIcon />
+        </IconButton>
+      </div>
+      <div>
         <div className="media-left">
           <a href="#">
             <img
@@ -50,20 +63,12 @@ function Message(props) {
           </a>
         </div>
         <div className="media-body">
-          <h6>{message.date}</h6>
           <h4 className="media-heading">{message.author.name}</h4>
           <p>{message.time}</p>
+
           {message.content}
         </div>
         <div className="media-right">
-          <IconButton
-            aria-label="save"
-            onClick={() => {
-              handleSave(user.id, message.id);
-            }}
-          >
-            <SaveIcon />
-          </IconButton>
           <IconButton
             aria-label="reaction"
             onClick={() => {

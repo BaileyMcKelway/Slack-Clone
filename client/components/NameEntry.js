@@ -41,7 +41,6 @@ class NameEntry extends Component {
           name="name"
           placeholder="Enter your name"
           className="form-control"
-          onChange={(e) => this.handleChange(e.target.value)}
         />
       </form>
     );

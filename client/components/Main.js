@@ -29,7 +29,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Sidebar />
+        <Sidebar user={this.props.user} users={this.props.users} />
         <Navbar />
         <main>
           <Switch>
@@ -48,6 +48,8 @@ class Main extends Component {
 const mapStateToProps = (state) => {
   return {
     channels: state.channels,
+    user: state.user,
+    users: state.users,
   };
 };
 

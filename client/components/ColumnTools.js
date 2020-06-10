@@ -7,7 +7,7 @@ export default class ColumnTools extends Component {
     return (
       <div>
         <h5>Menu</h5>
-        <ul>
+        <ul className="tool_list">
           <li>
             <NavLink to={`/saved`} activeClassName="active">
               <span> Saved Items</span>

@@ -10,7 +10,8 @@ class NavBar extends Component {
   render() {
     return (
       <nav>
-        <h3># Channel Name</h3>
+        <h5># Channel</h5>
+
         <NameEntry />
       </nav>
     );
@@ -19,6 +20,7 @@ class NavBar extends Component {
 
 const mapStateToProps = (state) => ({
   channels: state.channels,
+  users: state.users,
 });
 
 export default withRouter(connect(mapStateToProps)(NavBar));

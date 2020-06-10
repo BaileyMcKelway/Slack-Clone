@@ -173,10 +173,11 @@ export const postSaved = (userId, messageId) => {
 const initialState = {
   messages: [],
   newMessageEntry: '',
-  user: { id: 1, name: 'Cody', image: '/images/cody.jpg', saved: [] },
+  user: { id: 1, name: 'Cody', image: '/images/avataaars (1).png', saved: [] },
   users: [],
   channels: [],
   directs: [],
+  currentPage: {},
 };
 
 const reducer = (state = initialState, action) => {
