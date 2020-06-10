@@ -1,7 +1,7 @@
 {
   "name": "stackchat",
   "version": "1.0.0",
-  "description": "A chatty appy chat app",
+  "description": "A slack clone",
   "main": "index.js",
   "scripts": {
     "start": "npm run start-server & npm run build-watch",
