@@ -1,4 +1,4 @@
-# StackChat
+# Slack Clone
 
 A Slack Clone
 
