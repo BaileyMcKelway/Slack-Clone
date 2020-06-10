@@ -138,8 +138,8 @@ export const sendMessage = (message) => async (dispatch, getState) => {
   } else if (message.type === 'direct') {
     message.name = getState().user.name;
     const { data: newMessage } = await axios.post('/api/directs', message);
-    console.log(newMessage, 'directs');
     dispatch(gotNewDirect(newMessage));
+    socket.emit('new-direct', newMessage);
   }
 };
 

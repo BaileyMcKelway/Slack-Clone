@@ -1,5 +1,10 @@
 import io from 'socket.io-client';
-import store, { gotNewMessageFromServer, getChannel, addLike } from './store';
+import store, {
+  gotNewMessageFromServer,
+  getChannel,
+  addLike,
+  gotNewDirect,
+} from './store';
 
 const socket = io(window.location.origin);
 
@@ -13,6 +18,10 @@ socket.on('new-channel', (channel) => {
 
 socket.on('new-like', (message) => {
   store.dispatch(addLike(message));
+});
+
+socket.on('new-direct', (message) => {
+  store.dispatch(gotNewDirect(message));
 });
 
 export default socket;

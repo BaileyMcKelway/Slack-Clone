@@ -16,5 +16,9 @@ module.exports = (io) => {
     socket.on('new-like', (message) => {
       socket.broadcast.emit('new-like', message);
     });
+
+    socket.on('new-direct', (message) => {
+      socket.broadcast.emit('new-direct', message);
+    });
   });
 };
