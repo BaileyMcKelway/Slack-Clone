@@ -2,7 +2,7 @@
 
 A Slack Clone
 
-https://slackin-slack-clone.herokuapp.com/channels/4
+https://slackin-slack-clone.herokuapp.com
 
 ![](https://i.imgur.com/qE5Z85x.png)
 
