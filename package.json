@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "heroku-postbuild": "webpack --config webpack.prod.js",
+    "heroku-prebuild": "npm install --dev",
     "start": "npm run start-server & npm run build-watch",
     "start-server": "nodemon server -w server",
     "build-watch": "webpack -w",
