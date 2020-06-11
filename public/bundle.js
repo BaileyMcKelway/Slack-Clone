@@ -255,11 +255,11 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SavedItems = __webpack_require__(/*! ./SavedItems */ "./client/components/SavedItems.js");
-
-var _SavedItems2 = _interopRequireDefault(_SavedItems);
-
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
+
+var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -301,20 +301,9 @@ var ColumnTools = function (_Component) {
               _react2.default.createElement(
                 'span',
                 null,
-                ' Saved Items'
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/drafts', activeClassName: 'active' },
-              _react2.default.createElement(
-                'span',
-                null,
-                ' Drafts'
+                ' ',
+                _react2.default.createElement(_BookmarkRounded2.default, null),
+                'Saved Items'
               )
             )
           )
@@ -742,8 +731,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _styles = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
-
 var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
 
 var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
@@ -752,21 +739,17 @@ var _IconButton = __webpack_require__(/*! @material-ui/core/IconButton */ "./nod
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _Save = __webpack_require__(/*! @material-ui/icons/Save */ "./node_modules/@material-ui/icons/Save.js");
-
-var _Save2 = _interopRequireDefault(_Save);
-
 var _EmojiEmotions = __webpack_require__(/*! @material-ui/icons/EmojiEmotions */ "./node_modules/@material-ui/icons/EmojiEmotions.js");
 
 var _EmojiEmotions2 = _interopRequireDefault(_EmojiEmotions);
 
+var _Container = __webpack_require__(/*! @material-ui/core/Container */ "./node_modules/@material-ui/core/esm/Container/index.js");
+
+var _Container2 = _interopRequireDefault(_Container);
+
 var _store = __webpack_require__(/*! ../store */ "./client/store.js");
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _Chip = __webpack_require__(/*! @material-ui/core/Chip */ "./node_modules/@material-ui/core/esm/Chip/index.js");
-
-var _Chip2 = _interopRequireDefault(_Chip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -805,75 +788,79 @@ function Message(props) {
   var open = Boolean(anchorEl);
 
   return _react2.default.createElement(
-    'li',
-    {
-      className: open ? 'message_hover media' : 'media',
-      onMouseEnter: handleHover,
-      onMouseLeave: handleNotHover
-    },
+    _Container2.default,
+    { fixed: true },
     _react2.default.createElement(
-      'div',
-      { className: 'media-date' },
-      _react2.default.createElement(
-        'h6',
-        null,
-        message.date
-      ),
-      _react2.default.createElement(
-        _IconButton2.default,
-        {
-          'aria-label': 'save',
-          onClick: function onClick() {
-            handleSave(user.id, message.id);
-          }
-        },
-        _react2.default.createElement(_BookmarkRounded2.default, null)
-      )
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
+      'li',
+      {
+        className: open ? 'message_hover media' : 'media',
+        onMouseEnter: handleHover,
+        onMouseLeave: handleNotHover
+      },
       _react2.default.createElement(
         'div',
-        { className: 'media-left' },
+        { className: 'media-date' },
         _react2.default.createElement(
-          'a',
-          { href: '#' },
-          _react2.default.createElement('img', {
-            className: 'media-object',
-            src: message.author.image,
-            alt: 'image'
-          })
+          'h6',
+          null,
+          message.date
+        ),
+        _react2.default.createElement(
+          _IconButton2.default,
+          {
+            'aria-label': 'save',
+            onClick: function onClick() {
+              handleSave(user.id, message.id);
+            }
+          },
+          _react2.default.createElement(_BookmarkRounded2.default, null)
         )
       ),
       _react2.default.createElement(
         'div',
-        { className: 'media-body' },
+        null,
         _react2.default.createElement(
-          'h4',
-          { className: 'media-heading' },
-          message.author.name
+          'div',
+          { className: 'media-left' },
+          _react2.default.createElement(
+            'a',
+            { href: '#' },
+            _react2.default.createElement('img', {
+              className: 'media-object',
+              src: message.author.image,
+              alt: 'image'
+            })
+          )
         ),
         _react2.default.createElement(
-          'p',
-          null,
-          message.time
+          'div',
+          { className: 'media-body' },
+          _react2.default.createElement(
+            'h4',
+            { className: 'media-heading' },
+            message.author.name
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            message.time
+          ),
+          message.content
         ),
-        message.content
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'media-right' },
         _react2.default.createElement(
-          _IconButton2.default,
-          {
-            'aria-label': 'reaction',
-            onClick: function onClick() {
-              handleLike(message.id, message.channelId);
-            }
-          },
-          _react2.default.createElement(_EmojiEmotions2.default, null),
-          likes
+          'div',
+          { className: 'media-right' },
+          _react2.default.createElement(
+            _IconButton2.default,
+            {
+              'aria-label': 'reaction',
+              onClick: function onClick() {
+                handleLike(message.id, message.channelId);
+              }
+            },
+            _react2.default.createElement(_EmojiEmotions2.default, null),
+            likes
+          )
         )
       )
     )
@@ -1669,8 +1656,6 @@ var _Group2 = _interopRequireDefault(_Group);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { logo } from './slackbot.png';
-
 function Sidebar(props) {
   return _react2.default.createElement(
     'section',
@@ -2331,7 +2316,12 @@ var postSaved = exports.postSaved = function postSaved(userId, messageId) {
 var initialState = {
   messages: [],
   newMessageEntry: '',
-  user: { id: 1, name: 'Cody', image: '/images/avataaars (1).png', saved: [] },
+  user: {
+    id: 1,
+    name: 'Cody Hardy',
+    image: '/images/avataaars (1).png',
+    saved: []
+  },
   users: [],
   channels: [],
   directs: [],
@@ -3869,10 +3859,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/Chip/Chip.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/Chip/Chip.js ***!
-  \*********************************************************/
+/***/ "./node_modules/@material-ui/core/esm/Container/Container.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Container/Container.js ***!
+  \*******************************************************************/
 /*! exports provided: styles, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3881,22 +3871,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "styles", function() { return styles; });
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
 /* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/@material-ui/core/node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
-/* harmony import */ var _internal_svg_icons_Cancel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../internal/svg-icons/Cancel */ "./node_modules/@material-ui/core/esm/internal/svg-icons/Cancel.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/@material-ui/core/node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
 /* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
-/* harmony import */ var _styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/colorManipulator */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
-/* harmony import */ var _utils_useForkRef__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/useForkRef */ "./node_modules/@material-ui/core/esm/utils/useForkRef.js");
-/* harmony import */ var _utils_unsupportedProp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/unsupportedProp */ "./node_modules/@material-ui/core/esm/utils/unsupportedProp.js");
-/* harmony import */ var _utils_capitalize__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/capitalize */ "./node_modules/@material-ui/core/esm/utils/capitalize.js");
-/* harmony import */ var _ButtonBase__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../ButtonBase */ "./node_modules/@material-ui/core/esm/ButtonBase/index.js");
-
-
-
-
+/* harmony import */ var _utils_capitalize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/capitalize */ "./node_modules/@material-ui/core/esm/utils/capitalize.js");
 
 
 
@@ -3906,522 +3888,141 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var styles = function styles(theme) {
-  var backgroundColor = theme.palette.type === 'light' ? theme.palette.grey[300] : theme.palette.grey[700];
-  var deleteIconColor = Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.text.primary, 0.26);
   return {
     /* Styles applied to the root element. */
-    root: {
-      fontFamily: theme.typography.fontFamily,
-      fontSize: theme.typography.pxToRem(13),
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: 32,
-      color: theme.palette.getContrastText(backgroundColor),
-      backgroundColor: backgroundColor,
-      borderRadius: 32 / 2,
-      whiteSpace: 'nowrap',
-      transition: theme.transitions.create(['background-color', 'box-shadow']),
-      // label will inherit this from root, then `clickable` class overrides this for both
-      cursor: 'default',
-      // We disable the focus ring for mouse, touch and keyboard users.
-      outline: 0,
-      textDecoration: 'none',
-      border: 'none',
-      // Remove `button` border
-      padding: 0,
-      // Remove `button` padding
-      verticalAlign: 'middle',
+    root: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({
+      width: '100%',
+      marginLeft: 'auto',
       boxSizing: 'border-box',
-      '&$disabled': {
-        opacity: 0.5,
-        pointerEvents: 'none'
-      },
-      '& $avatar': {
-        marginLeft: 5,
-        marginRight: -6,
-        width: 24,
-        height: 24,
-        color: theme.palette.type === 'light' ? theme.palette.grey[700] : theme.palette.grey[300],
-        fontSize: theme.typography.pxToRem(12)
-      },
-      '& $avatarColorPrimary': {
-        color: theme.palette.primary.contrastText,
-        backgroundColor: theme.palette.primary.dark
-      },
-      '& $avatarColorSecondary': {
-        color: theme.palette.secondary.contrastText,
-        backgroundColor: theme.palette.secondary.dark
-      },
-      '& $avatarSmall': {
-        marginLeft: 4,
-        marginRight: -4,
-        width: 18,
-        height: 18,
-        fontSize: theme.typography.pxToRem(10)
+      marginRight: 'auto',
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      display: 'block'
+    }, theme.breakpoints.up('sm'), {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3)
+    }),
+
+    /* Styles applied to the root element if `disableGutters={true}`. */
+    disableGutters: {
+      paddingLeft: 0,
+      paddingRight: 0
+    },
+
+    /* Styles applied to the root element if `fixed={true}`. */
+    fixed: Object.keys(theme.breakpoints.values).reduce(function (acc, breakpoint) {
+      var value = theme.breakpoints.values[breakpoint];
+
+      if (value !== 0) {
+        acc[theme.breakpoints.up(breakpoint)] = {
+          maxWidth: value
+        };
       }
-    },
 
-    /* Styles applied to the root element if `size="small"`. */
-    sizeSmall: {
-      height: 24
-    },
+      return acc;
+    }, {}),
 
-    /* Styles applied to the root element if `color="primary"`. */
-    colorPrimary: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
-    },
+    /* Styles applied to the root element if `maxWidth="xs"`. */
+    maxWidthXs: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, theme.breakpoints.up('xs'), {
+      maxWidth: Math.max(theme.breakpoints.values.xs, 444)
+    }),
 
-    /* Styles applied to the root element if `color="secondary"`. */
-    colorSecondary: {
-      backgroundColor: theme.palette.secondary.main,
-      color: theme.palette.secondary.contrastText
-    },
+    /* Styles applied to the root element if `maxWidth="sm"`. */
+    maxWidthSm: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, theme.breakpoints.up('sm'), {
+      maxWidth: theme.breakpoints.values.sm
+    }),
 
-    /* Pseudo-class applied to the root element if `disabled={true}`. */
-    disabled: {},
+    /* Styles applied to the root element if `maxWidth="md"`. */
+    maxWidthMd: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, theme.breakpoints.up('md'), {
+      maxWidth: theme.breakpoints.values.md
+    }),
 
-    /* Styles applied to the root element if `onClick` is defined or `clickable={true}`. */
-    clickable: {
-      userSelect: 'none',
-      WebkitTapHighlightColor: 'transparent',
-      cursor: 'pointer',
-      '&:hover, &:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["emphasize"])(backgroundColor, 0.08)
-      },
-      '&:active': {
-        boxShadow: theme.shadows[1]
-      }
-    },
+    /* Styles applied to the root element if `maxWidth="lg"`. */
+    maxWidthLg: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, theme.breakpoints.up('lg'), {
+      maxWidth: theme.breakpoints.values.lg
+    }),
 
-    /* Styles applied to the root element if `onClick` and `color="primary"` is defined or `clickable={true}`. */
-    clickableColorPrimary: {
-      '&:hover, &:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["emphasize"])(theme.palette.primary.main, 0.08)
-      }
-    },
-
-    /* Styles applied to the root element if `onClick` and `color="secondary"` is defined or `clickable={true}`. */
-    clickableColorSecondary: {
-      '&:hover, &:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["emphasize"])(theme.palette.secondary.main, 0.08)
-      }
-    },
-
-    /* Styles applied to the root element if `onDelete` is defined. */
-    deletable: {
-      '&:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["emphasize"])(backgroundColor, 0.08)
-      }
-    },
-
-    /* Styles applied to the root element if `onDelete` and `color="primary"` is defined. */
-    deletableColorPrimary: {
-      '&:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["emphasize"])(theme.palette.primary.main, 0.2)
-      }
-    },
-
-    /* Styles applied to the root element if `onDelete` and `color="secondary"` is defined. */
-    deletableColorSecondary: {
-      '&:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["emphasize"])(theme.palette.secondary.main, 0.2)
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"`. */
-    outlined: {
-      backgroundColor: 'transparent',
-      border: "1px solid ".concat(theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'),
-      '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.text.primary, theme.palette.action.hoverOpacity)
-      },
-      '& $avatar': {
-        marginLeft: 4
-      },
-      '& $avatarSmall': {
-        marginLeft: 2
-      },
-      '& $icon': {
-        marginLeft: 4
-      },
-      '& $iconSmall': {
-        marginLeft: 2
-      },
-      '& $deleteIcon': {
-        marginRight: 5
-      },
-      '& $deleteIconSmall': {
-        marginRight: 3
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="primary"`. */
-    outlinedPrimary: {
-      color: theme.palette.primary.main,
-      border: "1px solid ".concat(theme.palette.primary.main),
-      '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.primary.main, theme.palette.action.hoverOpacity)
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="secondary"`. */
-    outlinedSecondary: {
-      color: theme.palette.secondary.main,
-      border: "1px solid ".concat(theme.palette.secondary.main),
-      '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
-        backgroundColor: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.secondary.main, theme.palette.action.hoverOpacity)
-      }
-    },
-    // TODO v5: remove
-
-    /* Styles applied to the `avatar` element. */
-    avatar: {},
-
-    /* Styles applied to the `avatar` element if `size="small"`. */
-    avatarSmall: {},
-
-    /* Styles applied to the `avatar` element if `color="primary"`. */
-    avatarColorPrimary: {},
-
-    /* Styles applied to the `avatar` element if `color="secondary"`. */
-    avatarColorSecondary: {},
-
-    /* Styles applied to the `icon` element. */
-    icon: {
-      color: theme.palette.type === 'light' ? theme.palette.grey[700] : theme.palette.grey[300],
-      marginLeft: 5,
-      marginRight: -6
-    },
-
-    /* Styles applied to the `icon` element if `size="small"`. */
-    iconSmall: {
-      width: 18,
-      height: 18,
-      marginLeft: 4,
-      marginRight: -4
-    },
-
-    /* Styles applied to the `icon` element if `color="primary"`. */
-    iconColorPrimary: {
-      color: 'inherit'
-    },
-
-    /* Styles applied to the `icon` element if `color="secondary"`. */
-    iconColorSecondary: {
-      color: 'inherit'
-    },
-
-    /* Styles applied to the label `span` element. */
-    label: {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      paddingLeft: 12,
-      paddingRight: 12,
-      whiteSpace: 'nowrap'
-    },
-
-    /* Styles applied to the label `span` element if `size="small"`. */
-    labelSmall: {
-      paddingLeft: 8,
-      paddingRight: 8
-    },
-
-    /* Styles applied to the `deleteIcon` element. */
-    deleteIcon: {
-      WebkitTapHighlightColor: 'transparent',
-      color: deleteIconColor,
-      height: 22,
-      width: 22,
-      cursor: 'pointer',
-      margin: '0 5px 0 -6px',
-      '&:hover': {
-        color: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(deleteIconColor, 0.4)
-      }
-    },
-
-    /* Styles applied to the `deleteIcon` element if `size="small"`. */
-    deleteIconSmall: {
-      height: 16,
-      width: 16,
-      marginRight: 4,
-      marginLeft: -4
-    },
-
-    /* Styles applied to the deleteIcon element if `color="primary"` and `variant="default"`. */
-    deleteIconColorPrimary: {
-      color: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.primary.contrastText, 0.7),
-      '&:hover, &:active': {
-        color: theme.palette.primary.contrastText
-      }
-    },
-
-    /* Styles applied to the deleteIcon element if `color="secondary"` and `variant="default"`. */
-    deleteIconColorSecondary: {
-      color: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.secondary.contrastText, 0.7),
-      '&:hover, &:active': {
-        color: theme.palette.secondary.contrastText
-      }
-    },
-
-    /* Styles applied to the deleteIcon element if `color="primary"` and `variant="outlined"`. */
-    deleteIconOutlinedColorPrimary: {
-      color: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.primary.main, 0.7),
-      '&:hover, &:active': {
-        color: theme.palette.primary.main
-      }
-    },
-
-    /* Styles applied to the deleteIcon element if `color="secondary"` and `variant="outlined"`. */
-    deleteIconOutlinedColorSecondary: {
-      color: Object(_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_7__["fade"])(theme.palette.secondary.main, 0.7),
-      '&:hover, &:active': {
-        color: theme.palette.secondary.main
-      }
-    }
+    /* Styles applied to the root element if `maxWidth="xl"`. */
+    maxWidthXl: Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, theme.breakpoints.up('xl'), {
+      maxWidth: theme.breakpoints.values.xl
+    })
   };
 };
-
-function isDeleteKeyboardEvent(keyboardEvent) {
-  return keyboardEvent.key === 'Backspace' || keyboardEvent.key === 'Delete';
-}
-/**
- * Chips represent complex entities in small blocks, such as a contact.
- */
-
-
-var Chip = react__WEBPACK_IMPORTED_MODULE_2__["forwardRef"](function Chip(props, ref) {
-  var avatarProp = props.avatar,
-      classes = props.classes,
+var Container = react__WEBPACK_IMPORTED_MODULE_3__["forwardRef"](function Container(props, ref) {
+  var classes = props.classes,
       className = props.className,
-      clickableProp = props.clickable,
-      _props$color = props.color,
-      color = _props$color === void 0 ? 'default' : _props$color,
-      ComponentProp = props.component,
-      deleteIconProp = props.deleteIcon,
-      _props$disabled = props.disabled,
-      disabled = _props$disabled === void 0 ? false : _props$disabled,
-      iconProp = props.icon,
-      label = props.label,
-      onClick = props.onClick,
-      onDelete = props.onDelete,
-      onKeyDown = props.onKeyDown,
-      onKeyUp = props.onKeyUp,
-      _props$size = props.size,
-      size = _props$size === void 0 ? 'medium' : _props$size,
-      _props$variant = props.variant,
-      variant = _props$variant === void 0 ? 'default' : _props$variant,
-      other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(props, ["avatar", "classes", "className", "clickable", "color", "component", "deleteIcon", "disabled", "icon", "label", "onClick", "onDelete", "onKeyDown", "onKeyUp", "size", "variant"]);
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'div' : _props$component,
+      _props$disableGutters = props.disableGutters,
+      disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters,
+      _props$fixed = props.fixed,
+      fixed = _props$fixed === void 0 ? false : _props$fixed,
+      _props$maxWidth = props.maxWidth,
+      maxWidth = _props$maxWidth === void 0 ? 'lg' : _props$maxWidth,
+      other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__["default"])(props, ["classes", "className", "component", "disableGutters", "fixed", "maxWidth"]);
 
-  var chipRef = react__WEBPACK_IMPORTED_MODULE_2__["useRef"](null);
-  var handleRef = Object(_utils_useForkRef__WEBPACK_IMPORTED_MODULE_8__["default"])(chipRef, ref);
-
-  var handleDeleteIconClick = function handleDeleteIconClick(event) {
-    // Stop the event from bubbling up to the `Chip`
-    event.stopPropagation();
-
-    if (onDelete) {
-      onDelete(event);
-    }
-  };
-
-  var handleKeyDown = function handleKeyDown(event) {
-    // Ignore events from children of `Chip`.
-    if (event.currentTarget === event.target && isDeleteKeyboardEvent(event)) {
-      // will be handled in keyUp, otherwise some browsers
-      // might init navigation
-      event.preventDefault();
-    }
-
-    if (onKeyDown) {
-      onKeyDown(event);
-    }
-  };
-
-  var handleKeyUp = function handleKeyUp(event) {
-    // Ignore events from children of `Chip`.
-    if (event.currentTarget === event.target) {
-      if (onDelete && isDeleteKeyboardEvent(event)) {
-        onDelete(event);
-      } else if (event.key === 'Escape' && chipRef.current) {
-        chipRef.current.blur();
-      }
-    }
-
-    if (onKeyUp) {
-      onKeyUp(event);
-    }
-  };
-
-  var clickable = clickableProp !== false && onClick ? true : clickableProp;
-  var small = size === 'small';
-  var Component = ComponentProp || (clickable ? _ButtonBase__WEBPACK_IMPORTED_MODULE_11__["default"] : 'div');
-  var moreProps = Component === _ButtonBase__WEBPACK_IMPORTED_MODULE_11__["default"] ? {
-    component: 'div'
-  } : {};
-  var deleteIcon = null;
-
-  if (onDelete) {
-    var customClasses = Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(color !== 'default' && (variant === "default" ? classes["deleteIconColor".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))] : classes["deleteIconOutlinedColor".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))]), small && classes.deleteIconSmall);
-    deleteIcon = deleteIconProp && react__WEBPACK_IMPORTED_MODULE_2__["isValidElement"](deleteIconProp) ? react__WEBPACK_IMPORTED_MODULE_2__["cloneElement"](deleteIconProp, {
-      className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(deleteIconProp.props.className, classes.deleteIcon, customClasses),
-      onClick: handleDeleteIconClick
-    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__["createElement"](_internal_svg_icons_Cancel__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(classes.deleteIcon, customClasses),
-      onClick: handleDeleteIconClick
-    });
-  }
-
-  var avatar = null;
-
-  if (avatarProp && react__WEBPACK_IMPORTED_MODULE_2__["isValidElement"](avatarProp)) {
-    avatar = react__WEBPACK_IMPORTED_MODULE_2__["cloneElement"](avatarProp, {
-      className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(classes.avatar, avatarProp.props.className, small && classes.avatarSmall, color !== 'default' && classes["avatarColor".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))])
-    });
-  }
-
-  var icon = null;
-
-  if (iconProp && react__WEBPACK_IMPORTED_MODULE_2__["isValidElement"](iconProp)) {
-    icon = react__WEBPACK_IMPORTED_MODULE_2__["cloneElement"](iconProp, {
-      className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(classes.icon, iconProp.props.className, small && classes.iconSmall, color !== 'default' && classes["iconColor".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))])
-    });
-  }
-
-  if (true) {
-    if (avatar && icon) {
-      console.error('Material-UI: The Chip component can not handle the avatar ' + 'and the icon prop at the same time. Pick one.');
-    }
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__["createElement"](Component, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    role: clickable || onDelete ? 'button' : undefined,
-    className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(classes.root, className, color !== 'default' && [classes["color".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))], clickable && classes["clickableColor".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))], onDelete && classes["deletableColor".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__["default"])(color))]], variant !== "default" && [classes.outlined, {
-      'primary': classes.outlinedPrimary,
-      'secondary': classes.outlinedSecondary
-    }[color]], disabled && classes.disabled, small && classes.sizeSmall, clickable && classes.clickable, onDelete && classes.deletable),
-    "aria-disabled": disabled ? true : undefined,
-    tabIndex: clickable || onDelete ? 0 : undefined,
-    onClick: onClick,
-    onKeyDown: handleKeyDown,
-    onKeyUp: handleKeyUp,
-    ref: handleRef
-  }, moreProps, other), avatar || icon, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__["createElement"]("span", {
-    className: Object(clsx__WEBPACK_IMPORTED_MODULE_4__["default"])(classes.label, small && classes.labelSmall)
-  }, label), deleteIcon);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](Component, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    className: Object(clsx__WEBPACK_IMPORTED_MODULE_5__["default"])(classes.root, className, fixed && classes.fixed, disableGutters && classes.disableGutters, maxWidth !== false && classes["maxWidth".concat(Object(_utils_capitalize__WEBPACK_IMPORTED_MODULE_7__["default"])(String(maxWidth)))]),
+    ref: ref
+  }, other));
 });
- true ? Chip.propTypes = {
-  /**
-   * Avatar element.
-   */
-  avatar: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.element,
-
-  /**
-   * This prop isn't supported.
-   * Use the `component` prop if you need to change the children structure.
-   */
-  children: _utils_unsupportedProp__WEBPACK_IMPORTED_MODULE_9__["default"],
+ true ? Container.propTypes = {
+  children: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.node.isRequired,
 
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css) below for more details.
    */
-  classes: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object.isRequired,
+  classes: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object.isRequired,
 
   /**
    * @ignore
    */
-  className: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string,
-
-  /**
-   * If `true`, the chip will appear clickable, and will raise when pressed,
-   * even if the onClick prop is not defined.
-   * If false, the chip will not be clickable, even if onClick prop is defined.
-   * This can be used, for example,
-   * along with the component prop to indicate an anchor Chip is clickable.
-   */
-  clickable: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.bool,
-
-  /**
-   * The color of the component. It supports those theme colors that make sense for this component.
-   */
-  color: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['default', 'primary', 'secondary']),
+  className: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.string,
 
   /**
    * The component used for the root node.
    * Either a string to use a HTML element or a component.
    */
-  component: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.elementType,
+  component: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.elementType,
 
   /**
-   * Override the default delete icon element. Shown only if `onDelete` is set.
+   * If `true`, the left and right padding is removed.
    */
-  deleteIcon: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.element,
+  disableGutters: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
 
   /**
-   * If `true`, the chip should be displayed in a disabled state.
+   * Set the max-width to match the min-width of the current breakpoint.
+   * This is useful if you'd prefer to design for a fixed set of sizes
+   * instead of trying to accommodate a fully fluid viewport.
+   * It's fluid by default.
    */
-  disabled: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.bool,
+  fixed: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.bool,
 
   /**
-   * Icon element.
+   * Determine the max-width of the container.
+   * The container width grows with the size of the screen.
+   * Set to `false` to disable `maxWidth`.
    */
-  icon: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.element,
-
-  /**
-   * The content of the label.
-   */
-  label: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.node,
-
-  /**
-   * @ignore
-   */
-  onClick: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func,
-
-  /**
-   * Callback function fired when the delete icon is clicked.
-   * If set, the delete icon will be shown.
-   */
-  onDelete: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func,
-
-  /**
-   * @ignore
-   */
-  onKeyDown: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func,
-
-  /**
-   * @ignore
-   */
-  onKeyUp: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func,
-
-  /**
-   * The size of the chip.
-   */
-  size: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['small', 'medium']),
-
-  /**
-   * The variant to use.
-   */
-  variant: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.oneOf(['default', 'outlined'])
+  maxWidth: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(['xs', 'sm', 'md', 'lg', 'xl', false])
 } : undefined;
 /* harmony default export */ __webpack_exports__["default"] = (Object(_styles_withStyles__WEBPACK_IMPORTED_MODULE_6__["default"])(styles, {
-  name: 'MuiChip'
-})(Chip));
+  name: 'MuiContainer'
+})(Container));
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/Chip/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/Chip/index.js ***!
-  \**********************************************************/
+/***/ "./node_modules/@material-ui/core/esm/Container/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Container/index.js ***!
+  \***************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Chip__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Chip */ "./node_modules/@material-ui/core/esm/Chip/Chip.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _Chip__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./node_modules/@material-ui/core/esm/Container/Container.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _Container__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 
 
@@ -5085,30 +4686,6 @@ var red = {
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/internal/svg-icons/Cancel.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/internal/svg-icons/Cancel.js ***!
-  \*************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/createSvgIcon */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
-  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
-}), 'Cancel'));
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js":
 /*!***********************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/styles/colorManipulator.js ***!
@@ -5545,32 +5122,6 @@ function createMixins(breakpoints, spacing, mixins) {
       minHeight: 64
     }), _toolbar)
   }, mixins);
-}
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createMuiStrictModeTheme; });
-/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/index.js");
-/* harmony import */ var _createMuiTheme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createMuiTheme */ "./node_modules/@material-ui/core/esm/styles/createMuiTheme.js");
-
-
-function createMuiStrictModeTheme(options) {
-  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-
-  return _createMuiTheme__WEBPACK_IMPORTED_MODULE_1__["default"].apply(void 0, [Object(_material_ui_utils__WEBPACK_IMPORTED_MODULE_0__["deepmerge"])({
-    unstable_strictMode: true
-  }, options)].concat(args));
 }
 
 /***/ }),
@@ -6021,34 +5572,6 @@ function createSpacing() {
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/styles/createStyles.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/createStyles.js ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createStyles; });
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
- // let warnOnce = false;
-// To remove in v5
-
-function createStyles(styles) {
-  // warning(
-  //   warnOnce,
-  //   [
-  //     'Material-UI: createStyles from @material-ui/core/styles is deprecated.',
-  //     'Please use @material-ui/styles/createStyles',
-  //   ].join('\n'),
-  // );
-  // warnOnce = true;
-  return Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_0__["createStyles"])(styles);
-}
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/core/esm/styles/createTypography.js":
 /*!***********************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/styles/createTypography.js ***!
@@ -6161,152 +5684,6 @@ function createTypography(palette, typography) {
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/styles/cssUtils.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/cssUtils.js ***!
-  \***************************************************************/
-/*! exports provided: isUnitless, getUnit, toUnitless, convertLength, alignProperty, fontGrid, responsiveProperty */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUnitless", function() { return isUnitless; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getUnit", function() { return getUnit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toUnitless", function() { return toUnitless; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "convertLength", function() { return convertLength; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "alignProperty", function() { return alignProperty; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fontGrid", function() { return fontGrid; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "responsiveProperty", function() { return responsiveProperty; });
-/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-
-function isUnitless(value) {
-  return String(parseFloat(value)).length === String(value).length;
-} // Ported from Compass
-// https://github.com/Compass/compass/blob/master/core/stylesheets/compass/typography/_units.scss
-// Emulate the sass function "unit"
-
-function getUnit(input) {
-  return String(input).match(/[\d.\-+]*\s*(.*)/)[1] || '';
-} // Emulate the sass function "unitless"
-
-function toUnitless(length) {
-  return parseFloat(length);
-} // Convert any CSS <length> or <percentage> value to any another.
-// From https://github.com/KyleAMathews/convert-css-length
-
-function convertLength(baseFontSize) {
-  return function (length, toUnit) {
-    var fromUnit = getUnit(length); // Optimize for cases where `from` and `to` units are accidentally the same.
-
-    if (fromUnit === toUnit) {
-      return length;
-    } // Convert input length to pixels.
-
-
-    var pxLength = toUnitless(length);
-
-    if (fromUnit !== 'px') {
-      if (fromUnit === 'em') {
-        pxLength = toUnitless(length) * toUnitless(baseFontSize);
-      } else if (fromUnit === 'rem') {
-        pxLength = toUnitless(length) * toUnitless(baseFontSize);
-        return length;
-      }
-    } // Convert length in pixels to the output unit
-
-
-    var outputLength = pxLength;
-
-    if (toUnit !== 'px') {
-      if (toUnit === 'em') {
-        outputLength = pxLength / toUnitless(baseFontSize);
-      } else if (toUnit === 'rem') {
-        outputLength = pxLength / toUnitless(baseFontSize);
-      } else {
-        return length;
-      }
-    }
-
-    return parseFloat(outputLength.toFixed(5)) + toUnit;
-  };
-}
-function alignProperty(_ref) {
-  var size = _ref.size,
-      grid = _ref.grid;
-  var sizeBelow = size - size % grid;
-  var sizeAbove = sizeBelow + grid;
-  return size - sizeBelow < sizeAbove - size ? sizeBelow : sizeAbove;
-} // fontGrid finds a minimal grid (in rem) for the fontSize values so that the
-// lineHeight falls under a x pixels grid, 4px in the case of Material Design,
-// without changing the relative line height
-
-function fontGrid(_ref2) {
-  var lineHeight = _ref2.lineHeight,
-      pixels = _ref2.pixels,
-      htmlFontSize = _ref2.htmlFontSize;
-  return pixels / (lineHeight * htmlFontSize);
-}
-/**
- * generate a responsive version of a given CSS property
- * @example
- * responsiveProperty({
- *   cssProperty: 'fontSize',
- *   min: 15,
- *   max: 20,
- *   unit: 'px',
- *   breakpoints: [300, 600],
- * })
- *
- * // this returns
- *
- * {
- *   fontSize: '15px',
- *   '@media (min-width:300px)': {
- *     fontSize: '17.5px',
- *   },
- *   '@media (min-width:600px)': {
- *     fontSize: '20px',
- *   },
- * }
- *
- * @param {Object} params
- * @param {string} params.cssProperty - The CSS property to be made responsive
- * @param {number} params.min - The smallest value of the CSS property
- * @param {number} params.max - The largest value of the CSS property
- * @param {string} [params.unit] - The unit to be used for the CSS property
- * @param {Array.number} [params.breakpoints]  - An array of breakpoints
- * @param {number} [params.alignStep] - Round scaled value to fall under this grid
- * @returns {Object} responsive styles for {params.cssProperty}
- */
-
-function responsiveProperty(_ref3) {
-  var cssProperty = _ref3.cssProperty,
-      min = _ref3.min,
-      max = _ref3.max,
-      _ref3$unit = _ref3.unit,
-      unit = _ref3$unit === void 0 ? 'rem' : _ref3$unit,
-      _ref3$breakpoints = _ref3.breakpoints,
-      breakpoints = _ref3$breakpoints === void 0 ? [600, 960, 1280] : _ref3$breakpoints,
-      _ref3$transform = _ref3.transform,
-      transform = _ref3$transform === void 0 ? null : _ref3$transform;
-
-  var output = Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])({}, cssProperty, "".concat(min).concat(unit));
-
-  var factor = (max - min) / breakpoints[breakpoints.length - 1];
-  breakpoints.forEach(function (breakpoint) {
-    var value = min + factor * breakpoint;
-
-    if (transform !== null) {
-      value = transform(value);
-    }
-
-    output["@media (min-width:".concat(breakpoint, "px)")] = Object(_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])({}, cssProperty, "".concat(Math.round(value * 10000) / 10000).concat(unit));
-  });
-  return output;
-}
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/core/esm/styles/defaultTheme.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/styles/defaultTheme.js ***!
@@ -6320,211 +5697,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var defaultTheme = Object(_createMuiTheme__WEBPACK_IMPORTED_MODULE_0__["default"])();
 /* harmony default export */ __webpack_exports__["default"] = (defaultTheme);
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/styles/index.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/index.js ***!
-  \************************************************************/
-/*! exports provided: hexToRgb, rgbToHex, hslToRgb, decomposeColor, recomposeColor, getContrastRatio, getLuminance, emphasize, fade, darken, lighten, createMuiTheme, unstable_createMuiStrictModeTheme, createStyles, makeStyles, responsiveFontSizes, styled, easing, duration, useTheme, withStyles, withTheme, createGenerateClassName, jssPreset, ServerStyleSheets, StylesProvider, MuiThemeProvider, ThemeProvider */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _colorManipulator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colorManipulator */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hexToRgb", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["hexToRgb"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "rgbToHex", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["rgbToHex"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hslToRgb", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["hslToRgb"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "decomposeColor", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["decomposeColor"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "recomposeColor", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["recomposeColor"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getContrastRatio", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["getContrastRatio"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getLuminance", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["getLuminance"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "emphasize", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["emphasize"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fade", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["fade"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "darken", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["darken"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "lighten", function() { return _colorManipulator__WEBPACK_IMPORTED_MODULE_0__["lighten"]; });
-
-/* harmony import */ var _createMuiTheme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createMuiTheme */ "./node_modules/@material-ui/core/esm/styles/createMuiTheme.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createMuiTheme", function() { return _createMuiTheme__WEBPACK_IMPORTED_MODULE_1__["default"]; });
-
-/* harmony import */ var _createMuiStrictModeTheme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createMuiStrictModeTheme */ "./node_modules/@material-ui/core/esm/styles/createMuiStrictModeTheme.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "unstable_createMuiStrictModeTheme", function() { return _createMuiStrictModeTheme__WEBPACK_IMPORTED_MODULE_2__["default"]; });
-
-/* harmony import */ var _createStyles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./createStyles */ "./node_modules/@material-ui/core/esm/styles/createStyles.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createStyles", function() { return _createStyles__WEBPACK_IMPORTED_MODULE_3__["default"]; });
-
-/* harmony import */ var _makeStyles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./makeStyles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "makeStyles", function() { return _makeStyles__WEBPACK_IMPORTED_MODULE_4__["default"]; });
-
-/* harmony import */ var _responsiveFontSizes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./responsiveFontSizes */ "./node_modules/@material-ui/core/esm/styles/responsiveFontSizes.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "responsiveFontSizes", function() { return _responsiveFontSizes__WEBPACK_IMPORTED_MODULE_5__["default"]; });
-
-/* harmony import */ var _styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styled */ "./node_modules/@material-ui/core/esm/styles/styled.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "styled", function() { return _styled__WEBPACK_IMPORTED_MODULE_6__["default"]; });
-
-/* harmony import */ var _transitions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./transitions */ "./node_modules/@material-ui/core/esm/styles/transitions.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "easing", function() { return _transitions__WEBPACK_IMPORTED_MODULE_7__["easing"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "duration", function() { return _transitions__WEBPACK_IMPORTED_MODULE_7__["duration"]; });
-
-/* harmony import */ var _useTheme__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./useTheme */ "./node_modules/@material-ui/core/esm/styles/useTheme.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useTheme", function() { return _useTheme__WEBPACK_IMPORTED_MODULE_8__["default"]; });
-
-/* harmony import */ var _withStyles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "withStyles", function() { return _withStyles__WEBPACK_IMPORTED_MODULE_9__["default"]; });
-
-/* harmony import */ var _withTheme__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./withTheme */ "./node_modules/@material-ui/core/esm/styles/withTheme.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "withTheme", function() { return _withTheme__WEBPACK_IMPORTED_MODULE_10__["default"]; });
-
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createGenerateClassName", function() { return _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__["createGenerateClassName"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "jssPreset", function() { return _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__["jssPreset"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServerStyleSheets", function() { return _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__["ServerStyleSheets"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StylesProvider", function() { return _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__["StylesProvider"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MuiThemeProvider", function() { return _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__["ThemeProvider"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ThemeProvider", function() { return _material_ui_styles__WEBPACK_IMPORTED_MODULE_11__["ThemeProvider"]; });
-
-
- // eslint-disable-next-line camelcase
-
-
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/styles/makeStyles.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/makeStyles.js ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
-/* harmony import */ var _defaultTheme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./defaultTheme */ "./node_modules/@material-ui/core/esm/styles/defaultTheme.js");
-
-
-
-
-function makeStyles(stylesOrCreator) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_1__["makeStyles"])(stylesOrCreator, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    defaultTheme: _defaultTheme__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }, options));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (makeStyles);
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/styles/responsiveFontSizes.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/responsiveFontSizes.js ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return responsiveFontSizes; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var _cssUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cssUtils */ "./node_modules/@material-ui/core/esm/styles/cssUtils.js");
-
-
-function responsiveFontSizes(themeInput) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var _options$breakpoints = options.breakpoints,
-      breakpoints = _options$breakpoints === void 0 ? ['sm', 'md', 'lg'] : _options$breakpoints,
-      _options$disableAlign = options.disableAlign,
-      disableAlign = _options$disableAlign === void 0 ? false : _options$disableAlign,
-      _options$factor = options.factor,
-      factor = _options$factor === void 0 ? 2 : _options$factor,
-      _options$variants = options.variants,
-      variants = _options$variants === void 0 ? ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline'] : _options$variants;
-
-  var theme = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, themeInput);
-
-  theme.typography = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, theme.typography);
-  var typography = theme.typography; // Convert between css lengths e.g. em->px or px->rem
-  // Set the baseFontSize for your project. Defaults to 16px (also the browser default).
-
-  var convert = Object(_cssUtils__WEBPACK_IMPORTED_MODULE_1__["convertLength"])(typography.htmlFontSize);
-  var breakpointValues = breakpoints.map(function (x) {
-    return theme.breakpoints.values[x];
-  });
-  variants.forEach(function (variant) {
-    var style = typography[variant];
-    var remFontSize = parseFloat(convert(style.fontSize, 'rem'));
-
-    if (remFontSize <= 1) {
-      return;
-    }
-
-    var maxFontSize = remFontSize;
-    var minFontSize = 1 + (maxFontSize - 1) / factor;
-    var lineHeight = style.lineHeight;
-
-    if (!Object(_cssUtils__WEBPACK_IMPORTED_MODULE_1__["isUnitless"])(lineHeight) && !disableAlign) {
-      throw new Error(['Material-UI: Unsupported non-unitless line height with grid alignment.', 'Use unitless line heights instead.'].join('\n'));
-    }
-
-    if (!Object(_cssUtils__WEBPACK_IMPORTED_MODULE_1__["isUnitless"])(lineHeight)) {
-      // make it unitless
-      lineHeight = parseFloat(convert(lineHeight, 'rem')) / parseFloat(remFontSize);
-    }
-
-    var transform = null;
-
-    if (!disableAlign) {
-      transform = function transform(value) {
-        return Object(_cssUtils__WEBPACK_IMPORTED_MODULE_1__["alignProperty"])({
-          size: value,
-          grid: Object(_cssUtils__WEBPACK_IMPORTED_MODULE_1__["fontGrid"])({
-            pixels: 4,
-            lineHeight: lineHeight,
-            htmlFontSize: typography.htmlFontSize
-          })
-        });
-      };
-    }
-
-    typography[variant] = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, style), Object(_cssUtils__WEBPACK_IMPORTED_MODULE_1__["responsiveProperty"])({
-      cssProperty: 'fontSize',
-      min: minFontSize,
-      max: maxFontSize,
-      unit: 'rem',
-      breakpoints: breakpointValues,
-      transform: transform
-    }));
-  });
-  return theme;
-}
 
 /***/ }),
 
@@ -6564,35 +5736,6 @@ var shape = {
   borderRadius: 4
 };
 /* harmony default export */ __webpack_exports__["default"] = (shape);
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/styles/styled.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/styled.js ***!
-  \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
-/* harmony import */ var _defaultTheme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./defaultTheme */ "./node_modules/@material-ui/core/esm/styles/defaultTheme.js");
-
-
-
-
-var styled = function styled(Component) {
-  var componentCreator = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_1__["styled"])(Component);
-  return function (style, options) {
-    return componentCreator(style, Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
-      defaultTheme: _defaultTheme__WEBPACK_IMPORTED_MODULE_2__["default"]
-    }, options));
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (styled);
 
 /***/ }),
 
@@ -6713,36 +5856,6 @@ function formatMs(milliseconds) {
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/styles/useTheme.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/useTheme.js ***!
-  \***************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return useTheme; });
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _defaultTheme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./defaultTheme */ "./node_modules/@material-ui/core/esm/styles/defaultTheme.js");
-
-
-
-function useTheme() {
-  var theme = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_0__["useTheme"])() || _defaultTheme__WEBPACK_IMPORTED_MODULE_2__["default"];
-
-  if (true) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    react__WEBPACK_IMPORTED_MODULE_1___default.a.useDebugValue(theme);
-  }
-
-  return theme;
-}
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/core/esm/styles/withStyles.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/styles/withStyles.js ***!
@@ -6766,26 +5879,6 @@ function withStyles(stylesOrCreator, options) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (withStyles);
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/styles/withTheme.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/styles/withTheme.js ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/index.js");
-/* harmony import */ var _defaultTheme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./defaultTheme */ "./node_modules/@material-ui/core/esm/styles/defaultTheme.js");
-
-
-var withTheme = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_0__["withThemeCreator"])({
-  defaultTheme: _defaultTheme__WEBPACK_IMPORTED_MODULE_1__["default"]
-});
-/* harmony default export */ __webpack_exports__["default"] = (withTheme);
 
 /***/ }),
 
@@ -6839,46 +5932,6 @@ function capitalize(string) {
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/utils/createSvgIcon.js ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return createSvgIcon; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _SvgIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SvgIcon */ "./node_modules/@material-ui/core/esm/SvgIcon/index.js");
-
-
-
-/**
- * Private module reserved for @material-ui/x packages.
- */
-
-function createSvgIcon(path, displayName) {
-  var Component = function Component(props, ref) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_SvgIcon__WEBPACK_IMPORTED_MODULE_2__["default"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
-      ref: ref
-    }, props), path);
-  };
-
-  if (true) {
-    // Need to set `displayName` on the inner component for React.memo.
-    // React prior to 16.14 ignores `displayName` on the wrapper.
-    Component.displayName = "".concat(displayName, "Icon");
-  }
-
-  Component.muiName = _SvgIcon__WEBPACK_IMPORTED_MODULE_2__["default"].muiName;
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.memo(react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Component));
-}
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/core/esm/utils/setRef.js":
 /*!************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/utils/setRef.js ***!
@@ -6896,30 +5949,6 @@ function setRef(ref, value) {
   } else if (ref) {
     ref.current = value;
   }
-}
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/utils/unsupportedProp.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/utils/unsupportedProp.js ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return unsupportedProp; });
-function unsupportedProp(props, propName, componentName, location, propFullName) {
-  if (false) {}
-
-  var propFullNameSafe = propFullName || propName;
-
-  if (typeof props[propName] !== 'undefined') {
-    return new Error("The prop `".concat(propFullNameSafe, "` is not supported. Please remove it."));
-  }
-
-  return null;
 }
 
 /***/ }),
@@ -8205,35 +7234,6 @@ var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/crea
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
   d: "M9.29 15.88L13.17 12 9.29 8.12a.9959.9959 0 010-1.41c.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z"
 }), 'KeyboardArrowRightRounded');
-
-exports.default = _default;
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/icons/Save.js":
-/*!*************************************************!*\
-  !*** ./node_modules/@material-ui/icons/Save.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@material-ui/icons/utils/createSvgIcon.js"));
-
-var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
-  d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
-}), 'Save');
 
 exports.default = _default;
 
@@ -27430,7 +26430,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 2;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n  /* flex-direction: column; */\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  /* text-transform: lowercase; */\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  flex: 1 1 auto;\n  display: flex;\n  flex-direction: column;\n}\n\nmain .media-list {\n  flex: 1 1 auto;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: relative;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n", ""]);
+exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  flex: 1 1 auto;\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n}\n\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n  width: 100%;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n", ""]);
 
 // exports
 

@@ -4,7 +4,6 @@ import ColumnTools from './ColumnTools';
 import DirectMessagesList from './DirectMessagesList';
 import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
 import GroupIcon from '@material-ui/icons/Group';
-// import { logo } from './slackbot.png';
 
 export default function Sidebar(props) {
   return (
@@ -13,7 +12,6 @@ export default function Sidebar(props) {
         <div className="sidebar-header">
           <h3 href="#">
             <div>Slackin</div>
-            {/* <FaSlack /> */}
             <img alt="Brand" src={'https://i.imgur.com/oO7j1nt.png'} />
           </h3>
           <span className="sidebar-currentuser">
