@@ -1,5 +1,5 @@
 {
-  "name": "stackchat",
+  "name": "slack-clone",
   "version": "1.0.0",
   "description": "A slack clone",
   "main": "index.js",
