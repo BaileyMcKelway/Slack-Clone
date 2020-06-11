@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SavedItems from './SavedItems';
 import { NavLink } from 'react-router-dom';
+import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 
 export default class ColumnTools extends Component {
   render() {
@@ -10,13 +10,11 @@ export default class ColumnTools extends Component {
         <ul className="tool_list">
           <li>
             <NavLink to={`/saved`} activeClassName="active">
-              <span> Saved Items</span>
-              {/* <SavedItems /> */}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={`/drafts`} activeClassName="active">
-              <span> Drafts</span>
+              <span>
+                {' '}
+                <BookmarkRoundedIcon />
+                Saved Items
+              </span>
               {/* <SavedItems /> */}
             </NavLink>
           </li>
