@@ -2,6 +2,8 @@
 
 A Slack Clone
 
+https://slackin-slack-clone.herokuapp.com
+
 ![](https://i.imgur.com/qE5Z85x.png)
 
 ## Setup
