@@ -35,13 +35,15 @@ class NameEntry extends Component {
   render() {
     return (
       <form className="form-inline" onSubmit={() => this.handleSubmit(event)}>
-        <label htmlFor="name">Your name:</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter your name"
-          className="form-control"
-        />
+        <label htmlFor="name">
+          Your name:
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            className="form-control"
+          />
+        </label>
       </form>
     );
   }

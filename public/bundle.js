@@ -1077,14 +1077,14 @@ var NameEntry = function (_Component) {
         _react2.default.createElement(
           'label',
           { htmlFor: 'name' },
-          'Your name:'
-        ),
-        _react2.default.createElement('input', {
-          type: 'text',
-          name: 'name',
-          placeholder: 'Enter your name',
-          className: 'form-control'
-        })
+          'Your name:',
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'name',
+            placeholder: 'Enter your name',
+            className: 'form-control'
+          })
+        )
       );
     }
   }]);
@@ -1473,14 +1473,20 @@ var NewMessageEntry = exports.NewMessageEntry = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'input-group input-group-lg' },
-          _react2.default.createElement('input', {
-            className: 'form-control',
-            type: 'text',
-            name: 'content',
-            value: this.state.input,
-            onChange: this.handleChange,
-            placeholder: 'Say something nice...'
-          }),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Add your message here',
+            _react2.default.createElement('input', {
+              id: 'message_input',
+              className: 'form-control',
+              type: 'text',
+              name: 'content',
+              value: this.state.input,
+              onChange: this.handleChange,
+              placeholder: 'Say something nice...'
+            })
+          ),
           _react2.default.createElement(
             'span',
             { className: 'input-group-btn' },

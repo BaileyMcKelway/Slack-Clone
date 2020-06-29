@@ -38,14 +38,18 @@ export class NewMessageEntry extends Component {
     return (
       <form id="new-message-form" onSubmit={this.handleSubmit}>
         <div className="input-group input-group-lg">
-          <input
-            className="form-control"
-            type="text"
-            name="content"
-            value={this.state.input}
-            onChange={this.handleChange}
-            placeholder="Say something nice..."
-          />
+          <label>
+            Add your message here
+            <input
+              id="message_input"
+              className="form-control"
+              type="text"
+              name="content"
+              value={this.state.input}
+              onChange={this.handleChange}
+              placeholder="Say something nice..."
+            />
+          </label>
           <span className="input-group-btn">
             <button className="btn btn-default" type="submit">
               Chat!

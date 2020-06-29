@@ -4,8 +4,11 @@ const morgan = require('morgan');
 const db = require('./db');
 const PORT = process.env.PORT || 8080;
 const app = express();
-const server = app.listen(PORT, () => console.log(`Feeling chatty on port ${PORT}`));
+const server = app.listen(PORT, () =>
+  console.log(`Feeling chatty on port ${PORT}`)
+);
 const io = require('socket.io')(server);
+const compression = require('compression');
 
 // handle sockets
 require('./socket')(io);
@@ -13,6 +16,8 @@ require('./socket')(io);
 module.exports = app;
 
 db.sync().then(() => console.log('Database is synced'));
+
+app.use(compression());
 
 // logging middleware
 app.use(morgan('dev'));
@@ -30,9 +35,7 @@ app.use('/api', require('./api'));
 
 // 404 middleware
 app.use((req, res, next) =>
-  path.extname(req.path).length > 0 ?
-    res.status(404).send('Not found') :
-    next()
+  path.extname(req.path).length > 0 ? res.status(404).send('Not found') : next()
 );
 
 // send index.html
