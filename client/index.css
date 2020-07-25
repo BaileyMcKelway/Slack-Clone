@@ -40,7 +40,7 @@ body {
   align-items: center;
 }
 
-.sidebar-header {
+.sidebar .sidebar-header {
   height: auto;
   width: 220px;
   background-color: #3f0e40;
@@ -91,6 +91,7 @@ body {
 }
 
 .sidebar .tool_list {
+  position: relative;
   list-style-type: none;
   margin: 0;
   padding: 0;
