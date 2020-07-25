@@ -6,13 +6,69 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Container from '@material-ui/core/Container';
 import { postLikes, postSaved } from '../store';
 import { connect } from 'react-redux';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker, Emoji } from 'emoji-mart';
 
 function Message(props) {
   const message = props.message;
 
+  const customReactionEmojis = [
+    {
+      name: '+1',
+      short_names: ['+1'],
+      text: '',
+      emoticons: [],
+      keywords: ['thumbsup'],
+    },
+    {
+      name: 'clap',
+      short_names: ['clap'],
+      text: '',
+      emoticons: [],
+      keywords: ['clap'],
+    },
+    {
+      name: 'mega',
+      short_names: ['mega'],
+      text: '',
+      emoticons: [],
+      keywords: ['mega', 'cheering megaphone'],
+    },
+    {
+      name: 'zap',
+      short_names: ['zap'],
+      text: '',
+      emoticons: [],
+      keywords: ['zap', 'high voltage sign'],
+    },
+    {
+      name: 'rocket',
+      short_names: ['rocket'],
+      text: '',
+      emoticons: [],
+      keywords: ['rocket'],
+    },
+    {
+      name: 'fire',
+      short_names: ['fire'],
+      text: '',
+      emoticons: [],
+      keywords: ['fire'],
+    },
+    {
+      name: 'hammer_and_wrench',
+      short_names: ['hammer_and_wrench'],
+      text: '',
+      emoticons: [],
+      keywords: ['hammer_and_wrench'],
+    },
+  ];
+
   const user = props.user;
   const [anchorEl, setAnchorEl] = useState(null);
   const [likes, setLikes] = useState(message.likes);
+  const [selectedEmojis, setSelectedEmojis] = useState([]);
+  const [reactionShown, setReactionShown] = useState(false);
 
   const handleHover = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +85,10 @@ function Message(props) {
   const handleLike = (messageId, channelId) => {
     props.like(messageId, channelId);
     setLikes(likes + 1);
+  };
+
+  const handleEmojiSelect = (emoji) => {
+    setSelectedEmojis([...selectedEmojis, emoji]);
   };
 
   const open = Boolean(anchorEl);
@@ -71,12 +131,27 @@ function Message(props) {
             <IconButton
               aria-label="reaction"
               onClick={() => {
-                handleLike(message.id, message.channelId);
+                // handleLike(message.id, message.channelId);
+                setReactionShown(!reactionShown);
               }}
             >
+              {reactionShown && (
+                <div className="reactions">
+                  <Picker
+                    showPreview={false}
+                    showSkinTones={false}
+                    include={['custom']}
+                    custom={customReactionEmojis}
+                    onSelect={handleEmojiSelect}
+                  />
+                </div>
+              )}
               <EmojiEmotionsIcon />
               {likes}
             </IconButton>
+            {selectedEmojis.map((emoji, index = 0) => {
+              return <Emoji key={index} emoji={emoji} size={16} />;
+            })}
           </div>
         </div>
       </li>
