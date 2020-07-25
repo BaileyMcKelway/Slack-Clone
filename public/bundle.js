@@ -664,7 +664,7 @@ var Main = function (_Component) {
         _react2.default.createElement(_Navbar2.default, null),
         _react2.default.createElement(
           'main',
-          null,
+          { id: 'main', className: 'main' },
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
@@ -922,9 +922,7 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _store = __webpack_require__(/*! ../store.js */ "./client/store.js");
 
-var _reactScrollToBottom = __webpack_require__(/*! react-scroll-to-bottom */ "./node_modules/react-scroll-to-bottom/lib/index.js");
-
-var _reactScrollToBottom2 = _interopRequireDefault(_reactScrollToBottom);
+var _reactScroll = __webpack_require__(/*! react-scroll */ "./node_modules/react-scroll/modules/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -947,6 +945,19 @@ var MessagesList = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.props.fetchInitialMessages();
+      this.scrollToBottom();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.scrollToBottom();
+    }
+  }, {
+    key: 'scrollToBottom',
+    value: function scrollToBottom() {
+      _reactScroll.animateScroll.scrollToBottom({
+        containerId: 'main'
+      });
     }
   }, {
     key: 'render',
@@ -26145,68 +26156,6 @@ module.exports = (function() {
 
 /***/ }),
 
-/***/ "./node_modules/classnames/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/classnames/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-  Copyright (c) 2017 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg) && arg.length) {
-				var inner = classNames.apply(null, arg);
-				if (inner) {
-					classes.push(inner);
-				}
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if ( true && module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else if (true) {
-		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-			return classNames;
-		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-}());
-
-
-/***/ }),
-
 /***/ "./node_modules/clsx/dist/clsx.m.js":
 /*!******************************************!*\
   !*** ./node_modules/clsx/dist/clsx.m.js ***!
@@ -26483,57 +26432,6 @@ module.exports = function(a, b){
   a.prototype = new fn;
   a.prototype.constructor = a;
 };
-
-/***/ }),
-
-/***/ "./node_modules/css-in-js-utils/lib/hyphenateProperty.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/css-in-js-utils/lib/hyphenateProperty.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = hyphenateProperty;
-
-var _hyphenateStyleName = __webpack_require__(/*! hyphenate-style-name */ "./node_modules/hyphenate-style-name/index.js");
-
-var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function hyphenateProperty(property) {
-  return (0, _hyphenateStyleName2.default)(property);
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/css-in-js-utils/lib/isPrefixedValue.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/css-in-js-utils/lib/isPrefixedValue.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = isPrefixedValue;
-var regex = /-webkit-|-moz-|-ms-/;
-
-function isPrefixedValue(value) {
-  return typeof value === 'string' && regex.test(value);
-}
-module.exports = exports['default'];
 
 /***/ }),
 
@@ -30980,2502 +30878,6 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ }),
 
-/***/ "./node_modules/fbjs/lib/camelize.js":
-/*!*******************************************!*\
-  !*** ./node_modules/fbjs/lib/camelize.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- */
-
-var _hyphenPattern = /-(.)/g;
-
-/**
- * Camelcases a hyphenated string, for example:
- *
- *   > camelize('background-color')
- *   < "backgroundColor"
- *
- * @param {string} string
- * @return {string}
- */
-function camelize(string) {
-  return string.replace(_hyphenPattern, function (_, character) {
-    return character.toUpperCase();
-  });
-}
-
-module.exports = camelize;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/camelizeStyleName.js":
-/*!****************************************************!*\
-  !*** ./node_modules/fbjs/lib/camelizeStyleName.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- */
-
-
-
-var camelize = __webpack_require__(/*! ./camelize */ "./node_modules/fbjs/lib/camelize.js");
-
-var msPattern = /^-ms-/;
-
-/**
- * Camelcases a hyphenated CSS property name, for example:
- *
- *   > camelizeStyleName('background-color')
- *   < "backgroundColor"
- *   > camelizeStyleName('-moz-transition')
- *   < "MozTransition"
- *   > camelizeStyleName('-ms-transition')
- *   < "msTransition"
- *
- * As Andi Smith suggests
- * (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
- * is converted to lowercase `ms`.
- *
- * @param {string} string
- * @return {string}
- */
-function camelizeStyleName(string) {
-  return camelize(string.replace(msPattern, 'ms-'));
-}
-
-module.exports = camelizeStyleName;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/emptyFunction.js":
-/*!************************************************!*\
-  !*** ./node_modules/fbjs/lib/emptyFunction.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/hyphenate.js":
-/*!********************************************!*\
-  !*** ./node_modules/fbjs/lib/hyphenate.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- */
-
-var _uppercasePattern = /([A-Z])/g;
-
-/**
- * Hyphenates a camelcased string, for example:
- *
- *   > hyphenate('backgroundColor')
- *   < "background-color"
- *
- * For CSS style names, use `hyphenateStyleName` instead which works properly
- * with all vendor prefixes, including `ms`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenate(string) {
-  return string.replace(_uppercasePattern, '-$1').toLowerCase();
-}
-
-module.exports = hyphenate;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/hyphenateStyleName.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/fbjs/lib/hyphenateStyleName.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- */
-
-
-
-var hyphenate = __webpack_require__(/*! ./hyphenate */ "./node_modules/fbjs/lib/hyphenate.js");
-
-var msPattern = /^ms-/;
-
-/**
- * Hyphenates a camelcased CSS property name, for example:
- *
- *   > hyphenateStyleName('backgroundColor')
- *   < "background-color"
- *   > hyphenateStyleName('MozTransition')
- *   < "-moz-transition"
- *   > hyphenateStyleName('msTransition')
- *   < "-ms-transition"
- *
- * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
- * is converted to `-ms-`.
- *
- * @param {string} string
- * @return {string}
- */
-function hyphenateStyleName(string) {
-  return hyphenate(string).replace(msPattern, '-ms-');
-}
-
-module.exports = hyphenateStyleName;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/memoizeStringOnly.js":
-/*!****************************************************!*\
-  !*** ./node_modules/fbjs/lib/memoizeStringOnly.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- * @typechecks static-only
- */
-
-
-
-/**
- * Memoizes the return value of a function that accepts one string argument.
- */
-
-function memoizeStringOnly(callback) {
-  var cache = {};
-  return function (string) {
-    if (!cache.hasOwnProperty(string)) {
-      cache[string] = callback.call(this, string);
-    }
-    return cache[string];
-  };
-}
-
-module.exports = memoizeStringOnly;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/warning.js":
-/*!******************************************!*\
-  !*** ./node_modules/fbjs/lib/warning.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ "./node_modules/fbjs/lib/emptyFunction.js");
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var warning = emptyFunction;
-
-if (true) {
-  var printWarning = function printWarning(format) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    var argIndex = 0;
-    var message = 'Warning: ' + format.replace(/%s/g, function () {
-      return args[argIndex++];
-    });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-
-  warning = function warning(condition, format) {
-    if (format === undefined) {
-      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-    }
-
-    if (format.indexOf('Failed Composite propType: ') === 0) {
-      return; // Ignore CompositeComponent proptype check.
-    }
-
-    if (!condition) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-        args[_key2 - 2] = arguments[_key2];
-      }
-
-      printWarning.apply(undefined, [format].concat(args));
-    }
-  };
-}
-
-module.exports = warning;
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/CSSPropertyOperations/CSSProperty.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/glamor/lib/CSSPropertyOperations/CSSProperty.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule CSSProperty
- */
-
-/**
- * CSS properties which accept numbers but are not in units of "px".
- */
-
-var isUnitlessNumber = {
-  animationIterationCount: true,
-  borderImageOutset: true,
-  borderImageSlice: true,
-  borderImageWidth: true,
-  boxFlex: true,
-  boxFlexGroup: true,
-  boxOrdinalGroup: true,
-  columnCount: true,
-  flex: true,
-  flexGrow: true,
-  flexPositive: true,
-  flexShrink: true,
-  flexNegative: true,
-  flexOrder: true,
-  gridRow: true,
-  gridRowStart: true,
-  gridRowEnd: true,
-  gridColumn: true,
-  gridColumnStart: true,
-  gridColumnEnd: true,
-  fontWeight: true,
-  lineClamp: true,
-  lineHeight: true,
-  opacity: true,
-  order: true,
-  orphans: true,
-  tabSize: true,
-  widows: true,
-  zIndex: true,
-  zoom: true,
-
-  // SVG-related properties
-  fillOpacity: true,
-  floodOpacity: true,
-  stopOpacity: true,
-  strokeDasharray: true,
-  strokeDashoffset: true,
-  strokeMiterlimit: true,
-  strokeOpacity: true,
-  strokeWidth: true
-
-  /**
-   * @param {string} prefix vendor-specific prefix, eg: Webkit
-   * @param {string} key style name, eg: transitionDuration
-   * @return {string} style name prefixed with `prefix`, properly camelCased, eg:
-   * WebkitTransitionDuration
-   */
-};function prefixKey(prefix, key) {
-  return prefix + key.charAt(0).toUpperCase() + key.substring(1);
-}
-
-/**
- * Support style names that may come passed in prefixed by adding permutations
- * of vendor prefixes.
- */
-var prefixes = ['Webkit', 'ms', 'Moz', 'O'];
-
-// Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
-// infinite loop, because it iterates over the newly added props too.
-Object.keys(isUnitlessNumber).forEach(function (prop) {
-  prefixes.forEach(function (prefix) {
-    isUnitlessNumber[prefixKey(prefix, prop)] = isUnitlessNumber[prop];
-  });
-});
-
-/**
- * Most style properties can be unset by doing .style[prop] = '' but IE8
- * doesn't like doing that with shorthand properties so for the properties that
- * IE8 breaks on, which are listed here, we instead unset each of the
- * individual properties. See http://bugs.jquery.com/ticket/12385.
- * The 4-value 'clock' properties like margin, padding, border-width seem to
- * behave without any problems. Curiously, list-style works too without any
- * special prodding.
- */
-var shorthandPropertyExpansions = {
-  background: {
-    backgroundAttachment: true,
-    backgroundColor: true,
-    backgroundImage: true,
-    backgroundPositionX: true,
-    backgroundPositionY: true,
-    backgroundRepeat: true
-  },
-  backgroundPosition: {
-    backgroundPositionX: true,
-    backgroundPositionY: true
-  },
-  border: {
-    borderWidth: true,
-    borderStyle: true,
-    borderColor: true
-  },
-  borderBottom: {
-    borderBottomWidth: true,
-    borderBottomStyle: true,
-    borderBottomColor: true
-  },
-  borderLeft: {
-    borderLeftWidth: true,
-    borderLeftStyle: true,
-    borderLeftColor: true
-  },
-  borderRight: {
-    borderRightWidth: true,
-    borderRightStyle: true,
-    borderRightColor: true
-  },
-  borderTop: {
-    borderTopWidth: true,
-    borderTopStyle: true,
-    borderTopColor: true
-  },
-  font: {
-    fontStyle: true,
-    fontVariant: true,
-    fontWeight: true,
-    fontSize: true,
-    lineHeight: true,
-    fontFamily: true
-  },
-  outline: {
-    outlineWidth: true,
-    outlineStyle: true,
-    outlineColor: true
-  }
-};
-
-var CSSProperty = {
-  isUnitlessNumber: isUnitlessNumber,
-  shorthandPropertyExpansions: shorthandPropertyExpansions
-};
-
-exports.default = CSSProperty;
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/CSSPropertyOperations/dangerousStyleValue.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/glamor/lib/CSSPropertyOperations/dangerousStyleValue.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _CSSProperty = __webpack_require__(/*! ./CSSProperty */ "./node_modules/glamor/lib/CSSPropertyOperations/CSSProperty.js");
-
-var _CSSProperty2 = _interopRequireDefault(_CSSProperty);
-
-var _warning = __webpack_require__(/*! fbjs/lib/warning */ "./node_modules/fbjs/lib/warning.js");
-
-var _warning2 = _interopRequireDefault(_warning);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule dangerousStyleValue
- */
-
-var isUnitlessNumber = _CSSProperty2.default.isUnitlessNumber;
-var styleWarnings = {};
-
-/**
- * Convert a value into the proper css writable value. The style name `name`
- * should be logical (no hyphens), as specified
- * in `CSSProperty.isUnitlessNumber`.
- *
- * @param {string} name CSS property name such as `topMargin`.
- * @param {*} value CSS property value such as `10px`.
- * @param {ReactDOMComponent} component
- * @return {string} Normalized style value with dimensions applied.
- */
-function dangerousStyleValue(name, value, component) {
-  // Note that we've removed escapeTextForBrowser() calls here since the
-  // whole string will be escaped when the attribute is injected into
-  // the markup. If you provide unsafe user data here they can inject
-  // arbitrary CSS which may be problematic (I couldn't repro this):
-  // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
-  // http://www.thespanner.co.uk/2007/11/26/ultimate-xss-css-injection/
-  // This is not an XSS hole but instead a potential CSS injection issue
-  // which has lead to a greater discussion about how we're going to
-  // trust URLs moving forward. See #2115901
-
-  var isEmpty = value == null || typeof value === 'boolean' || value === '';
-  if (isEmpty) {
-    return '';
-  }
-
-  var isNonNumeric = isNaN(value);
-  if (isNonNumeric || value === 0 || isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name]) {
-    return '' + value; // cast to string
-  }
-
-  if (typeof value === 'string') {
-    if (true) {
-      // Allow '0' to pass through without warning. 0 is already special and
-      // doesn't require units, so we don't need to warn about it.
-      if (component && value !== '0') {
-        var owner = component._currentElement._owner;
-        var ownerName = owner ? owner.getName() : null;
-        if (ownerName && !styleWarnings[ownerName]) {
-          styleWarnings[ownerName] = {};
-        }
-        var warned = false;
-        if (ownerName) {
-          var warnings = styleWarnings[ownerName];
-          warned = warnings[name];
-          if (!warned) {
-            warnings[name] = true;
-          }
-        }
-        if (!warned) {
-           true ? (0, _warning2.default)(false, 'a `%s` tag (owner: `%s`) was passed a numeric string value ' + 'for CSS property `%s` (value: `%s`) which will be treated ' + 'as a unitless number in a future version of React.', component._currentElement.type, ownerName || 'unknown', name, value) : undefined;
-        }
-      }
-    }
-    value = value.trim();
-  }
-  return value + 'px';
-}
-
-exports.default = dangerousStyleValue;
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/CSSPropertyOperations/index.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/glamor/lib/CSSPropertyOperations/index.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.processStyleName = undefined;
-exports.createMarkupForStyles = createMarkupForStyles;
-
-var _camelizeStyleName = __webpack_require__(/*! fbjs/lib/camelizeStyleName */ "./node_modules/fbjs/lib/camelizeStyleName.js");
-
-var _camelizeStyleName2 = _interopRequireDefault(_camelizeStyleName);
-
-var _dangerousStyleValue = __webpack_require__(/*! ./dangerousStyleValue */ "./node_modules/glamor/lib/CSSPropertyOperations/dangerousStyleValue.js");
-
-var _dangerousStyleValue2 = _interopRequireDefault(_dangerousStyleValue);
-
-var _hyphenateStyleName = __webpack_require__(/*! fbjs/lib/hyphenateStyleName */ "./node_modules/fbjs/lib/hyphenateStyleName.js");
-
-var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
-
-var _memoizeStringOnly = __webpack_require__(/*! fbjs/lib/memoizeStringOnly */ "./node_modules/fbjs/lib/memoizeStringOnly.js");
-
-var _memoizeStringOnly2 = _interopRequireDefault(_memoizeStringOnly);
-
-var _warning = __webpack_require__(/*! fbjs/lib/warning */ "./node_modules/fbjs/lib/warning.js");
-
-var _warning2 = _interopRequireDefault(_warning);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var processStyleName = exports.processStyleName = (0, _memoizeStringOnly2.default)(_hyphenateStyleName2.default); /**
-                                                                                                                   * Copyright 2013-present, Facebook, Inc.
-                                                                                                                   * All rights reserved.
-                                                                                                                   *
-                                                                                                                   * This source code is licensed under the BSD-style license found in the
-                                                                                                                   * LICENSE file in the root directory of this source tree. An additional grant
-                                                                                                                   * of patent rights can be found in the PATENTS file in the same directory.
-                                                                                                                   *
-                                                                                                                   * @providesModule CSSPropertyOperations
-                                                                                                                   */
-
-if (true) {
-  // 'msTransform' is correct, but the other prefixes should be capitalized
-  var badVendoredStyleNamePattern = /^(?:webkit|moz|o)[A-Z]/;
-
-  // style values shouldn't contain a semicolon
-  var badStyleValueWithSemicolonPattern = /;\s*$/;
-
-  var warnedStyleNames = {};
-  var warnedStyleValues = {};
-  var warnedForNaNValue = false;
-
-  var warnHyphenatedStyleName = function warnHyphenatedStyleName(name, owner) {
-    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
-      return;
-    }
-
-    warnedStyleNames[name] = true;
-     true ? (0, _warning2.default)(false, 'Unsupported style property %s. Did you mean %s?%s', name, (0, _camelizeStyleName2.default)(name), checkRenderMessage(owner)) : undefined;
-  };
-
-  var warnBadVendoredStyleName = function warnBadVendoredStyleName(name, owner) {
-    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
-      return;
-    }
-
-    warnedStyleNames[name] = true;
-     true ? (0, _warning2.default)(false, 'Unsupported vendor-prefixed style property %s. Did you mean %s?%s', name, name.charAt(0).toUpperCase() + name.slice(1), checkRenderMessage(owner)) : undefined;
-  };
-
-  var warnStyleValueWithSemicolon = function warnStyleValueWithSemicolon(name, value, owner) {
-    if (warnedStyleValues.hasOwnProperty(value) && warnedStyleValues[value]) {
-      return;
-    }
-
-    warnedStyleValues[value] = true;
-     true ? (0, _warning2.default)(false, 'Style property values shouldn\'t contain a semicolon.%s ' + 'Try "%s: %s" instead.', checkRenderMessage(owner), name, value.replace(badStyleValueWithSemicolonPattern, '')) : undefined;
-  };
-
-  var warnStyleValueIsNaN = function warnStyleValueIsNaN(name, value, owner) {
-    if (warnedForNaNValue) {
-      return;
-    }
-
-    warnedForNaNValue = true;
-     true ? (0, _warning2.default)(false, '`NaN` is an invalid value for the `%s` css style property.%s', name, checkRenderMessage(owner)) : undefined;
-  };
-
-  var checkRenderMessage = function checkRenderMessage(owner) {
-    if (owner) {
-      var name = owner.getName();
-      if (name) {
-        return ' Check the render method of `' + name + '`.';
-      }
-    }
-    return '';
-  };
-
-  /**
-   * @param {string} name
-   * @param {*} value
-   * @param {ReactDOMComponent} component
-   */
-  var warnValidStyle = function warnValidStyle(name, value, component) {
-    //eslint-disable-line no-var
-    var owner = void 0;
-    if (component) {
-      owner = component._currentElement._owner;
-    }
-    if (name.indexOf('-') > -1) {
-      warnHyphenatedStyleName(name, owner);
-    } else if (badVendoredStyleNamePattern.test(name)) {
-      warnBadVendoredStyleName(name, owner);
-    } else if (badStyleValueWithSemicolonPattern.test(value)) {
-      warnStyleValueWithSemicolon(name, value, owner);
-    }
-
-    if (typeof value === 'number' && isNaN(value)) {
-      warnStyleValueIsNaN(name, value, owner);
-    }
-  };
-}
-
-/**
-   * Serializes a mapping of style properties for use as inline styles:
-   *
-   *   > createMarkupForStyles({width: '200px', height: 0})
-   *   "width:200px;height:0;"
-   *
-   * Undefined values are ignored so that declarative programming is easier.
-   * The result should be HTML-escaped before insertion into the DOM.
-   *
-   * @param {object} styles
-   * @param {ReactDOMComponent} component
-   * @return {?string}
-   */
-
-function createMarkupForStyles(styles, component) {
-  var serialized = '';
-  for (var styleName in styles) {
-    var isCustomProp = styleName.indexOf('--') === 0;
-    if (!styles.hasOwnProperty(styleName)) {
-      continue;
-    }
-    if (styleName === 'label') {
-      continue;
-    }
-    var styleValue = styles[styleName];
-    if ( true && !isCustomProp) {
-      warnValidStyle(styleName, styleValue, component);
-    }
-    if (styleValue != null) {
-      if (isCustomProp) {
-        serialized += styleName + ':' + styleValue + ';';
-      } else {
-        serialized += processStyleName(styleName) + ':';
-        serialized += (0, _dangerousStyleValue2.default)(styleName, styleValue, component) + ';';
-      }
-    }
-  }
-  return serialized || null;
-}
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/clean.js":
-/*!******************************************!*\
-  !*** ./node_modules/glamor/lib/clean.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-exports.default = clean;
-// Returns true for null, false, undefined and {}
-function isFalsy(value) {
-  return value === null || value === undefined || value === false || (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && Object.keys(value).length === 0;
-}
-
-function cleanObject(object) {
-  if (isFalsy(object)) return null;
-  if ((typeof object === 'undefined' ? 'undefined' : _typeof(object)) !== 'object') return object;
-
-  var acc = {},
-      keys = Object.keys(object),
-      hasFalsy = false;
-  for (var i = 0; i < keys.length; i++) {
-    var value = object[keys[i]];
-    var filteredValue = clean(value);
-    if (filteredValue === null || filteredValue !== value) {
-      hasFalsy = true;
-    }
-    if (filteredValue !== null) {
-      acc[keys[i]] = filteredValue;
-    }
-  }
-  return Object.keys(acc).length === 0 ? null : hasFalsy ? acc : object;
-}
-
-function cleanArray(rules) {
-  var hasFalsy = false;
-  var filtered = [];
-  rules.forEach(function (rule) {
-    var filteredRule = clean(rule);
-    if (filteredRule === null || filteredRule !== rule) {
-      hasFalsy = true;
-    }
-    if (filteredRule !== null) {
-      filtered.push(filteredRule);
-    }
-  });
-  return filtered.length == 0 ? null : hasFalsy ? filtered : rules;
-}
-
-// Takes style array or object provided by user and clears all the falsy data 
-// If there is no styles left after filtration returns null
-function clean(input) {
-  return Array.isArray(input) ? cleanArray(input) : cleanObject(input);
-}
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/hash.js":
-/*!*****************************************!*\
-  !*** ./node_modules/glamor/lib/hash.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = doHash;
-// murmurhash2 via https://gist.github.com/raycmorgan/588423
-
-function doHash(str, seed) {
-  var m = 0x5bd1e995;
-  var r = 24;
-  var h = seed ^ str.length;
-  var length = str.length;
-  var currentIndex = 0;
-
-  while (length >= 4) {
-    var k = UInt32(str, currentIndex);
-
-    k = Umul32(k, m);
-    k ^= k >>> r;
-    k = Umul32(k, m);
-
-    h = Umul32(h, m);
-    h ^= k;
-
-    currentIndex += 4;
-    length -= 4;
-  }
-
-  switch (length) {
-    case 3:
-      h ^= UInt16(str, currentIndex);
-      h ^= str.charCodeAt(currentIndex + 2) << 16;
-      h = Umul32(h, m);
-      break;
-
-    case 2:
-      h ^= UInt16(str, currentIndex);
-      h = Umul32(h, m);
-      break;
-
-    case 1:
-      h ^= str.charCodeAt(currentIndex);
-      h = Umul32(h, m);
-      break;
-  }
-
-  h ^= h >>> 13;
-  h = Umul32(h, m);
-  h ^= h >>> 15;
-
-  return h >>> 0;
-}
-
-function UInt32(str, pos) {
-  return str.charCodeAt(pos++) + (str.charCodeAt(pos++) << 8) + (str.charCodeAt(pos++) << 16) + (str.charCodeAt(pos) << 24);
-}
-
-function UInt16(str, pos) {
-  return str.charCodeAt(pos++) + (str.charCodeAt(pos++) << 8);
-}
-
-function Umul32(n, m) {
-  n = n | 0;
-  m = m | 0;
-  var nlo = n & 0xffff;
-  var nhi = n >>> 16;
-  var res = nlo * m + ((nhi * m & 0xffff) << 16) | 0;
-  return res;
-}
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/glamor/lib/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.compose = exports.merge = exports.$ = exports.style = exports.presets = exports.keyframes = exports.fontFace = exports.insertGlobal = exports.insertRule = exports.plugins = exports.styleSheet = undefined;
-exports.speedy = speedy;
-exports.simulations = simulations;
-exports.simulate = simulate;
-exports.cssLabels = cssLabels;
-exports.isLikeRule = isLikeRule;
-exports.idFor = idFor;
-exports.css = css;
-exports.rehydrate = rehydrate;
-exports.flush = flush;
-exports.select = select;
-exports.parent = parent;
-exports.media = media;
-exports.pseudo = pseudo;
-exports.active = active;
-exports.any = any;
-exports.checked = checked;
-exports.disabled = disabled;
-exports.empty = empty;
-exports.enabled = enabled;
-exports._default = _default;
-exports.first = first;
-exports.firstChild = firstChild;
-exports.firstOfType = firstOfType;
-exports.fullscreen = fullscreen;
-exports.focus = focus;
-exports.hover = hover;
-exports.indeterminate = indeterminate;
-exports.inRange = inRange;
-exports.invalid = invalid;
-exports.lastChild = lastChild;
-exports.lastOfType = lastOfType;
-exports.left = left;
-exports.link = link;
-exports.onlyChild = onlyChild;
-exports.onlyOfType = onlyOfType;
-exports.optional = optional;
-exports.outOfRange = outOfRange;
-exports.readOnly = readOnly;
-exports.readWrite = readWrite;
-exports.required = required;
-exports.right = right;
-exports.root = root;
-exports.scope = scope;
-exports.target = target;
-exports.valid = valid;
-exports.visited = visited;
-exports.dir = dir;
-exports.lang = lang;
-exports.not = not;
-exports.nthChild = nthChild;
-exports.nthLastChild = nthLastChild;
-exports.nthLastOfType = nthLastOfType;
-exports.nthOfType = nthOfType;
-exports.after = after;
-exports.before = before;
-exports.firstLetter = firstLetter;
-exports.firstLine = firstLine;
-exports.selection = selection;
-exports.backdrop = backdrop;
-exports.placeholder = placeholder;
-exports.cssFor = cssFor;
-exports.attribsFor = attribsFor;
-
-var _objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/glamor/node_modules/object-assign/index.js");
-
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
-
-var _sheet = __webpack_require__(/*! ./sheet.js */ "./node_modules/glamor/lib/sheet.js");
-
-var _CSSPropertyOperations = __webpack_require__(/*! ./CSSPropertyOperations */ "./node_modules/glamor/lib/CSSPropertyOperations/index.js");
-
-var _clean = __webpack_require__(/*! ./clean.js */ "./node_modules/glamor/lib/clean.js");
-
-var _clean2 = _interopRequireDefault(_clean);
-
-var _plugins = __webpack_require__(/*! ./plugins */ "./node_modules/glamor/lib/plugins.js");
-
-var _hash = __webpack_require__(/*! ./hash */ "./node_modules/glamor/lib/hash.js");
-
-var _hash2 = _interopRequireDefault(_hash);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-/* stylesheet */
-
-
-var styleSheet = exports.styleSheet = new _sheet.StyleSheet();
-// an isomorphic StyleSheet shim. hides all the nitty gritty.
-
-// /**************** LIFTOFF IN 3... 2... 1... ****************/
-styleSheet.inject(); //eslint-disable-line indent
-// /****************      TO THE MOOOOOOON     ****************/
-
-// convenience function to toggle speedy
-function speedy(bool) {
-  return styleSheet.speedy(bool);
-}
-
-// plugins
-// we include these by default
-var plugins = exports.plugins = styleSheet.plugins = new _plugins.PluginSet([_plugins.prefixes, _plugins.contentWrap, _plugins.fallbacks]);
-plugins.media = new _plugins.PluginSet(); // neat! media, font-face, keyframes
-plugins.fontFace = new _plugins.PluginSet();
-plugins.keyframes = new _plugins.PluginSet([_plugins.prefixes, _plugins.fallbacks]);
-
-// define some constants
-
-var isDev =  true || false;
-var isTest = "development" === 'test';
-var isBrowser = typeof window !== 'undefined';
-
-/**** simulations  ****/
-
-// a flag to enable simulation meta tags on dom nodes
-// defaults to true in dev mode. recommend *not* to
-// toggle often.
-var canSimulate = isDev;
-
-// we use these flags for issuing warnings when simulate is called
-// in prod / in incorrect order
-var warned1 = false,
-    warned2 = false;
-
-// toggles simulation activity. shouldn't be needed in most cases
-function simulations() {
-  var bool = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-  canSimulate = !!bool;
-}
-
-// use this on dom nodes to 'simulate' pseudoclasses
-// <div {...hover({ color: 'red' })} {...simulate('hover', 'visited')}>...</div>
-// you can even send in some weird ones, as long as it's in simple format
-// and matches an existing rule on the element
-// eg simulate('nthChild2', ':hover:active') etc
-function simulate() {
-  for (var _len = arguments.length, pseudos = Array(_len), _key = 0; _key < _len; _key++) {
-    pseudos[_key] = arguments[_key];
-  }
-
-  pseudos = (0, _clean2.default)(pseudos);
-  if (!pseudos) return {};
-  if (!canSimulate) {
-    if (!warned1) {
-      console.warn('can\'t simulate without once calling simulations(true)'); //eslint-disable-line no-console
-      warned1 = true;
-    }
-    if (!isDev && !isTest && !warned2) {
-      console.warn('don\'t use simulation outside dev'); //eslint-disable-line no-console
-      warned2 = true;
-    }
-    return {};
-  }
-  return pseudos.reduce(function (o, p) {
-    return o['data-simulate-' + simple(p)] = '', o;
-  }, {});
-}
-
-/**** labels ****/
-// toggle for debug labels.
-// *shouldn't* have to mess with this manually
-var hasLabels = isDev;
-
-function cssLabels(bool) {
-  hasLabels = !!bool;
-}
-
-// takes a string, converts to lowercase, strips out nonalphanumeric.
-function simple(str) {
-  var char = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-  return str.toLowerCase().replace(/[^a-z0-9]/g, char);
-}
-
-// hashes a string to something 'unique'
-// we use this to generate ids for styles
-
-
-function hashify(obj) {
-  var str = JSON.stringify(obj);
-  var toRet = (0, _hash2.default)(str).toString(36);
-  if (obj.label && obj.label.length > 0 && isDev) {
-    return simple(obj.label.join('.'), '-') + '-' + toRet;
-  }
-  return toRet;
-}
-
-// of shape { 'data-css-<id>': '' }
-function isLikeRule(rule) {
-  var keys = Object.keys(rule).filter(function (x) {
-    return x !== 'toString';
-  });
-  if (keys.length !== 1) {
-    return false;
-  }
-  return !!/data\-css\-([a-zA-Z0-9\-_]+)/.exec(keys[0]);
-}
-
-// extracts id from a { 'data-css-<id>': ''} like object
-function idFor(rule) {
-  var keys = Object.keys(rule).filter(function (x) {
-    return x !== 'toString';
-  });
-  if (keys.length !== 1) throw new Error('not a rule');
-  var regex = /data\-css\-([a-zA-Z0-9\-_]+)/;
-  var match = regex.exec(keys[0]);
-  if (!match) throw new Error('not a rule');
-  return match[1];
-}
-
-// from https://github.com/j2css/j2c/blob/5d381c2d721d04b54fabe6a165d587247c3087cb/src/helpers.js#L28-L61
-
-// "Tokenizes" the selectors into parts relevant for the next function.
-// Strings and comments are matched, but ignored afterwards.
-// This is not a full tokenizers. It only recognizes comas, parentheses,
-// strings and comments.
-// regexp generated by scripts/regexps.js then trimmed by hand
-var selectorTokenizer = /[(),]|"(?:\\.|[^"\n])*"|'(?:\\.|[^'\n])*'|\/\*[\s\S]*?\*\//g;
-
-/**
- * This will split a coma-separated selector list into individual selectors,
- * ignoring comas in strings, comments and in :pseudo-selectors(parameter, lists).
- *
- * @param {string} selector
- * @return {string[]}
- */
-
-function splitSelector(selector) {
-  if (selector.indexOf(',') === -1) {
-    return [selector];
-  }
-
-  var indices = [],
-      res = [],
-      inParen = 0,
-      o;
-  /*eslint-disable no-cond-assign*/
-  while (o = selectorTokenizer.exec(selector)) {
-    /*eslint-enable no-cond-assign*/
-    switch (o[0]) {
-      case '(':
-        inParen++;break;
-      case ')':
-        inParen--;break;
-      case ',':
-        if (inParen) break;indices.push(o.index);
-    }
-  }
-  for (o = indices.length; o--;) {
-    res.unshift(selector.slice(indices[o] + 1));
-    selector = selector.slice(0, indices[o]);
-  }
-  res.unshift(selector);
-  return res;
-}
-
-function selector(id, path) {
-  if (!id) {
-    return path.replace(/\&/g, '');
-  }
-  if (!path) return '.css-' + id + ',[data-css-' + id + ']';
-
-  var x = splitSelector(path).map(function (x) {
-    return x.indexOf('&') >= 0 ? [x.replace(/\&/mg, '.css-' + id), x.replace(/\&/mg, '[data-css-' + id + ']')].join(',') // todo - make sure each sub selector has an &
-    : '.css-' + id + x + ',[data-css-' + id + ']' + x;
-  }).join(',');
-
-  if (canSimulate && /^\&\:/.exec(path) && !/\s/.exec(path)) {
-    x += ',.css-' + id + '[data-simulate-' + simple(path) + '],[data-css-' + id + '][data-simulate-' + simple(path) + ']';
-  }
-  return x;
-}
-
-// end https://github.com/j2css/j2c/blob/5d381c2d721d04b54fabe6a165d587247c3087cb/src/helpers.js#L28-L61
-
-
-function toCSS(_ref) {
-  var selector = _ref.selector,
-      style = _ref.style;
-
-  var result = plugins.transform({ selector: selector, style: style });
-  return result.selector + '{' + (0, _CSSPropertyOperations.createMarkupForStyles)(result.style) + '}';
-}
-
-function deconstruct(style) {
-  // we can be sure it's not infinitely nested here
-  var plain = void 0,
-      selects = void 0,
-      medias = void 0,
-      supports = void 0;
-  Object.keys(style).forEach(function (key) {
-    if (key.indexOf('&') >= 0) {
-      selects = selects || {};
-      selects[key] = style[key];
-    } else if (key.indexOf('@media') === 0) {
-      medias = medias || {};
-      medias[key] = deconstruct(style[key]);
-    } else if (key.indexOf('@supports') === 0) {
-      supports = supports || {};
-      supports[key] = deconstruct(style[key]);
-    } else if (key === 'label') {
-      if (style.label.length > 0) {
-        plain = plain || {};
-        plain.label = hasLabels ? style.label.join('.') : '';
-      }
-    } else {
-      plain = plain || {};
-      plain[key] = style[key];
-    }
-  });
-  return { plain: plain, selects: selects, medias: medias, supports: supports };
-}
-
-function deconstructedStyleToCSS(id, style) {
-  var css = [];
-
-  // plugins here
-  var plain = style.plain,
-      selects = style.selects,
-      medias = style.medias,
-      supports = style.supports;
-
-  if (plain) {
-    css.push(toCSS({ style: plain, selector: selector(id) }));
-  }
-  if (selects) {
-    Object.keys(selects).forEach(function (key) {
-      return css.push(toCSS({ style: selects[key], selector: selector(id, key) }));
-    });
-  }
-  if (medias) {
-    Object.keys(medias).forEach(function (key) {
-      return css.push(key + '{' + deconstructedStyleToCSS(id, medias[key]).join('') + '}');
-    });
-  }
-  if (supports) {
-    Object.keys(supports).forEach(function (key) {
-      return css.push(key + '{' + deconstructedStyleToCSS(id, supports[key]).join('') + '}');
-    });
-  }
-  return css;
-}
-
-// this cache to track which rules have
-// been inserted into the stylesheet
-var inserted = styleSheet.inserted = {};
-
-// and helpers to insert rules into said styleSheet
-function insert(spec) {
-  if (!inserted[spec.id]) {
-    inserted[spec.id] = true;
-    var deconstructed = deconstruct(spec.style);
-    var rules = deconstructedStyleToCSS(spec.id, deconstructed);
-    inserted[spec.id] = isBrowser ? true : rules;
-    rules.forEach(function (cssRule) {
-      return styleSheet.insert(cssRule);
-    });
-  }
-}
-
-// a simple cache to store generated rules
-var registered = styleSheet.registered = {};
-function register(spec) {
-  if (!registered[spec.id]) {
-    registered[spec.id] = spec;
-  }
-}
-
-function _getRegistered(rule) {
-  if (isLikeRule(rule)) {
-    var ret = registered[idFor(rule)];
-    if (ret == null) {
-      throw new Error('[glamor] an unexpected rule cache miss occurred. This is probably a sign of multiple glamor instances in your app. See https://github.com/threepointone/glamor/issues/79');
-    }
-    return ret;
-  }
-  return rule;
-}
-
-// todo - perf
-var ruleCache = {};
-function toRule(spec) {
-  register(spec);
-  insert(spec);
-
-  if (ruleCache[spec.id]) {
-    return ruleCache[spec.id];
-  }
-
-  var ret = _defineProperty({}, 'data-css-' + spec.id, hasLabels ? spec.label || '' : '');
-  Object.defineProperty(ret, 'toString', {
-    enumerable: false, value: function value() {
-      return 'css-' + spec.id;
-    }
-  });
-  ruleCache[spec.id] = ret;
-  return ret;
-}
-
-function log() {
-  //eslint-disable-line no-unused-vars
-  console.log(this); //eslint-disable-line no-console
-  return this;
-}
-
-function isSelector(key) {
-  var possibles = [':', '.', '[', '>', ' '],
-      found = false,
-      ch = key.charAt(0);
-  for (var i = 0; i < possibles.length; i++) {
-    if (ch === possibles[i]) {
-      found = true;
-      break;
-    }
-  }
-  return found || key.indexOf('&') >= 0;
-}
-
-function joinSelectors(a, b) {
-  var as = splitSelector(a).map(function (a) {
-    return !(a.indexOf('&') >= 0) ? '&' + a : a;
-  });
-  var bs = splitSelector(b).map(function (b) {
-    return !(b.indexOf('&') >= 0) ? '&' + b : b;
-  });
-
-  return bs.reduce(function (arr, b) {
-    return arr.concat(as.map(function (a) {
-      return b.replace(/\&/g, a);
-    }));
-  }, []).join(',');
-}
-
-function joinMediaQueries(a, b) {
-  return a ? '@media ' + a.substring(6) + ' and ' + b.substring(6) : b;
-}
-
-function isMediaQuery(key) {
-  return key.indexOf('@media') === 0;
-}
-
-function isSupports(key) {
-  return key.indexOf('@supports') === 0;
-}
-
-function joinSupports(a, b) {
-  return a ? '@supports ' + a.substring(9) + ' and ' + b.substring(9) : b;
-}
-
-// flatten a nested array
-function flatten(inArr) {
-  var arr = [];
-  for (var i = 0; i < inArr.length; i++) {
-    if (Array.isArray(inArr[i])) arr = arr.concat(flatten(inArr[i]));else arr = arr.concat(inArr[i]);
-  }
-  return arr;
-}
-
-var prefixedPseudoSelectors = {
-  '::placeholder': ['::-webkit-input-placeholder', '::-moz-placeholder', '::-ms-input-placeholder'],
-  ':fullscreen': [':-webkit-full-screen', ':-moz-full-screen', ':-ms-fullscreen']
-
-  // mutable! modifies dest.
-};function build(dest, _ref2) {
-  var _ref2$selector = _ref2.selector,
-      selector = _ref2$selector === undefined ? '' : _ref2$selector,
-      _ref2$mq = _ref2.mq,
-      mq = _ref2$mq === undefined ? '' : _ref2$mq,
-      _ref2$supp = _ref2.supp,
-      supp = _ref2$supp === undefined ? '' : _ref2$supp,
-      _ref2$src = _ref2.src,
-      src = _ref2$src === undefined ? {} : _ref2$src;
-
-
-  if (!Array.isArray(src)) {
-    src = [src];
-  }
-  src = flatten(src);
-
-  src.forEach(function (_src) {
-    if (isLikeRule(_src)) {
-      var reg = _getRegistered(_src);
-      if (reg.type !== 'css') {
-        throw new Error('cannot merge this rule');
-      }
-      _src = reg.style;
-    }
-    _src = (0, _clean2.default)(_src);
-    if (_src && _src.composes) {
-      build(dest, { selector: selector, mq: mq, supp: supp, src: _src.composes });
-    }
-    Object.keys(_src || {}).forEach(function (key) {
-      if (isSelector(key)) {
-
-        if (prefixedPseudoSelectors[key]) {
-          prefixedPseudoSelectors[key].forEach(function (p) {
-            return build(dest, { selector: joinSelectors(selector, p), mq: mq, supp: supp, src: _src[key] });
-          });
-        }
-
-        build(dest, { selector: joinSelectors(selector, key), mq: mq, supp: supp, src: _src[key] });
-      } else if (isMediaQuery(key)) {
-        build(dest, { selector: selector, mq: joinMediaQueries(mq, key), supp: supp, src: _src[key] });
-      } else if (isSupports(key)) {
-        build(dest, { selector: selector, mq: mq, supp: joinSupports(supp, key), src: _src[key] });
-      } else if (key === 'composes') {
-        // ignore, we already dealth with it
-      } else {
-        var _dest = dest;
-        if (supp) {
-          _dest[supp] = _dest[supp] || {};
-          _dest = _dest[supp];
-        }
-        if (mq) {
-          _dest[mq] = _dest[mq] || {};
-          _dest = _dest[mq];
-        }
-        if (selector) {
-          _dest[selector] = _dest[selector] || {};
-          _dest = _dest[selector];
-        }
-
-        if (key === 'label') {
-          if (hasLabels) {
-            dest.label = dest.label.concat(_src.label);
-          }
-        } else {
-          _dest[key] = _src[key];
-        }
-      }
-    });
-  });
-}
-
-function _css(rules) {
-  var style = { label: [] };
-  build(style, { src: rules }); // mutative! but worth it.
-
-  var spec = {
-    id: hashify(style),
-    style: style, label: hasLabels ? style.label.join('.') : '',
-    type: 'css'
-  };
-  return toRule(spec);
-}
-
-var nullrule = {
-  // 'data-css-nil': ''
-};
-Object.defineProperty(nullrule, 'toString', {
-  enumerable: false, value: function value() {
-    return 'css-nil';
-  }
-});
-
-var inputCaches = typeof WeakMap !== 'undefined' ? [nullrule, new WeakMap(), new WeakMap(), new WeakMap()] : [nullrule];
-
-var warnedWeakMapError = false;
-function multiIndexCache(fn) {
-  return function (args) {
-    if (inputCaches[args.length]) {
-      var coi = inputCaches[args.length];
-      var ctr = 0;
-      while (ctr < args.length - 1) {
-        if (!coi.has(args[ctr])) {
-          coi.set(args[ctr], new WeakMap());
-        }
-        coi = coi.get(args[ctr]);
-        ctr++;
-      }
-      if (coi.has(args[args.length - 1])) {
-        var ret = coi.get(args[ctr]);
-
-        if (registered[ret.toString().substring(4)]) {
-          // make sure it hasn't been flushed
-          return ret;
-        }
-      }
-    }
-    var value = fn(args);
-    if (inputCaches[args.length]) {
-      var _ctr = 0,
-          _coi = inputCaches[args.length];
-      while (_ctr < args.length - 1) {
-        _coi = _coi.get(args[_ctr]);
-        _ctr++;
-      }
-      try {
-        _coi.set(args[_ctr], value);
-      } catch (err) {
-        if (isDev && !warnedWeakMapError) {
-          var _console;
-
-          warnedWeakMapError = true;
-          (_console = console).warn.apply(_console, ['failed setting the WeakMap cache for args:'].concat(_toConsumableArray(args))); // eslint-disable-line no-console
-          console.warn('this should NOT happen, please file a bug on the github repo.'); // eslint-disable-line no-console
-        }
-      }
-    }
-    return value;
-  };
-}
-
-var cachedCss = typeof WeakMap !== 'undefined' ? multiIndexCache(_css) : _css;
-
-function css() {
-  for (var _len2 = arguments.length, rules = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    rules[_key2] = arguments[_key2];
-  }
-
-  if (rules[0] && rules[0].length && rules[0].raw) {
-    throw new Error('you forgot to include glamor/babel in your babel plugins.');
-  }
-
-  rules = (0, _clean2.default)(rules);
-  if (!rules) {
-    return nullrule;
-  }
-
-  return cachedCss(rules);
-}
-
-css.insert = function (css) {
-  var spec = {
-    id: hashify(css),
-    css: css,
-    type: 'raw'
-  };
-  register(spec);
-  if (!inserted[spec.id]) {
-    styleSheet.insert(spec.css);
-    inserted[spec.id] = isBrowser ? true : [spec.css];
-  }
-};
-
-var insertRule = exports.insertRule = css.insert;
-
-css.global = function (selector, style) {
-  style = (0, _clean2.default)(style);
-  if (style) {
-    return css.insert(toCSS({ selector: selector, style: style }));
-  }
-};
-
-var insertGlobal = exports.insertGlobal = css.global;
-
-function insertKeyframe(spec) {
-  if (!inserted[spec.id]) {
-    var inner = Object.keys(spec.keyframes).map(function (kf) {
-      var result = plugins.keyframes.transform({ id: spec.id, name: kf, style: spec.keyframes[kf] });
-      return result.name + '{' + (0, _CSSPropertyOperations.createMarkupForStyles)(result.style) + '}';
-    }).join('');
-
-    var rules = ['-webkit-', '-moz-', '-o-', ''].map(function (prefix) {
-      return '@' + prefix + 'keyframes ' + (spec.name + '_' + spec.id) + '{' + inner + '}';
-    });
-    rules.forEach(function (rule) {
-      return styleSheet.insert(rule);
-    });
-
-    inserted[spec.id] = isBrowser ? true : rules;
-  }
-}
-css.keyframes = function (name, kfs) {
-  if (!kfs) {
-    kfs = name, name = 'animation';
-  }
-
-  // do not ignore empty keyframe definitions for now.
-  kfs = (0, _clean2.default)(kfs) || {};
-  var spec = {
-    id: hashify({ name: name, kfs: kfs }),
-    type: 'keyframes',
-    name: name,
-    keyframes: kfs
-  };
-  register(spec);
-  insertKeyframe(spec);
-  return name + '_' + spec.id;
-};
-
-// we don't go all out for fonts as much, giving a simple font loading strategy
-// use a fancier lib if you need moar power
-css.fontFace = function (font) {
-  font = (0, _clean2.default)(font);
-  var spec = {
-    id: hashify(font),
-    type: 'font-face',
-    font: font
-  };
-  register(spec);
-  insertFontFace(spec);
-
-  return font.fontFamily;
-};
-
-var fontFace = exports.fontFace = css.fontFace;
-var keyframes = exports.keyframes = css.keyframes;
-
-function insertFontFace(spec) {
-  if (!inserted[spec.id]) {
-    var rule = '@font-face{' + (0, _CSSPropertyOperations.createMarkupForStyles)(spec.font) + '}';
-    styleSheet.insert(rule);
-    inserted[spec.id] = isBrowser ? true : [rule];
-  }
-}
-
-// rehydrate the insertion cache with ids sent from
-// renderStatic / renderStaticOptimized
-function rehydrate(ids) {
-  // load up ids
-  (0, _objectAssign2.default)(inserted, ids.reduce(function (o, i) {
-    return o[i] = true, o;
-  }, {}));
-  // assume css loaded separately
-}
-
-// clears out the cache and empties the stylesheet
-// best for tests, though there might be some value for SSR.
-
-function flush() {
-  inserted = styleSheet.inserted = {};
-  registered = styleSheet.registered = {};
-  ruleCache = {};
-  styleSheet.flush();
-  styleSheet.inject();
-}
-
-var presets = exports.presets = {
-  mobile: '(min-width: 400px)',
-  Mobile: '@media (min-width: 400px)',
-  phablet: '(min-width: 550px)',
-  Phablet: '@media (min-width: 550px)',
-  tablet: '(min-width: 750px)',
-  Tablet: '@media (min-width: 750px)',
-  desktop: '(min-width: 1000px)',
-  Desktop: '@media (min-width: 1000px)',
-  hd: '(min-width: 1200px)',
-  Hd: '@media (min-width: 1200px)'
-};
-
-var style = exports.style = css;
-
-function select(selector) {
-  for (var _len3 = arguments.length, styles = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-    styles[_key3 - 1] = arguments[_key3];
-  }
-
-  if (!selector) {
-    return style(styles);
-  }
-  return css(_defineProperty({}, selector, styles));
-}
-var $ = exports.$ = select;
-
-function parent(selector) {
-  for (var _len4 = arguments.length, styles = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-    styles[_key4 - 1] = arguments[_key4];
-  }
-
-  return css(_defineProperty({}, selector + ' &', styles));
-}
-
-var merge = exports.merge = css;
-var compose = exports.compose = css;
-
-function media(query) {
-  for (var _len5 = arguments.length, rules = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-    rules[_key5 - 1] = arguments[_key5];
-  }
-
-  return css(_defineProperty({}, '@media ' + query, rules));
-}
-
-function pseudo(selector) {
-  for (var _len6 = arguments.length, styles = Array(_len6 > 1 ? _len6 - 1 : 0), _key6 = 1; _key6 < _len6; _key6++) {
-    styles[_key6 - 1] = arguments[_key6];
-  }
-
-  return css(_defineProperty({}, selector, styles));
-}
-
-// allllll the pseudoclasses
-
-function active(x) {
-  return pseudo(':active', x);
-}
-
-function any(x) {
-  return pseudo(':any', x);
-}
-
-function checked(x) {
-  return pseudo(':checked', x);
-}
-
-function disabled(x) {
-  return pseudo(':disabled', x);
-}
-
-function empty(x) {
-  return pseudo(':empty', x);
-}
-
-function enabled(x) {
-  return pseudo(':enabled', x);
-}
-
-function _default(x) {
-  return pseudo(':default', x); // note '_default' name
-}
-
-function first(x) {
-  return pseudo(':first', x);
-}
-
-function firstChild(x) {
-  return pseudo(':first-child', x);
-}
-
-function firstOfType(x) {
-  return pseudo(':first-of-type', x);
-}
-
-function fullscreen(x) {
-  return pseudo(':fullscreen', x);
-}
-
-function focus(x) {
-  return pseudo(':focus', x);
-}
-
-function hover(x) {
-  return pseudo(':hover', x);
-}
-
-function indeterminate(x) {
-  return pseudo(':indeterminate', x);
-}
-
-function inRange(x) {
-  return pseudo(':in-range', x);
-}
-
-function invalid(x) {
-  return pseudo(':invalid', x);
-}
-
-function lastChild(x) {
-  return pseudo(':last-child', x);
-}
-
-function lastOfType(x) {
-  return pseudo(':last-of-type', x);
-}
-
-function left(x) {
-  return pseudo(':left', x);
-}
-
-function link(x) {
-  return pseudo(':link', x);
-}
-
-function onlyChild(x) {
-  return pseudo(':only-child', x);
-}
-
-function onlyOfType(x) {
-  return pseudo(':only-of-type', x);
-}
-
-function optional(x) {
-  return pseudo(':optional', x);
-}
-
-function outOfRange(x) {
-  return pseudo(':out-of-range', x);
-}
-
-function readOnly(x) {
-  return pseudo(':read-only', x);
-}
-
-function readWrite(x) {
-  return pseudo(':read-write', x);
-}
-
-function required(x) {
-  return pseudo(':required', x);
-}
-
-function right(x) {
-  return pseudo(':right', x);
-}
-
-function root(x) {
-  return pseudo(':root', x);
-}
-
-function scope(x) {
-  return pseudo(':scope', x);
-}
-
-function target(x) {
-  return pseudo(':target', x);
-}
-
-function valid(x) {
-  return pseudo(':valid', x);
-}
-
-function visited(x) {
-  return pseudo(':visited', x);
-}
-
-// parameterized pseudoclasses
-function dir(p, x) {
-  return pseudo(':dir(' + p + ')', x);
-}
-function lang(p, x) {
-  return pseudo(':lang(' + p + ')', x);
-}
-function not(p, x) {
-  // should this be a plugin?
-  var selector = p.split(',').map(function (x) {
-    return x.trim();
-  }).map(function (x) {
-    return ':not(' + x + ')';
-  });
-  if (selector.length === 1) {
-    return pseudo(':not(' + p + ')', x);
-  }
-  return select(selector.join(''), x);
-}
-function nthChild(p, x) {
-  return pseudo(':nth-child(' + p + ')', x);
-}
-function nthLastChild(p, x) {
-  return pseudo(':nth-last-child(' + p + ')', x);
-}
-function nthLastOfType(p, x) {
-  return pseudo(':nth-last-of-type(' + p + ')', x);
-}
-function nthOfType(p, x) {
-  return pseudo(':nth-of-type(' + p + ')', x);
-}
-
-// pseudoelements
-function after(x) {
-  return pseudo('::after', x);
-}
-function before(x) {
-  return pseudo('::before', x);
-}
-function firstLetter(x) {
-  return pseudo('::first-letter', x);
-}
-function firstLine(x) {
-  return pseudo('::first-line', x);
-}
-function selection(x) {
-  return pseudo('::selection', x);
-}
-function backdrop(x) {
-  return pseudo('::backdrop', x);
-}
-function placeholder(x) {
-  // https://github.com/threepointone/glamor/issues/14
-  return css({ '::placeholder': x });
-}
-
-/*** helpers for web components ***/
-// https://github.com/threepointone/glamor/issues/16
-
-function cssFor() {
-  for (var _len7 = arguments.length, rules = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-    rules[_key7] = arguments[_key7];
-  }
-
-  rules = (0, _clean2.default)(rules);
-  return rules ? rules.map(function (r) {
-    var style = { label: [] };
-    build(style, { src: r }); // mutative! but worth it.
-    return deconstructedStyleToCSS(hashify(style), deconstruct(style)).join('');
-  }).join('') : '';
-}
-
-function attribsFor() {
-  for (var _len8 = arguments.length, rules = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-    rules[_key8] = arguments[_key8];
-  }
-
-  rules = (0, _clean2.default)(rules);
-  var htmlAttributes = rules ? rules.map(function (rule) {
-    idFor(rule); // throwaway check for rule
-    var key = Object.keys(rule)[0],
-        value = rule[key];
-    return key + '="' + (value || '') + '"';
-  }).join(' ') : '';
-
-  return htmlAttributes;
-}
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/plugins.js":
-/*!********************************************!*\
-  !*** ./node_modules/glamor/lib/plugins.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-exports.PluginSet = PluginSet;
-exports.fallbacks = fallbacks;
-exports.contentWrap = contentWrap;
-exports.prefixes = prefixes;
-
-var _objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/glamor/node_modules/object-assign/index.js");
-
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
-
-var _CSSPropertyOperations = __webpack_require__(/*! ./CSSPropertyOperations */ "./node_modules/glamor/lib/CSSPropertyOperations/index.js");
-
-var _prefixer = __webpack_require__(/*! ./prefixer */ "./node_modules/glamor/lib/prefixer.js");
-
-var _prefixer2 = _interopRequireDefault(_prefixer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var isDev = function (x) {
-  return x === 'development' || !x;
-}("development");
-
-function PluginSet(initial) {
-  this.fns = initial || [];
-}
-
-(0, _objectAssign2.default)(PluginSet.prototype, {
-  add: function add() {
-    var _this = this;
-
-    for (var _len = arguments.length, fns = Array(_len), _key = 0; _key < _len; _key++) {
-      fns[_key] = arguments[_key];
-    }
-
-    fns.forEach(function (fn) {
-      if (_this.fns.indexOf(fn) >= 0) {
-        if (isDev) {
-          console.warn('adding the same plugin again, ignoring'); //eslint-disable-line no-console
-        }
-      } else {
-        _this.fns = [fn].concat(_this.fns);
-      }
-    });
-  },
-  remove: function remove(fn) {
-    this.fns = this.fns.filter(function (x) {
-      return x !== fn;
-    });
-  },
-  clear: function clear() {
-    this.fns = [];
-  },
-  transform: function transform(o) {
-    return this.fns.reduce(function (o, fn) {
-      return fn(o);
-    }, o);
-  }
-});
-
-function fallbacks(node) {
-  var hasArray = Object.keys(node.style).map(function (x) {
-    return Array.isArray(node.style[x]);
-  }).indexOf(true) >= 0;
-  if (hasArray) {
-    var style = node.style;
-
-    var flattened = Object.keys(style).reduce(function (o, key) {
-      o[key] = Array.isArray(style[key]) ? style[key].join('; ' + (0, _CSSPropertyOperations.processStyleName)(key) + ': ') : style[key];
-      return o;
-    }, {});
-    // todo - 
-    // flatten arrays which haven't been flattened yet 
-    return (0, _objectAssign2.default)({}, node, { style: flattened });
-  }
-  return node;
-}
-
-var contentValues = ['normal', 'none', 'counter', 'open-quote', 'close-quote', 'no-open-quote', 'no-close-quote', 'initial', 'inherit'];
-
-function contentWrap(node) {
-  if (node.style.content) {
-    var cont = node.style.content;
-    if (contentValues.indexOf(cont) >= 0) {
-      return node;
-    }
-    if (/^(attr|calc|counters?|url)\(/.test(cont)) {
-      return node;
-    }
-    if (cont.charAt(0) === cont.charAt(cont.length - 1) && (cont.charAt(0) === '"' || cont.charAt(0) === "'")) {
-      return node;
-    }
-    return _extends({}, node, { style: _extends({}, node.style, { content: '"' + cont + '"' }) });
-  }
-  return node;
-}
-
-function prefixes(node) {
-  return (0, _objectAssign2.default)({}, node, { style: (0, _prefixer2.default)(_extends({}, node.style)) });
-}
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/prefixer.js":
-/*!*********************************************!*\
-  !*** ./node_modules/glamor/lib/prefixer.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = prefixer;
-
-var _staticData = __webpack_require__(/*! inline-style-prefixer/static/staticData */ "./node_modules/inline-style-prefixer/static/staticData.js");
-
-var _staticData2 = _interopRequireDefault(_staticData);
-
-var _prefixProperty = __webpack_require__(/*! inline-style-prefixer/utils/prefixProperty */ "./node_modules/inline-style-prefixer/utils/prefixProperty.js");
-
-var _prefixProperty2 = _interopRequireDefault(_prefixProperty);
-
-var _prefixValue = __webpack_require__(/*! inline-style-prefixer/utils/prefixValue */ "./node_modules/inline-style-prefixer/utils/prefixValue.js");
-
-var _prefixValue2 = _interopRequireDefault(_prefixValue);
-
-var _cursor = __webpack_require__(/*! inline-style-prefixer/static/plugins/cursor */ "./node_modules/inline-style-prefixer/static/plugins/cursor.js");
-
-var _cursor2 = _interopRequireDefault(_cursor);
-
-var _crossFade = __webpack_require__(/*! inline-style-prefixer/static/plugins/crossFade */ "./node_modules/inline-style-prefixer/static/plugins/crossFade.js");
-
-var _crossFade2 = _interopRequireDefault(_crossFade);
-
-var _filter = __webpack_require__(/*! inline-style-prefixer/static/plugins/filter */ "./node_modules/inline-style-prefixer/static/plugins/filter.js");
-
-var _filter2 = _interopRequireDefault(_filter);
-
-var _flex = __webpack_require__(/*! inline-style-prefixer/static/plugins/flex */ "./node_modules/inline-style-prefixer/static/plugins/flex.js");
-
-var _flex2 = _interopRequireDefault(_flex);
-
-var _flexboxOld = __webpack_require__(/*! inline-style-prefixer/static/plugins/flexboxOld */ "./node_modules/inline-style-prefixer/static/plugins/flexboxOld.js");
-
-var _flexboxOld2 = _interopRequireDefault(_flexboxOld);
-
-var _gradient = __webpack_require__(/*! inline-style-prefixer/static/plugins/gradient */ "./node_modules/inline-style-prefixer/static/plugins/gradient.js");
-
-var _gradient2 = _interopRequireDefault(_gradient);
-
-var _imageSet = __webpack_require__(/*! inline-style-prefixer/static/plugins/imageSet */ "./node_modules/inline-style-prefixer/static/plugins/imageSet.js");
-
-var _imageSet2 = _interopRequireDefault(_imageSet);
-
-var _position = __webpack_require__(/*! inline-style-prefixer/static/plugins/position */ "./node_modules/inline-style-prefixer/static/plugins/position.js");
-
-var _position2 = _interopRequireDefault(_position);
-
-var _sizing = __webpack_require__(/*! inline-style-prefixer/static/plugins/sizing */ "./node_modules/inline-style-prefixer/static/plugins/sizing.js");
-
-var _sizing2 = _interopRequireDefault(_sizing);
-
-var _transition = __webpack_require__(/*! inline-style-prefixer/static/plugins/transition */ "./node_modules/inline-style-prefixer/static/plugins/transition.js");
-
-var _transition2 = _interopRequireDefault(_transition);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var plugins = [_crossFade2.default, _cursor2.default, _filter2.default, _flexboxOld2.default, _gradient2.default, _imageSet2.default, _position2.default, _sizing2.default, _transition2.default, _flex2.default]; // custom facade for inline-style-prefixer
-
-var prefixMap = _staticData2.default.prefixMap;
-
-function prefixer(style) {
-  for (var property in style) {
-    var value = style[property];
-
-    var processedValue = (0, _prefixValue2.default)(plugins, property, value, style, prefixMap);
-
-    // only modify the value if it was touched
-    // by any plugin to prevent unnecessary mutations
-    if (processedValue) {
-      style[property] = processedValue;
-    }
-
-    (0, _prefixProperty2.default)(prefixMap, property, style);
-  }
-  return style;
-}
-
-/***/ }),
-
-/***/ "./node_modules/glamor/lib/sheet.js":
-/*!******************************************!*\
-  !*** ./node_modules/glamor/lib/sheet.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.StyleSheet = StyleSheet;
-
-var _objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/glamor/node_modules/object-assign/index.js");
-
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-/* 
-
-high performance StyleSheet for css-in-js systems 
-
-- uses multiple style tags behind the scenes for millions of rules 
-- uses `insertRule` for appending in production for *much* faster performance
-- 'polyfills' on server side 
-
-
-// usage
-
-import StyleSheet from 'glamor/lib/sheet'
-let styleSheet = new StyleSheet()
-
-styleSheet.inject() 
-- 'injects' the stylesheet into the page (or into memory if on server)
-
-styleSheet.insert('#box { border: 1px solid red; }') 
-- appends a css rule into the stylesheet 
-
-styleSheet.flush() 
-- empties the stylesheet of all its contents
-
-
-*/
-
-function last(arr) {
-  return arr[arr.length - 1];
-}
-
-function sheetForTag(tag) {
-  if (tag.sheet) {
-    return tag.sheet;
-  }
-
-  // this weirdness brought to you by firefox 
-  for (var i = 0; i < document.styleSheets.length; i++) {
-    if (document.styleSheets[i].ownerNode === tag) {
-      return document.styleSheets[i];
-    }
-  }
-}
-
-var isBrowser = typeof window !== 'undefined';
-var isDev =  true || false; //(x => (x === 'development') || !x)(process.env.NODE_ENV)
-var isTest = "development" === 'test';
-
-var oldIE = function () {
-  if (isBrowser) {
-    var div = document.createElement('div');
-    div.innerHTML = '<!--[if lt IE 10]><i></i><![endif]-->';
-    return div.getElementsByTagName('i').length === 1;
-  }
-}();
-
-function makeStyleTag() {
-  var tag = document.createElement('style');
-  tag.type = 'text/css';
-  tag.setAttribute('data-glamor', '');
-  tag.appendChild(document.createTextNode(''));
-  (document.head || document.getElementsByTagName('head')[0]).appendChild(tag);
-  return tag;
-}
-
-function StyleSheet() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      _ref$speedy = _ref.speedy,
-      speedy = _ref$speedy === undefined ? !isDev && !isTest : _ref$speedy,
-      _ref$maxLength = _ref.maxLength,
-      maxLength = _ref$maxLength === undefined ? isBrowser && oldIE ? 4000 : 65000 : _ref$maxLength;
-
-  this.isSpeedy = speedy; // the big drawback here is that the css won't be editable in devtools
-  this.sheet = undefined;
-  this.tags = [];
-  this.maxLength = maxLength;
-  this.ctr = 0;
-}
-
-(0, _objectAssign2.default)(StyleSheet.prototype, {
-  getSheet: function getSheet() {
-    return sheetForTag(last(this.tags));
-  },
-  inject: function inject() {
-    var _this = this;
-
-    if (this.injected) {
-      throw new Error('already injected stylesheet!');
-    }
-    if (isBrowser) {
-      this.tags[0] = makeStyleTag();
-    } else {
-      // server side 'polyfill'. just enough behavior to be useful.
-      this.sheet = {
-        cssRules: [],
-        insertRule: function insertRule(rule) {
-          // enough 'spec compliance' to be able to extract the rules later  
-          // in other words, just the cssText field 
-          _this.sheet.cssRules.push({ cssText: rule });
-        }
-      };
-    }
-    this.injected = true;
-  },
-  speedy: function speedy(bool) {
-    if (this.ctr !== 0) {
-      throw new Error('cannot change speedy mode after inserting any rule to sheet. Either call speedy(' + bool + ') earlier in your app, or call flush() before speedy(' + bool + ')');
-    }
-    this.isSpeedy = !!bool;
-  },
-  _insert: function _insert(rule) {
-    // this weirdness for perf, and chrome's weird bug 
-    // https://stackoverflow.com/questions/20007992/chrome-suddenly-stopped-accepting-insertrule
-    try {
-      var sheet = this.getSheet();
-      sheet.insertRule(rule, rule.indexOf('@import') !== -1 ? 0 : sheet.cssRules.length);
-    } catch (e) {
-      if (isDev) {
-        // might need beter dx for this 
-        console.warn('whoops, illegal rule inserted', rule); //eslint-disable-line no-console
-      }
-    }
-  },
-  insert: function insert(rule) {
-
-    if (isBrowser) {
-      // this is the ultrafast version, works across browsers 
-      if (this.isSpeedy && this.getSheet().insertRule) {
-        this._insert(rule);
-      }
-      // more browser weirdness. I don't even know    
-      // else if(this.tags.length > 0 && this.tags::last().styleSheet) {      
-      //   this.tags::last().styleSheet.cssText+= rule
-      // }
-      else {
-          if (rule.indexOf('@import') !== -1) {
-            var tag = last(this.tags);
-            tag.insertBefore(document.createTextNode(rule), tag.firstChild);
-          } else {
-            last(this.tags).appendChild(document.createTextNode(rule));
-          }
-        }
-    } else {
-      // server side is pretty simple         
-      this.sheet.insertRule(rule, rule.indexOf('@import') !== -1 ? 0 : this.sheet.cssRules.length);
-    }
-
-    this.ctr++;
-    if (isBrowser && this.ctr % this.maxLength === 0) {
-      this.tags.push(makeStyleTag());
-    }
-    return this.ctr - 1;
-  },
-
-  // commenting this out till we decide on v3's decision 
-  // _replace(index, rule) {
-  //   // this weirdness for perf, and chrome's weird bug 
-  //   // https://stackoverflow.com/questions/20007992/chrome-suddenly-stopped-accepting-insertrule
-  //   try {  
-  //     let sheet = this.getSheet()        
-  //     sheet.deleteRule(index) // todo - correct index here     
-  //     sheet.insertRule(rule, index)
-  //   }
-  //   catch(e) {
-  //     if(isDev) {
-  //       // might need beter dx for this 
-  //       console.warn('whoops, problem replacing rule', rule) //eslint-disable-line no-console
-  //     }          
-  //   }          
-
-  // }
-  // replace(index, rule) {
-  //   if(isBrowser) {
-  //     if(this.isSpeedy && this.getSheet().insertRule) {
-  //       this._replace(index, rule)
-  //     }
-  //     else {
-  //       let _slot = Math.floor((index  + this.maxLength) / this.maxLength) - 1        
-  //       let _index = (index % this.maxLength) + 1
-  //       let tag = this.tags[_slot]
-  //       tag.replaceChild(document.createTextNode(rule), tag.childNodes[_index])
-  //     }
-  //   }
-  //   else {
-  //     let rules = this.sheet.cssRules
-  //     this.sheet.cssRules = [ ...rules.slice(0, index), { cssText: rule }, ...rules.slice(index + 1) ]
-  //   }
-  // }
-  delete: function _delete(index) {
-    // we insert a blank rule when 'deleting' so previously returned indexes remain stable
-    return this.replace(index, '');
-  },
-  flush: function flush() {
-    if (isBrowser) {
-      this.tags.forEach(function (tag) {
-        return tag.parentNode.removeChild(tag);
-      });
-      this.tags = [];
-      this.sheet = null;
-      this.ctr = 0;
-      // todo - look for remnants in document.styleSheets
-    } else {
-      // simpler on server 
-      this.sheet.cssRules = [];
-    }
-    this.injected = false;
-  },
-  rules: function rules() {
-    if (!isBrowser) {
-      return this.sheet.cssRules;
-    }
-    var arr = [];
-    this.tags.forEach(function (tag) {
-      return arr.splice.apply(arr, [arr.length, 0].concat(_toConsumableArray(Array.from(sheetForTag(tag).cssRules))));
-    });
-    return arr;
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/glamor/node_modules/object-assign/index.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/glamor/node_modules/object-assign/index.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/has-binary/index.js":
 /*!******************************************!*\
   !*** ./node_modules/has-binary/index.js ***!
@@ -34949,539 +32351,6 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/crossFade.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/crossFade.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = crossFade;
-
-var _isPrefixedValue = __webpack_require__(/*! css-in-js-utils/lib/isPrefixedValue */ "./node_modules/css-in-js-utils/lib/isPrefixedValue.js");
-
-var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// http://caniuse.com/#search=cross-fade
-var prefixes = ['-webkit-', ''];
-function crossFade(property, value) {
-  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('cross-fade(') > -1) {
-    return prefixes.map(function (prefix) {
-      return value.replace(/cross-fade\(/g, prefix + 'cross-fade(');
-    });
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/cursor.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/cursor.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = cursor;
-var prefixes = ['-webkit-', '-moz-', ''];
-
-var values = {
-  'zoom-in': true,
-  'zoom-out': true,
-  grab: true,
-  grabbing: true
-};
-
-function cursor(property, value) {
-  if (property === 'cursor' && values.hasOwnProperty(value)) {
-    return prefixes.map(function (prefix) {
-      return prefix + value;
-    });
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/filter.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/filter.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = filter;
-
-var _isPrefixedValue = __webpack_require__(/*! css-in-js-utils/lib/isPrefixedValue */ "./node_modules/css-in-js-utils/lib/isPrefixedValue.js");
-
-var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// http://caniuse.com/#feat=css-filter-function
-var prefixes = ['-webkit-', ''];
-function filter(property, value) {
-  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('filter(') > -1) {
-    return prefixes.map(function (prefix) {
-      return value.replace(/filter\(/g, prefix + 'filter(');
-    });
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/flex.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/flex.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = flex;
-var values = {
-  flex: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex'],
-  'inline-flex': ['-webkit-inline-box', '-moz-inline-box', '-ms-inline-flexbox', '-webkit-inline-flex', 'inline-flex']
-};
-
-function flex(property, value) {
-  if (property === 'display' && values.hasOwnProperty(value)) {
-    return values[value];
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/flexboxOld.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/flexboxOld.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = flexboxOld;
-var alternativeValues = {
-  'space-around': 'justify',
-  'space-between': 'justify',
-  'flex-start': 'start',
-  'flex-end': 'end',
-  'wrap-reverse': 'multiple',
-  wrap: 'multiple'
-};
-
-var alternativeProps = {
-  alignItems: 'WebkitBoxAlign',
-  justifyContent: 'WebkitBoxPack',
-  flexWrap: 'WebkitBoxLines'
-};
-
-function flexboxOld(property, value, style) {
-  if (property === 'flexDirection' && typeof value === 'string') {
-    if (value.indexOf('column') > -1) {
-      style.WebkitBoxOrient = 'vertical';
-    } else {
-      style.WebkitBoxOrient = 'horizontal';
-    }
-    if (value.indexOf('reverse') > -1) {
-      style.WebkitBoxDirection = 'reverse';
-    } else {
-      style.WebkitBoxDirection = 'normal';
-    }
-  }
-  if (alternativeProps.hasOwnProperty(property)) {
-    style[alternativeProps[property]] = alternativeValues[value] || value;
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/gradient.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/gradient.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = gradient;
-
-var _isPrefixedValue = __webpack_require__(/*! css-in-js-utils/lib/isPrefixedValue */ "./node_modules/css-in-js-utils/lib/isPrefixedValue.js");
-
-var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var prefixes = ['-webkit-', '-moz-', ''];
-
-var values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
-
-function gradient(property, value) {
-  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && values.test(value)) {
-    return prefixes.map(function (prefix) {
-      return prefix + value;
-    });
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/imageSet.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/imageSet.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = imageSet;
-
-var _isPrefixedValue = __webpack_require__(/*! css-in-js-utils/lib/isPrefixedValue */ "./node_modules/css-in-js-utils/lib/isPrefixedValue.js");
-
-var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// http://caniuse.com/#feat=css-image-set
-var prefixes = ['-webkit-', ''];
-function imageSet(property, value) {
-  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('image-set(') > -1) {
-    return prefixes.map(function (prefix) {
-      return value.replace(/image-set\(/g, prefix + 'image-set(');
-    });
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/position.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/position.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = position;
-function position(property, value) {
-  if (property === 'position' && value === 'sticky') {
-    return ['-webkit-sticky', 'sticky'];
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/sizing.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/sizing.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = sizing;
-var prefixes = ['-webkit-', '-moz-', ''];
-
-var properties = {
-  maxHeight: true,
-  maxWidth: true,
-  width: true,
-  height: true,
-  columnWidth: true,
-  minWidth: true,
-  minHeight: true
-};
-var values = {
-  'min-content': true,
-  'max-content': true,
-  'fill-available': true,
-  'fit-content': true,
-  'contain-floats': true
-};
-
-function sizing(property, value) {
-  if (properties.hasOwnProperty(property) && values.hasOwnProperty(value)) {
-    return prefixes.map(function (prefix) {
-      return prefix + value;
-    });
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/plugins/transition.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/plugins/transition.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = transition;
-
-var _hyphenateProperty = __webpack_require__(/*! css-in-js-utils/lib/hyphenateProperty */ "./node_modules/css-in-js-utils/lib/hyphenateProperty.js");
-
-var _hyphenateProperty2 = _interopRequireDefault(_hyphenateProperty);
-
-var _isPrefixedValue = __webpack_require__(/*! css-in-js-utils/lib/isPrefixedValue */ "./node_modules/css-in-js-utils/lib/isPrefixedValue.js");
-
-var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-var _capitalizeString = __webpack_require__(/*! ../../utils/capitalizeString */ "./node_modules/inline-style-prefixer/utils/capitalizeString.js");
-
-var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var properties = {
-  transition: true,
-  transitionProperty: true,
-  WebkitTransition: true,
-  WebkitTransitionProperty: true,
-  MozTransition: true,
-  MozTransitionProperty: true
-};
-
-
-var prefixMapping = {
-  Webkit: '-webkit-',
-  Moz: '-moz-',
-  ms: '-ms-'
-};
-
-function prefixValue(value, propertyPrefixMap) {
-  if ((0, _isPrefixedValue2.default)(value)) {
-    return value;
-  }
-
-  // only split multi values, not cubic beziers
-  var multipleValues = value.split(/,(?![^()]*(?:\([^()]*\))?\))/g);
-
-  for (var i = 0, len = multipleValues.length; i < len; ++i) {
-    var singleValue = multipleValues[i];
-    var values = [singleValue];
-    for (var property in propertyPrefixMap) {
-      var dashCaseProperty = (0, _hyphenateProperty2.default)(property);
-
-      if (singleValue.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
-        var prefixes = propertyPrefixMap[property];
-        for (var j = 0, pLen = prefixes.length; j < pLen; ++j) {
-          // join all prefixes and create a new value
-          values.unshift(singleValue.replace(dashCaseProperty, prefixMapping[prefixes[j]] + dashCaseProperty));
-        }
-      }
-    }
-
-    multipleValues[i] = values.join(',');
-  }
-
-  return multipleValues.join(',');
-}
-
-function transition(property, value, style, propertyPrefixMap) {
-  // also check for already prefixed transitions
-  if (typeof value === 'string' && properties.hasOwnProperty(property)) {
-    var outputValue = prefixValue(value, propertyPrefixMap);
-    // if the property is already prefixed
-    var webkitOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (val) {
-      return !/-moz-|-ms-/.test(val);
-    }).join(',');
-
-    if (property.indexOf('Webkit') > -1) {
-      return webkitOutput;
-    }
-
-    var mozOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (val) {
-      return !/-webkit-|-ms-/.test(val);
-    }).join(',');
-
-    if (property.indexOf('Moz') > -1) {
-      return mozOutput;
-    }
-
-    style['Webkit' + (0, _capitalizeString2.default)(property)] = webkitOutput;
-    style['Moz' + (0, _capitalizeString2.default)(property)] = mozOutput;
-    return outputValue;
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/static/staticData.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/static/staticData.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var w = ["Webkit"];
-var m = ["Moz"];
-var ms = ["ms"];
-var wm = ["Webkit", "Moz"];
-var wms = ["Webkit", "ms"];
-var wmms = ["Webkit", "Moz", "ms"];
-
-exports.default = {
-  plugins: [],
-  prefixMap: { "appearance": wm, "userSelect": wmms, "textEmphasisPosition": w, "textEmphasis": w, "textEmphasisStyle": w, "textEmphasisColor": w, "boxDecorationBreak": w, "clipPath": w, "maskImage": w, "maskMode": w, "maskRepeat": w, "maskPosition": w, "maskClip": w, "maskOrigin": w, "maskSize": w, "maskComposite": w, "mask": w, "maskBorderSource": w, "maskBorderMode": w, "maskBorderSlice": w, "maskBorderWidth": w, "maskBorderOutset": w, "maskBorderRepeat": w, "maskBorder": w, "maskType": w, "textDecorationStyle": w, "textDecorationSkip": w, "textDecorationLine": w, "textDecorationColor": w, "filter": w, "fontFeatureSettings": w, "breakAfter": wmms, "breakBefore": wmms, "breakInside": wmms, "columnCount": wm, "columnFill": wm, "columnGap": wm, "columnRule": wm, "columnRuleColor": wm, "columnRuleStyle": wm, "columnRuleWidth": wm, "columns": wm, "columnSpan": wm, "columnWidth": wm, "writingMode": wms, "flex": w, "flexBasis": w, "flexDirection": w, "flexGrow": w, "flexFlow": w, "flexShrink": w, "flexWrap": w, "alignContent": w, "alignItems": w, "alignSelf": w, "justifyContent": w, "order": w, "transform": w, "transformOrigin": w, "transformOriginX": w, "transformOriginY": w, "backfaceVisibility": w, "perspective": w, "perspectiveOrigin": w, "transformStyle": w, "transformOriginZ": w, "animation": w, "animationDelay": w, "animationDirection": w, "animationFillMode": w, "animationDuration": w, "animationIterationCount": w, "animationName": w, "animationPlayState": w, "animationTimingFunction": w, "backdropFilter": w, "fontKerning": w, "scrollSnapType": wms, "scrollSnapPointsX": wms, "scrollSnapPointsY": wms, "scrollSnapDestination": wms, "scrollSnapCoordinate": wms, "shapeImageThreshold": w, "shapeImageMargin": w, "shapeImageOutside": w, "hyphens": wmms, "flowInto": wms, "flowFrom": wms, "regionFragment": wms, "textAlignLast": m, "tabSize": m, "wrapFlow": ms, "wrapThrough": ms, "wrapMargin": ms, "gridTemplateColumns": ms, "gridTemplateRows": ms, "gridTemplateAreas": ms, "gridTemplate": ms, "gridAutoColumns": ms, "gridAutoRows": ms, "gridAutoFlow": ms, "grid": ms, "gridRowStart": ms, "gridColumnStart": ms, "gridRowEnd": ms, "gridRow": ms, "gridColumn": ms, "gridColumnEnd": ms, "gridColumnGap": ms, "gridRowGap": ms, "gridArea": ms, "gridGap": ms, "textSizeAdjust": wms, "borderImage": w, "borderImageOutset": w, "borderImageRepeat": w, "borderImageSlice": w, "borderImageSource": w, "borderImageWidth": w, "transitionDelay": w, "transitionDuration": w, "transitionProperty": w, "transitionTimingFunction": w }
-};
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/utils/capitalizeString.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/utils/capitalizeString.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = capitalizeString;
-function capitalizeString(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-module.exports = exports["default"];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/utils/prefixProperty.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/utils/prefixProperty.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = prefixProperty;
-
-var _capitalizeString = __webpack_require__(/*! ./capitalizeString */ "./node_modules/inline-style-prefixer/utils/capitalizeString.js");
-
-var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function prefixProperty(prefixProperties, property, style) {
-  if (prefixProperties.hasOwnProperty(property)) {
-    var requiredPrefixes = prefixProperties[property];
-    for (var i = 0, len = requiredPrefixes.length; i < len; ++i) {
-      style[requiredPrefixes[i] + (0, _capitalizeString2.default)(property)] = style[property];
-    }
-  }
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/inline-style-prefixer/utils/prefixValue.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/inline-style-prefixer/utils/prefixValue.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = prefixValue;
-function prefixValue(plugins, property, value, style, metaData) {
-  for (var i = 0, len = plugins.length; i < len; ++i) {
-    var processedValue = plugins[i](property, value, style, metaData);
-
-    // we can stop processing if a value is returned
-    // as all plugin criteria are unique
-    if (processedValue) {
-      return processedValue;
-    }
-  }
-}
-module.exports = exports["default"];
 
 /***/ }),
 
@@ -39568,6 +36437,457 @@ var index = create();
 /* harmony default export */ __webpack_exports__["default"] = (index);
 
 
+
+/***/ }),
+
+/***/ "./node_modules/lodash.throttle/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash.throttle/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the `TypeError` message for "Functions" methods. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/** Used to match leading and trailing whitespace. */
+var reTrim = /^\s+|\s+$/g;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        result = wait - timeSinceLastCall;
+
+    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+/**
+ * Creates a throttled function that only invokes `func` at most once per
+ * every `wait` milliseconds. The throttled function comes with a `cancel`
+ * method to cancel delayed `func` invocations and a `flush` method to
+ * immediately invoke them. Provide `options` to indicate whether `func`
+ * should be invoked on the leading and/or trailing edge of the `wait`
+ * timeout. The `func` is invoked with the last arguments provided to the
+ * throttled function. Subsequent calls to the throttled function return the
+ * result of the last `func` invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the throttled function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.throttle` and `_.debounce`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to throttle.
+ * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=true]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new throttled function.
+ * @example
+ *
+ * // Avoid excessively updating the position while scrolling.
+ * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+ *
+ * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+ * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+ * jQuery(element).on('click', throttled);
+ *
+ * // Cancel the trailing throttled invocation.
+ * jQuery(window).on('popstate', throttled.cancel);
+ */
+function throttle(func, wait, options) {
+  var leading = true,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  if (isObject(options)) {
+    leading = 'leading' in options ? !!options.leading : leading;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+  return debounce(func, wait, {
+    'leading': leading,
+    'maxWait': wait,
+    'trailing': trailing
+  });
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+}
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = value.replace(reTrim, '');
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = throttle;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -68721,10 +66041,10 @@ function pathToRegexp (path, keys, options) {
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js ***!
-  \************************************************************************/
+/***/ "./node_modules/react-scroll/modules/components/Button.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/components/Button.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -68734,633 +66054,58 @@ function pathToRegexp (path, keys, options) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
 
-var _glamor = __webpack_require__(/*! glamor */ "./node_modules/glamor/lib/index.js");
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js"));
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _AutoHideFollowButton = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/AutoHideFollowButton */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js"));
-
-var _Composer = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/Composer */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js"));
-
-var _Panel = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/Panel */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ROOT_CSS = (0, _glamor.css)({
-  position: 'relative'
-});
-
-var BasicScrollToBottom = function BasicScrollToBottom(_ref) {
-  var checkInterval = _ref.checkInterval,
-      children = _ref.children,
-      className = _ref.className,
-      debounce = _ref.debounce,
-      followButtonClassName = _ref.followButtonClassName,
-      mode = _ref.mode,
-      scrollViewClassName = _ref.scrollViewClassName;
-  return /*#__PURE__*/_react.default.createElement(_Composer.default, {
-    checkInterval: checkInterval,
-    debounce: debounce,
-    mode: mode
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)(ROOT_CSS + '', (className || '') + '')
-  }, /*#__PURE__*/_react.default.createElement(_Panel.default, {
-    className: scrollViewClassName
-  }, children), /*#__PURE__*/_react.default.createElement(_AutoHideFollowButton.default, {
-    className: followButtonClassName
-  })));
-};
-
-BasicScrollToBottom.defaultProps = {
-  checkInterval: undefined,
-  children: undefined,
-  className: undefined,
-  debounce: undefined,
-  followButtonClassName: undefined,
-  mode: undefined,
-  scrollViewClassName: undefined
-};
-BasicScrollToBottom.propTypes = {
-  checkInterval: _propTypes.default.number,
-  children: _propTypes.default.any,
-  className: _propTypes.default.string,
-  debounce: _propTypes.default.number,
-  followButtonClassName: _propTypes.default.string,
-  mode: _propTypes.default.oneOf(['bottom', 'top']),
-  scrollViewClassName: _propTypes.default.string
-};
-var _default = BasicScrollToBottom;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9CYXNpY1Njcm9sbFRvQm90dG9tLmpzIl0sIm5hbWVzIjpbIlJPT1RfQ1NTIiwicG9zaXRpb24iLCJCYXNpY1Njcm9sbFRvQm90dG9tIiwiY2hlY2tJbnRlcnZhbCIsImNoaWxkcmVuIiwiY2xhc3NOYW1lIiwiZGVib3VuY2UiLCJmb2xsb3dCdXR0b25DbGFzc05hbWUiLCJtb2RlIiwic2Nyb2xsVmlld0NsYXNzTmFtZSIsImRlZmF1bHRQcm9wcyIsInVuZGVmaW5lZCIsInByb3BUeXBlcyIsIlByb3BUeXBlcyIsIm51bWJlciIsImFueSIsInN0cmluZyIsIm9uZU9mIl0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBRUE7O0FBQ0E7O0FBQ0E7Ozs7QUFFQSxJQUFNQSxRQUFRLEdBQUcsaUJBQUk7QUFDbkJDLEVBQUFBLFFBQVEsRUFBRTtBQURTLENBQUosQ0FBakI7O0FBSUEsSUFBTUMsbUJBQW1CLEdBQUcsU0FBdEJBLG1CQUFzQjtBQUFBLE1BQzFCQyxhQUQwQixRQUMxQkEsYUFEMEI7QUFBQSxNQUUxQkMsUUFGMEIsUUFFMUJBLFFBRjBCO0FBQUEsTUFHMUJDLFNBSDBCLFFBRzFCQSxTQUgwQjtBQUFBLE1BSTFCQyxRQUowQixRQUkxQkEsUUFKMEI7QUFBQSxNQUsxQkMscUJBTDBCLFFBSzFCQSxxQkFMMEI7QUFBQSxNQU0xQkMsSUFOMEIsUUFNMUJBLElBTjBCO0FBQUEsTUFPMUJDLG1CQVAwQixRQU8xQkEsbUJBUDBCO0FBQUEsc0JBUzFCLDZCQUFDLGlCQUFEO0FBQVUsSUFBQSxhQUFhLEVBQUVOLGFBQXpCO0FBQXdDLElBQUEsUUFBUSxFQUFFRyxRQUFsRDtBQUE0RCxJQUFBLElBQUksRUFBRUU7QUFBbEUsa0JBQ0U7QUFBSyxJQUFBLFNBQVMsRUFBRSx5QkFBV1IsUUFBUSxHQUFHLEVBQXRCLEVBQTBCLENBQUNLLFNBQVMsSUFBSSxFQUFkLElBQW9CLEVBQTlDO0FBQWhCLGtCQUNFLDZCQUFDLGNBQUQ7QUFBTyxJQUFBLFNBQVMsRUFBRUk7QUFBbEIsS0FBd0NMLFFBQXhDLENBREYsZUFFRSw2QkFBQyw2QkFBRDtBQUFzQixJQUFBLFNBQVMsRUFBRUc7QUFBakMsSUFGRixDQURGLENBVDBCO0FBQUEsQ0FBNUI7O0FBaUJBTCxtQkFBbUIsQ0FBQ1EsWUFBcEIsR0FBbUM7QUFDakNQLEVBQUFBLGFBQWEsRUFBRVEsU0FEa0I7QUFFakNQLEVBQUFBLFFBQVEsRUFBRU8sU0FGdUI7QUFHakNOLEVBQUFBLFNBQVMsRUFBRU0sU0FIc0I7QUFJakNMLEVBQUFBLFFBQVEsRUFBRUssU0FKdUI7QUFLakNKLEVBQUFBLHFCQUFxQixFQUFFSSxTQUxVO0FBTWpDSCxFQUFBQSxJQUFJLEVBQUVHLFNBTjJCO0FBT2pDRixFQUFBQSxtQkFBbUIsRUFBRUU7QUFQWSxDQUFuQztBQVVBVCxtQkFBbUIsQ0FBQ1UsU0FBcEIsR0FBZ0M7QUFDOUJULEVBQUFBLGFBQWEsRUFBRVUsbUJBQVVDLE1BREs7QUFFOUJWLEVBQUFBLFFBQVEsRUFBRVMsbUJBQVVFLEdBRlU7QUFHOUJWLEVBQUFBLFNBQVMsRUFBRVEsbUJBQVVHLE1BSFM7QUFJOUJWLEVBQUFBLFFBQVEsRUFBRU8sbUJBQVVDLE1BSlU7QUFLOUJQLEVBQUFBLHFCQUFxQixFQUFFTSxtQkFBVUcsTUFMSDtBQU05QlIsRUFBQUEsSUFBSSxFQUFFSyxtQkFBVUksS0FBVixDQUFnQixDQUFDLFFBQUQsRUFBVyxLQUFYLENBQWhCLENBTndCO0FBTzlCUixFQUFBQSxtQkFBbUIsRUFBRUksbUJBQVVHO0FBUEQsQ0FBaEM7ZUFVZWQsbUIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBjc3MgfSBmcm9tICdnbGFtb3InO1xuaW1wb3J0IGNsYXNzTmFtZXMgZnJvbSAnY2xhc3NuYW1lcyc7XG5pbXBvcnQgUHJvcFR5cGVzIGZyb20gJ3Byb3AtdHlwZXMnO1xuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IEF1dG9IaWRlRm9sbG93QnV0dG9uIGZyb20gJy4vU2Nyb2xsVG9Cb3R0b20vQXV0b0hpZGVGb2xsb3dCdXR0b24nO1xuaW1wb3J0IENvbXBvc2VyIGZyb20gJy4vU2Nyb2xsVG9Cb3R0b20vQ29tcG9zZXInO1xuaW1wb3J0IFBhbmVsIGZyb20gJy4vU2Nyb2xsVG9Cb3R0b20vUGFuZWwnO1xuXG5jb25zdCBST09UX0NTUyA9IGNzcyh7XG4gIHBvc2l0aW9uOiAncmVsYXRpdmUnXG59KTtcblxuY29uc3QgQmFzaWNTY3JvbGxUb0JvdHRvbSA9ICh7XG4gIGNoZWNrSW50ZXJ2YWwsXG4gIGNoaWxkcmVuLFxuICBjbGFzc05hbWUsXG4gIGRlYm91bmNlLFxuICBmb2xsb3dCdXR0b25DbGFzc05hbWUsXG4gIG1vZGUsXG4gIHNjcm9sbFZpZXdDbGFzc05hbWVcbn0pID0+IChcbiAgPENvbXBvc2VyIGNoZWNrSW50ZXJ2YWw9e2NoZWNrSW50ZXJ2YWx9IGRlYm91bmNlPXtkZWJvdW5jZX0gbW9kZT17bW9kZX0+XG4gICAgPGRpdiBjbGFzc05hbWU9e2NsYXNzTmFtZXMoUk9PVF9DU1MgKyAnJywgKGNsYXNzTmFtZSB8fCAnJykgKyAnJyl9PlxuICAgICAgPFBhbmVsIGNsYXNzTmFtZT17c2Nyb2xsVmlld0NsYXNzTmFtZX0+e2NoaWxkcmVufTwvUGFuZWw+XG4gICAgICA8QXV0b0hpZGVGb2xsb3dCdXR0b24gY2xhc3NOYW1lPXtmb2xsb3dCdXR0b25DbGFzc05hbWV9IC8+XG4gICAgPC9kaXY+XG4gIDwvQ29tcG9zZXI+XG4pO1xuXG5CYXNpY1Njcm9sbFRvQm90dG9tLmRlZmF1bHRQcm9wcyA9IHtcbiAgY2hlY2tJbnRlcnZhbDogdW5kZWZpbmVkLFxuICBjaGlsZHJlbjogdW5kZWZpbmVkLFxuICBjbGFzc05hbWU6IHVuZGVmaW5lZCxcbiAgZGVib3VuY2U6IHVuZGVmaW5lZCxcbiAgZm9sbG93QnV0dG9uQ2xhc3NOYW1lOiB1bmRlZmluZWQsXG4gIG1vZGU6IHVuZGVmaW5lZCxcbiAgc2Nyb2xsVmlld0NsYXNzTmFtZTogdW5kZWZpbmVkXG59O1xuXG5CYXNpY1Njcm9sbFRvQm90dG9tLnByb3BUeXBlcyA9IHtcbiAgY2hlY2tJbnRlcnZhbDogUHJvcFR5cGVzLm51bWJlcixcbiAgY2hpbGRyZW46IFByb3BUeXBlcy5hbnksXG4gIGNsYXNzTmFtZTogUHJvcFR5cGVzLnN0cmluZyxcbiAgZGVib3VuY2U6IFByb3BUeXBlcy5udW1iZXIsXG4gIGZvbGxvd0J1dHRvbkNsYXNzTmFtZTogUHJvcFR5cGVzLnN0cmluZyxcbiAgbW9kZTogUHJvcFR5cGVzLm9uZU9mKFsnYm90dG9tJywgJ3RvcCddKSxcbiAgc2Nyb2xsVmlld0NsYXNzTmFtZTogUHJvcFR5cGVzLnN0cmluZ1xufTtcblxuZXhwb3J0IGRlZmF1bHQgQmFzaWNTY3JvbGxUb0JvdHRvbTtcbiJdfQ==
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/EventSpy.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/EventSpy.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var _debounce = _interopRequireDefault(__webpack_require__(/*! ./debounce */ "./node_modules/react-scroll-to-bottom/lib/debounce.js"));
+var _react2 = _interopRequireDefault(_react);
+
+var _scrollLink = __webpack_require__(/*! ../mixins/scroll-link */ "./node_modules/react-scroll/modules/mixins/scroll-link.js");
+
+var _scrollLink2 = _interopRequireDefault(_scrollLink);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EventSpy = function EventSpy(_ref) {
-  var debounce = _ref.debounce,
-      name = _ref.name,
-      onEvent = _ref.onEvent,
-      target = _ref.target;
-  // We need to save the "onEvent" to ref.
-  // This is because "onEvent" may change from time to time, but debounce may still fire to the older callback.
-  var onEventRef = (0, _react.useRef)();
-  onEventRef.current = onEvent;
-  var debouncer = (0, _react.useMemo)(function () {
-    return (0, _debounce.default)(function (event) {
-      var current = onEventRef.current;
-      current && current(event);
-    }, debounce);
-  }, [debounce, onEventRef]);
-  var handleEvent = (0, _react.useCallback)(function (event) {
-    event.timeStampLow = Date.now();
-    debouncer(event);
-  }, [debouncer]);
-  (0, _react.useLayoutEffect)(function () {
-    target.addEventListener(name, handleEvent, {
-      passive: true
-    });
-    handleEvent({
-      target: target,
-      type: name
-    });
-    return function () {
-      return target.removeEventListener(name, handleEvent);
-    };
-  }, [name, handleEvent, target]);
-  return false;
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-EventSpy.defaultProps = {
-  debounce: 200
-};
-var _default = EventSpy;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9FdmVudFNweS5qcyJdLCJuYW1lcyI6WyJFdmVudFNweSIsImRlYm91bmNlIiwibmFtZSIsIm9uRXZlbnQiLCJ0YXJnZXQiLCJvbkV2ZW50UmVmIiwiY3VycmVudCIsImRlYm91bmNlciIsImV2ZW50IiwiaGFuZGxlRXZlbnQiLCJ0aW1lU3RhbXBMb3ciLCJEYXRlIiwibm93IiwiYWRkRXZlbnRMaXN0ZW5lciIsInBhc3NpdmUiLCJ0eXBlIiwicmVtb3ZlRXZlbnRMaXN0ZW5lciIsImRlZmF1bHRQcm9wcyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRUEsSUFBTUEsUUFBUSxHQUFHLFNBQVhBLFFBQVcsT0FBeUM7QUFBQSxNQUF0Q0MsUUFBc0MsUUFBdENBLFFBQXNDO0FBQUEsTUFBNUJDLElBQTRCLFFBQTVCQSxJQUE0QjtBQUFBLE1BQXRCQyxPQUFzQixRQUF0QkEsT0FBc0I7QUFBQSxNQUFiQyxNQUFhLFFBQWJBLE1BQWE7QUFDeEQ7QUFDQTtBQUNBLE1BQU1DLFVBQVUsR0FBRyxvQkFBbkI7QUFFQUEsRUFBQUEsVUFBVSxDQUFDQyxPQUFYLEdBQXFCSCxPQUFyQjtBQUVBLE1BQU1JLFNBQVMsR0FBRyxvQkFDaEI7QUFBQSxXQUNFLHVCQUFXLFVBQUFDLEtBQUssRUFBSTtBQUFBLFVBQ1ZGLE9BRFUsR0FDRUQsVUFERixDQUNWQyxPQURVO0FBR2xCQSxNQUFBQSxPQUFPLElBQUlBLE9BQU8sQ0FBQ0UsS0FBRCxDQUFsQjtBQUNELEtBSkQsRUFJR1AsUUFKSCxDQURGO0FBQUEsR0FEZ0IsRUFPaEIsQ0FBQ0EsUUFBRCxFQUFXSSxVQUFYLENBUGdCLENBQWxCO0FBVUEsTUFBTUksV0FBVyxHQUFHLHdCQUNsQixVQUFBRCxLQUFLLEVBQUk7QUFDUEEsSUFBQUEsS0FBSyxDQUFDRSxZQUFOLEdBQXFCQyxJQUFJLENBQUNDLEdBQUwsRUFBckI7QUFFQUwsSUFBQUEsU0FBUyxDQUFDQyxLQUFELENBQVQ7QUFDRCxHQUxpQixFQU1sQixDQUFDRCxTQUFELENBTmtCLENBQXBCO0FBU0EsOEJBQWdCLFlBQU07QUFDcEJILElBQUFBLE1BQU0sQ0FBQ1MsZ0JBQVAsQ0FBd0JYLElBQXhCLEVBQThCTyxXQUE5QixFQUEyQztBQUFFSyxNQUFBQSxPQUFPLEVBQUU7QUFBWCxLQUEzQztBQUNBTCxJQUFBQSxXQUFXLENBQUM7QUFBRUwsTUFBQUEsTUFBTSxFQUFOQSxNQUFGO0FBQVVXLE1BQUFBLElBQUksRUFBRWI7QUFBaEIsS0FBRCxDQUFYO0FBRUEsV0FBTztBQUFBLGFBQU1FLE1BQU0sQ0FBQ1ksbUJBQVAsQ0FBMkJkLElBQTNCLEVBQWlDTyxXQUFqQyxDQUFOO0FBQUEsS0FBUDtBQUNELEdBTEQsRUFLRyxDQUFDUCxJQUFELEVBQU9PLFdBQVAsRUFBb0JMLE1BQXBCLENBTEg7QUFPQSxTQUFPLEtBQVA7QUFDRCxDQWxDRDs7QUFvQ0FKLFFBQVEsQ0FBQ2lCLFlBQVQsR0FBd0I7QUFDdEJoQixFQUFBQSxRQUFRLEVBQUU7QUFEWSxDQUF4QjtlQUllRCxRIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ2FsbGJhY2ssIHVzZUxheW91dEVmZmVjdCwgdXNlTWVtbywgdXNlUmVmIH0gZnJvbSAncmVhY3QnO1xuXG5pbXBvcnQgZGVib3VuY2VGbiBmcm9tICcuL2RlYm91bmNlJztcblxuY29uc3QgRXZlbnRTcHkgPSAoeyBkZWJvdW5jZSwgbmFtZSwgb25FdmVudCwgdGFyZ2V0IH0pID0+IHtcbiAgLy8gV2UgbmVlZCB0byBzYXZlIHRoZSBcIm9uRXZlbnRcIiB0byByZWYuXG4gIC8vIFRoaXMgaXMgYmVjYXVzZSBcIm9uRXZlbnRcIiBtYXkgY2hhbmdlIGZyb20gdGltZSB0byB0aW1lLCBidXQgZGVib3VuY2UgbWF5IHN0aWxsIGZpcmUgdG8gdGhlIG9sZGVyIGNhbGxiYWNrLlxuICBjb25zdCBvbkV2ZW50UmVmID0gdXNlUmVmKCk7XG5cbiAgb25FdmVudFJlZi5jdXJyZW50ID0gb25FdmVudDtcblxuICBjb25zdCBkZWJvdW5jZXIgPSB1c2VNZW1vKFxuICAgICgpID0+XG4gICAgICBkZWJvdW5jZUZuKGV2ZW50ID0+IHtcbiAgICAgICAgY29uc3QgeyBjdXJyZW50IH0gPSBvbkV2ZW50UmVmO1xuXG4gICAgICAgIGN1cnJlbnQgJiYgY3VycmVudChldmVudCk7XG4gICAgICB9LCBkZWJvdW5jZSksXG4gICAgW2RlYm91bmNlLCBvbkV2ZW50UmVmXVxuICApO1xuXG4gIGNvbnN0IGhhbmRsZUV2ZW50ID0gdXNlQ2FsbGJhY2soXG4gICAgZXZlbnQgPT4ge1xuICAgICAgZXZlbnQudGltZVN0YW1wTG93ID0gRGF0ZS5ub3coKTtcblxuICAgICAgZGVib3VuY2VyKGV2ZW50KTtcbiAgICB9LFxuICAgIFtkZWJvdW5jZXJdXG4gICk7XG5cbiAgdXNlTGF5b3V0RWZmZWN0KCgpID0+IHtcbiAgICB0YXJnZXQuYWRkRXZlbnRMaXN0ZW5lcihuYW1lLCBoYW5kbGVFdmVudCwgeyBwYXNzaXZlOiB0cnVlIH0pO1xuICAgIGhhbmRsZUV2ZW50KHsgdGFyZ2V0LCB0eXBlOiBuYW1lIH0pO1xuXG4gICAgcmV0dXJuICgpID0+IHRhcmdldC5yZW1vdmVFdmVudExpc3RlbmVyKG5hbWUsIGhhbmRsZUV2ZW50KTtcbiAgfSwgW25hbWUsIGhhbmRsZUV2ZW50LCB0YXJnZXRdKTtcblxuICByZXR1cm4gZmFsc2U7XG59O1xuXG5FdmVudFNweS5kZWZhdWx0UHJvcHMgPSB7XG4gIGRlYm91bmNlOiAyMDBcbn07XG5cbmV4cG9ydCBkZWZhdWx0IEV2ZW50U3B5O1xuIl19
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-/***/ }),
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js":
-/*!****************************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+var ButtonElement = function (_React$Component) {
+  _inherits(ButtonElement, _React$Component);
 
-"use strict";
+  function ButtonElement() {
+    _classCallCheck(this, ButtonElement);
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _glamor = __webpack_require__(/*! glamor */ "./node_modules/glamor/lib/index.js");
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js"));
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _useScrollToEnd = _interopRequireDefault(__webpack_require__(/*! ../hooks/useScrollToEnd */ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToEnd.js"));
-
-var _useSticky3 = _interopRequireDefault(__webpack_require__(/*! ../hooks/useSticky */ "./node_modules/react-scroll-to-bottom/lib/hooks/useSticky.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-var ROOT_CSS = (0, _glamor.css)({
-  backgroundColor: 'rgba(0, 0, 0, .2)',
-  borderRadius: 10,
-  borderWidth: 0,
-  bottom: 5,
-  cursor: 'pointer',
-  height: 20,
-  outline: 0,
-  position: 'absolute',
-  right: 20,
-  width: 20,
-  '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, .4)'
-  },
-  '&:active': {
-    backgroundColor: 'rgba(0, 0, 0, .6)'
+    return _possibleConstructorReturn(this, (ButtonElement.__proto__ || Object.getPrototypeOf(ButtonElement)).apply(this, arguments));
   }
-});
 
-var AutoHideFollowButton = function AutoHideFollowButton(_ref) {
-  var children = _ref.children,
-      className = _ref.className;
-
-  var _useSticky = (0, _useSticky3.default)(),
-      _useSticky2 = _slicedToArray(_useSticky, 1),
-      sticky = _useSticky2[0];
-
-  var scrollToEnd = (0, _useScrollToEnd.default)();
-  return !sticky && /*#__PURE__*/_react.default.createElement("button", {
-    className: (0, _classnames.default)(ROOT_CSS + '', (className || '') + ''),
-    onClick: scrollToEnd,
-    type: "button"
-  }, children);
-};
-
-AutoHideFollowButton.defaultProps = {
-  children: undefined,
-  className: ''
-};
-AutoHideFollowButton.propTypes = {
-  children: _propTypes.default.any,
-  className: _propTypes.default.string
-};
-var _default = AutoHideFollowButton;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9TY3JvbGxUb0JvdHRvbS9BdXRvSGlkZUZvbGxvd0J1dHRvbi5qcyJdLCJuYW1lcyI6WyJST09UX0NTUyIsImJhY2tncm91bmRDb2xvciIsImJvcmRlclJhZGl1cyIsImJvcmRlcldpZHRoIiwiYm90dG9tIiwiY3Vyc29yIiwiaGVpZ2h0Iiwib3V0bGluZSIsInBvc2l0aW9uIiwicmlnaHQiLCJ3aWR0aCIsIkF1dG9IaWRlRm9sbG93QnV0dG9uIiwiY2hpbGRyZW4iLCJjbGFzc05hbWUiLCJzdGlja3kiLCJzY3JvbGxUb0VuZCIsImRlZmF1bHRQcm9wcyIsInVuZGVmaW5lZCIsInByb3BUeXBlcyIsIlByb3BUeXBlcyIsImFueSIsInN0cmluZyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUNBOztBQUVBOztBQUNBOzs7Ozs7Ozs7Ozs7Ozs7O0FBRUEsSUFBTUEsUUFBUSxHQUFHLGlCQUFJO0FBQ25CQyxFQUFBQSxlQUFlLEVBQUUsbUJBREU7QUFFbkJDLEVBQUFBLFlBQVksRUFBRSxFQUZLO0FBR25CQyxFQUFBQSxXQUFXLEVBQUUsQ0FITTtBQUluQkMsRUFBQUEsTUFBTSxFQUFFLENBSlc7QUFLbkJDLEVBQUFBLE1BQU0sRUFBRSxTQUxXO0FBTW5CQyxFQUFBQSxNQUFNLEVBQUUsRUFOVztBQU9uQkMsRUFBQUEsT0FBTyxFQUFFLENBUFU7QUFRbkJDLEVBQUFBLFFBQVEsRUFBRSxVQVJTO0FBU25CQyxFQUFBQSxLQUFLLEVBQUUsRUFUWTtBQVVuQkMsRUFBQUEsS0FBSyxFQUFFLEVBVlk7QUFZbkIsYUFBVztBQUNUVCxJQUFBQSxlQUFlLEVBQUU7QUFEUixHQVpRO0FBZ0JuQixjQUFZO0FBQ1ZBLElBQUFBLGVBQWUsRUFBRTtBQURQO0FBaEJPLENBQUosQ0FBakI7O0FBcUJBLElBQU1VLG9CQUFvQixHQUFHLFNBQXZCQSxvQkFBdUIsT0FBNkI7QUFBQSxNQUExQkMsUUFBMEIsUUFBMUJBLFFBQTBCO0FBQUEsTUFBaEJDLFNBQWdCLFFBQWhCQSxTQUFnQjs7QUFBQSxtQkFDdkMsMEJBRHVDO0FBQUE7QUFBQSxNQUNqREMsTUFEaUQ7O0FBRXhELE1BQU1DLFdBQVcsR0FBRyw4QkFBcEI7QUFFQSxTQUNFLENBQUNELE1BQUQsaUJBQ0U7QUFBUSxJQUFBLFNBQVMsRUFBRSx5QkFBV2QsUUFBUSxHQUFHLEVBQXRCLEVBQTBCLENBQUNhLFNBQVMsSUFBSSxFQUFkLElBQW9CLEVBQTlDLENBQW5CO0FBQXNFLElBQUEsT0FBTyxFQUFFRSxXQUEvRTtBQUE0RixJQUFBLElBQUksRUFBQztBQUFqRyxLQUNHSCxRQURILENBRko7QUFPRCxDQVhEOztBQWFBRCxvQkFBb0IsQ0FBQ0ssWUFBckIsR0FBb0M7QUFDbENKLEVBQUFBLFFBQVEsRUFBRUssU0FEd0I7QUFFbENKLEVBQUFBLFNBQVMsRUFBRTtBQUZ1QixDQUFwQztBQUtBRixvQkFBb0IsQ0FBQ08sU0FBckIsR0FBaUM7QUFDL0JOLEVBQUFBLFFBQVEsRUFBRU8sbUJBQVVDLEdBRFc7QUFFL0JQLEVBQUFBLFNBQVMsRUFBRU0sbUJBQVVFO0FBRlUsQ0FBakM7ZUFLZVYsb0IiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBjc3MgfSBmcm9tICdnbGFtb3InO1xuaW1wb3J0IGNsYXNzTmFtZXMgZnJvbSAnY2xhc3NuYW1lcyc7XG5pbXBvcnQgUHJvcFR5cGVzIGZyb20gJ3Byb3AtdHlwZXMnO1xuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IHVzZVNjcm9sbFRvRW5kIGZyb20gJy4uL2hvb2tzL3VzZVNjcm9sbFRvRW5kJztcbmltcG9ydCB1c2VTdGlja3kgZnJvbSAnLi4vaG9va3MvdXNlU3RpY2t5JztcblxuY29uc3QgUk9PVF9DU1MgPSBjc3Moe1xuICBiYWNrZ3JvdW5kQ29sb3I6ICdyZ2JhKDAsIDAsIDAsIC4yKScsXG4gIGJvcmRlclJhZGl1czogMTAsXG4gIGJvcmRlcldpZHRoOiAwLFxuICBib3R0b206IDUsXG4gIGN1cnNvcjogJ3BvaW50ZXInLFxuICBoZWlnaHQ6IDIwLFxuICBvdXRsaW5lOiAwLFxuICBwb3NpdGlvbjogJ2Fic29sdXRlJyxcbiAgcmlnaHQ6IDIwLFxuICB3aWR0aDogMjAsXG5cbiAgJyY6aG92ZXInOiB7XG4gICAgYmFja2dyb3VuZENvbG9yOiAncmdiYSgwLCAwLCAwLCAuNCknXG4gIH0sXG5cbiAgJyY6YWN0aXZlJzoge1xuICAgIGJhY2tncm91bmRDb2xvcjogJ3JnYmEoMCwgMCwgMCwgLjYpJ1xuICB9XG59KTtcblxuY29uc3QgQXV0b0hpZGVGb2xsb3dCdXR0b24gPSAoeyBjaGlsZHJlbiwgY2xhc3NOYW1lIH0pID0+IHtcbiAgY29uc3QgW3N0aWNreV0gPSB1c2VTdGlja3koKTtcbiAgY29uc3Qgc2Nyb2xsVG9FbmQgPSB1c2VTY3JvbGxUb0VuZCgpO1xuXG4gIHJldHVybiAoXG4gICAgIXN0aWNreSAmJiAoXG4gICAgICA8YnV0dG9uIGNsYXNzTmFtZT17Y2xhc3NOYW1lcyhST09UX0NTUyArICcnLCAoY2xhc3NOYW1lIHx8ICcnKSArICcnKX0gb25DbGljaz17c2Nyb2xsVG9FbmR9IHR5cGU9XCJidXR0b25cIj5cbiAgICAgICAge2NoaWxkcmVufVxuICAgICAgPC9idXR0b24+XG4gICAgKVxuICApO1xufTtcblxuQXV0b0hpZGVGb2xsb3dCdXR0b24uZGVmYXVsdFByb3BzID0ge1xuICBjaGlsZHJlbjogdW5kZWZpbmVkLFxuICBjbGFzc05hbWU6ICcnXG59O1xuXG5BdXRvSGlkZUZvbGxvd0J1dHRvbi5wcm9wVHlwZXMgPSB7XG4gIGNoaWxkcmVuOiBQcm9wVHlwZXMuYW55LFxuICBjbGFzc05hbWU6IFByb3BUeXBlcy5zdHJpbmdcbn07XG5cbmV4cG9ydCBkZWZhdWx0IEF1dG9IaWRlRm9sbG93QnV0dG9uO1xuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js"));
-
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _EventSpy = _interopRequireDefault(__webpack_require__(/*! ../EventSpy */ "./node_modules/react-scroll-to-bottom/lib/EventSpy.js"));
-
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ./FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
-
-var _InternalContext = _interopRequireDefault(__webpack_require__(/*! ./InternalContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/InternalContext.js"));
-
-var _SpineTo = _interopRequireDefault(__webpack_require__(/*! ../SpineTo */ "./node_modules/react-scroll-to-bottom/lib/SpineTo.js"));
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ./StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-var MIN_CHECK_INTERVAL = 17; // 1 frame
-
-var MODE_BOTTOM = 'bottom';
-var MODE_TOP = 'top';
-var NEAR_END_THRESHOLD = 1;
-var SCROLL_DECISION_DURATION = 34; // 2 frames
-
-function setImmediateInterval(fn, ms) {
-  fn();
-  return setInterval(fn, ms);
-}
-
-function computeViewState(_ref) {
-  var mode = _ref.mode,
-      _ref$target = _ref.target,
-      offsetHeight = _ref$target.offsetHeight,
-      scrollHeight = _ref$target.scrollHeight,
-      scrollTop = _ref$target.scrollTop;
-  var atBottom = scrollHeight - scrollTop - offsetHeight < NEAR_END_THRESHOLD;
-  var atTop = scrollTop < NEAR_END_THRESHOLD;
-  var atEnd = mode === MODE_TOP ? atTop : atBottom;
-  var atStart = mode !== MODE_TOP ? atTop : atBottom;
-  return {
-    atBottom: atBottom,
-    atEnd: atEnd,
-    atStart: atStart,
-    atTop: atTop
-  };
-}
-
-function isEnd(scrollTop, mode) {
-  return mode === MODE_TOP && scrollTop === 0 || mode === MODE_BOTTOM && scrollTop === '100%';
-}
-
-var Composer = function Composer(_ref2) {
-  var checkInterval = _ref2.checkInterval,
-      children = _ref2.children,
-      debounce = _ref2.debounce,
-      mode = _ref2.mode;
-  mode = mode === MODE_TOP ? MODE_TOP : MODE_BOTTOM;
-  var ignoreScrollEventBeforeRef = (0, _react.useRef)(0);
-
-  var _useState = (0, _react.useState)(mode === MODE_TOP ? 0 : '100%'),
-      _useState2 = _slicedToArray(_useState, 2),
-      scrollTop = _useState2[0],
-      setScrollTop = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(null),
-      _useState4 = _slicedToArray(_useState3, 2),
-      target = _useState4[0],
-      setTarget = _useState4[1]; // Internal context
-
-
-  var _useState5 = (0, _react.useState)(0),
-      _useState6 = _slicedToArray(_useState5, 2),
-      offsetHeight = _useState6[0],
-      setOffsetHeight = _useState6[1];
-
-  var _useState7 = (0, _react.useState)(0),
-      _useState8 = _slicedToArray(_useState7, 2),
-      scrollHeight = _useState8[0],
-      setScrollHeight = _useState8[1]; // State context
-
-
-  var _useState9 = (0, _react.useState)(false),
-      _useState10 = _slicedToArray(_useState9, 2),
-      animating = _useState10[0],
-      setAnimating = _useState10[1];
-
-  var _useState11 = (0, _react.useState)(true),
-      _useState12 = _slicedToArray(_useState11, 2),
-      atBottom = _useState12[0],
-      setAtBottom = _useState12[1];
-
-  var _useState13 = (0, _react.useState)(true),
-      _useState14 = _slicedToArray(_useState13, 2),
-      atEnd = _useState14[0],
-      setAtEnd = _useState14[1];
-
-  var _useState15 = (0, _react.useState)(true),
-      _useState16 = _slicedToArray(_useState15, 2),
-      atTop = _useState16[0],
-      setAtTop = _useState16[1];
-
-  var _useState17 = (0, _react.useState)(false),
-      _useState18 = _slicedToArray(_useState17, 2),
-      atStart = _useState18[0],
-      setAtStart = _useState18[1];
-
-  var _useState19 = (0, _react.useState)(true),
-      _useState20 = _slicedToArray(_useState19, 2),
-      sticky = _useState20[0],
-      setSticky = _useState20[1]; // High-rate state context
-
-
-  var scrollPositionObserversRef = (0, _react.useRef)([]);
-  var observeScrollPosition = (0, _react.useCallback)(function (fn) {
-    scrollPositionObserversRef.current.push(fn);
-    target && fn({
-      scrollTop: target.scrollTop
-    });
-    return function () {
-      var scrollPositionObservers = scrollPositionObserversRef.current;
-      var index = scrollPositionObservers.indexOf(fn);
-      ~index && scrollPositionObservers.splice(index, 1);
-    };
-  }, [scrollPositionObserversRef, target]);
-  var handleScrollEnd = (0, _react.useCallback)(function () {
-    ignoreScrollEventBeforeRef.current = Date.now();
-    setAnimating(false);
-    setScrollTop(null);
-  }, [ignoreScrollEventBeforeRef, setAnimating, setScrollTop]); // Function context
-
-  var scrollTo = (0, _react.useCallback)(function (scrollTop) {
-    var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-        behavior = _ref3.behavior;
-
-    if (behavior === 'auto') {
-      // Stop any existing animation
-      handleScrollEnd(); // Jump to the scroll position
-
-      target.scrollTop = scrollTop === '100%' ? target.scrollHeight - target.offsetHeight : scrollTop;
-    } else {
-      behavior !== 'smooth' && console.warn('react-scroll-to-bottom: Please set "behavior" when calling "scrollTo". In future versions, the default behavior will be changed from smooth scrolling to discrete scrolling to align with HTML Standard.');
-      setAnimating(true);
-      setScrollTop(scrollTop);
+  _createClass(ButtonElement, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'input',
+        this.props,
+        this.props.children
+      );
     }
-  }, [handleScrollEnd, setAnimating, setScrollTop, target]);
-  var scrollToBottom = (0, _react.useCallback)(function () {
-    var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        behavior = _ref4.behavior;
+  }]);
 
-    behavior !== 'smooth' && console.warn('react-scroll-to-bottom: Please set "behavior" when calling "scrollToBottom". In future versions, the default behavior will be changed from smooth scrolling to discrete scrolling to align with HTML Standard.');
-    scrollTo('100%', {
-      behavior: behavior || 'smooth'
-    });
-  }, [scrollTo]);
-  var scrollToTop = (0, _react.useCallback)(function () {
-    var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        behavior = _ref5.behavior;
+  return ButtonElement;
+}(_react2.default.Component);
 
-    behavior !== 'smooth' && console.warn('react-scroll-to-bottom: Please set "behavior" when calling "scrollToTop". In future versions, the default behavior will be changed from smooth scrolling to discrete scrolling to align with HTML Standard.');
-    scrollTo(0, {
-      behavior: behavior || 'smooth'
-    });
-  }, [scrollTo]);
-  var scrollToEnd = (0, _react.useCallback)(function () {
-    var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        behavior = _ref6.behavior;
+;
 
-    behavior !== 'smooth' && console.warn('react-scroll-to-bottom: Please set "behavior" when calling "scrollToEnd". In future versions, the default behavior will be changed from smooth scrolling to discrete scrolling to align with HTML Standard.');
-    var options = {
-      behavior: behavior || 'smooth'
-    };
-    mode === MODE_TOP ? scrollToTop(options) : scrollToBottom(options);
-  }, [mode, scrollToBottom, scrollToTop]);
-  var scrollToStart = (0, _react.useCallback)(function () {
-    var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        behavior = _ref7.behavior;
-
-    behavior !== 'smooth' && console.warn('react-scroll-to-bottom: Please set "behavior" when calling "scrollToStart". In future versions, the default behavior will be changed from smooth scrolling to discrete scrolling to align with HTML Standard.');
-    var options = {
-      behavior: behavior || 'smooth'
-    };
-    mode === MODE_TOP ? scrollToBottom(options) : scrollToTop(options);
-  }, [mode, scrollToBottom, scrollToTop]);
-  (0, _react.useEffect)(function () {
-    if (sticky) {
-      var stickyButNotAtEndSince = false;
-      var timeout = setImmediateInterval(function () {
-        if (sticky && target && !computeViewState({
-          mode: mode,
-          target: target
-        }).atEnd) {
-          if (!stickyButNotAtEndSince) {
-            stickyButNotAtEndSince = Date.now();
-          } else if (Date.now() - stickyButNotAtEndSince > SCROLL_DECISION_DURATION) {
-            // Quirks: In Firefox, after user scroll down, Firefox do two things:
-            //         1. Set to a new "scrollTop"
-            //         2. Fire "scroll" event
-            //         For what we observed, #1 is fired about 20ms before #2. There is a chance that this stickyCheckTimeout is being scheduled between 1 and 2.
-            //         That means, if we just look at #1 to decide if we should scroll, we will always scroll, in oppose to the user's intention.
-            // Repro: Open Firefox, set checkInterval to a lower number, and try to scroll by dragging the scroll handler. It will jump back.
-            !animating && scrollToEnd({
-              behavior: 'smooth'
-            });
-            stickyButNotAtEndSince = false;
-          }
-        } else {
-          stickyButNotAtEndSince = false;
-        }
-      }, Math.max(MIN_CHECK_INTERVAL, checkInterval) || MIN_CHECK_INTERVAL);
-      return function () {
-        return clearInterval(timeout);
-      };
-    }
-  }, [animating, checkInterval, mode, scrollToEnd, sticky, target]);
-  var handleScroll = (0, _react.useCallback)(function (_ref8) {
-    var timeStampLow = _ref8.timeStampLow;
-
-    // Currently, there are no reliable way to check if the "scroll" event is trigger due to
-    // user gesture, programmatic scrolling, or Chrome-synthesized "scroll" event to compensate size change.
-    // Thus, we use our best-effort to guess if it is triggered by user gesture, and disable sticky if it is heading towards the start direction.
-    if (timeStampLow <= ignoreScrollEventBeforeRef.current) {
-      // Since we debounce "scroll" event, this handler might be called after spineTo.onEnd (a.k.a. artificial scrolling).
-      // We should ignore debounced event fired after scrollEnd, because without skipping them, the userInitiatedScroll calculated below will not be accurate.
-      // Thus, on a fast machine, adding elements super fast will lose the "stickiness".
-      return;
-    }
-
-    if (target) {
-      var _computeViewState = computeViewState({
-        mode: mode,
-        target: target
-      }),
-          _atBottom = _computeViewState.atBottom,
-          _atEnd = _computeViewState.atEnd,
-          _atStart = _computeViewState.atStart,
-          _atTop = _computeViewState.atTop;
-
-      setAtBottom(_atBottom);
-      setAtEnd(_atEnd);
-      setAtStart(_atStart);
-      setAtTop(_atTop); // Chrome will emit "synthetic" scroll event if the container is resized or an element is added
-      // We need to ignore these "synthetic" events
-      // Repro: In playground, press 4-1-5-1-1 (small, add one, normal, add one, add one)
-      //        Nomatter how fast or slow the sequence is being pressed, it should still stick to the bottom
-
-      var nextOffsetHeight = target.offsetHeight,
-          nextScrollHeight = target.scrollHeight;
-      var offsetHeightChanged = nextOffsetHeight !== offsetHeight;
-      var scrollHeightChanged = nextScrollHeight !== scrollHeight;
-      offsetHeightChanged && setOffsetHeight(nextOffsetHeight);
-      scrollHeightChanged && setScrollHeight(nextScrollHeight); // Sticky means:
-      // - If it is scrolled programatically, we are still in sticky mode
-      // - If it is scrolled by the user, then sticky means if we are at the end
-      // Only update stickiness if the scroll event is not due to synthetic scroll done by Chrome
-
-      !offsetHeightChanged && !scrollHeightChanged && setSticky( // We are sticky if we are animating to the end, or we are already at the end.
-      // We can be "animating but not sticky" by calling "scrollTo(100)" where the container scrollHeight is 200px.
-      animating && isEnd(scrollTop, mode) || _atEnd); // If no scrollTop is set (not in programmatic scrolling mode), we should set "animating" to false
-      // "animating" is used to calculate the "sticky" property
-
-      scrollTop === null && setAnimating(false);
-      var actualScrollTop = target.scrollTop;
-      scrollPositionObserversRef.current.forEach(function (observer) {
-        return observer({
-          scrollTop: actualScrollTop
-        });
-      });
-    }
-  }, [animating, ignoreScrollEventBeforeRef, mode, offsetHeight, scrollHeight, scrollPositionObserversRef, scrollTop, setAnimating, setAtBottom, setAtEnd, setAtStart, setAtTop, setOffsetHeight, setScrollHeight, setSticky, target]);
-  var internalContext = (0, _react.useMemo)(function () {
-    return {
-      observeScrollPosition: observeScrollPosition,
-      offsetHeight: offsetHeight,
-      scrollHeight: scrollHeight,
-      setTarget: setTarget
-    };
-  }, [observeScrollPosition, offsetHeight, scrollHeight, setTarget]);
-  var animatingToEnd = animating && isEnd(scrollTop, mode);
-  var stateContext = (0, _react.useMemo)(function () {
-    return {
-      animating: animating,
-      animatingToEnd: animatingToEnd,
-      atBottom: atBottom,
-      atEnd: atEnd,
-      atStart: atStart,
-      atTop: atTop,
-      mode: mode,
-      sticky: sticky
-    };
-  }, [animating, animatingToEnd, atBottom, atEnd, atStart, atTop, mode, sticky]);
-  var functionContext = (0, _react.useMemo)(function () {
-    return {
-      scrollTo: scrollTo,
-      scrollToBottom: scrollToBottom,
-      scrollToEnd: scrollToEnd,
-      scrollToStart: scrollToStart,
-      scrollToTop: scrollToTop
-    };
-  }, [scrollTo, scrollToBottom, scrollToEnd, scrollToStart, scrollToTop]);
-  (0, _react.useEffect)(function () {
-    // We need to update the "scrollHeight" value to latest when the user do a focus inside the box.
-    //
-    // This is because:
-    // - In our code that mitigate Chrome synthetic scrolling, that code will look at whether "scrollHeight" value is latest or not.
-    // - That code only run on "scroll" event.
-    // - That means, on every "scroll" event, if the "scrollHeight" value is not latest, we will skip modifying the stickiness.
-    // - That means, if the user "focus" to an element that cause the scroll view to scroll to the bottom, the user agent will fire "scroll" event.
-    //   Since the "scrollHeight" is not latest value, this "scroll" event will be ignored and stickiness will not be modified.
-    // - That means, if the user "focus" to a newly added element that is at the end of the scroll view, the "scroll to bottom" button will continue to show.
-    //
-    // Repro in Chrome:
-    // 1. Fill up a scroll view
-    // 2. Scroll up, the "scroll to bottom" button should show up
-    // 3. Click "Add a button"
-    // 4. Click on the scroll view (to pseudo-focus on it)
-    // 5. Press TAB, the scroll view will be at the bottom
-    //
-    // Expect:
-    // - The "scroll to bottom" button should be gone.
-    if (target) {
-      var handleFocus = function handleFocus() {
-        return setScrollHeight(target.scrollHeight);
-      };
-
-      target.addEventListener('focus', handleFocus, {
-        capture: true,
-        passive: true
-      });
-      return function () {
-        return target.removeEventListener('focus', handleFocus);
-      };
-    }
-  }, [target]);
-  return /*#__PURE__*/_react.default.createElement(_InternalContext.default.Provider, {
-    value: internalContext
-  }, /*#__PURE__*/_react.default.createElement(_FunctionContext.default.Provider, {
-    value: functionContext
-  }, /*#__PURE__*/_react.default.createElement(_StateContext.default.Provider, {
-    value: stateContext
-  }, children, target && /*#__PURE__*/_react.default.createElement(_EventSpy.default, {
-    debounce: debounce,
-    name: "scroll",
-    onEvent: handleScroll,
-    target: target
-  }), target && scrollTop !== null && /*#__PURE__*/_react.default.createElement(_SpineTo.default, {
-    name: "scrollTop",
-    onEnd: handleScrollEnd,
-    target: target,
-    value: scrollTop
-  }))));
-};
-
-Composer.defaultProps = {
-  checkInterval: 100,
-  children: undefined,
-  debounce: 17,
-  mode: undefined
-};
-Composer.propTypes = {
-  checkInterval: _propTypes.default.number,
-  children: _propTypes.default.any,
-  debounce: _propTypes.default.number,
-  mode: _propTypes.default.oneOf(['bottom', 'top'])
-};
-var _default = Composer;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9TY3JvbGxUb0JvdHRvbS9Db21wb3Nlci5qcyJdLCJuYW1lcyI6WyJNSU5fQ0hFQ0tfSU5URVJWQUwiLCJNT0RFX0JPVFRPTSIsIk1PREVfVE9QIiwiTkVBUl9FTkRfVEhSRVNIT0xEIiwiU0NST0xMX0RFQ0lTSU9OX0RVUkFUSU9OIiwic2V0SW1tZWRpYXRlSW50ZXJ2YWwiLCJmbiIsIm1zIiwic2V0SW50ZXJ2YWwiLCJjb21wdXRlVmlld1N0YXRlIiwibW9kZSIsInRhcmdldCIsIm9mZnNldEhlaWdodCIsInNjcm9sbEhlaWdodCIsInNjcm9sbFRvcCIsImF0Qm90dG9tIiwiYXRUb3AiLCJhdEVuZCIsImF0U3RhcnQiLCJpc0VuZCIsIkNvbXBvc2VyIiwiY2hlY2tJbnRlcnZhbCIsImNoaWxkcmVuIiwiZGVib3VuY2UiLCJpZ25vcmVTY3JvbGxFdmVudEJlZm9yZVJlZiIsInNldFNjcm9sbFRvcCIsInNldFRhcmdldCIsInNldE9mZnNldEhlaWdodCIsInNldFNjcm9sbEhlaWdodCIsImFuaW1hdGluZyIsInNldEFuaW1hdGluZyIsInNldEF0Qm90dG9tIiwic2V0QXRFbmQiLCJzZXRBdFRvcCIsInNldEF0U3RhcnQiLCJzdGlja3kiLCJzZXRTdGlja3kiLCJzY3JvbGxQb3NpdGlvbk9ic2VydmVyc1JlZiIsIm9ic2VydmVTY3JvbGxQb3NpdGlvbiIsImN1cnJlbnQiLCJwdXNoIiwic2Nyb2xsUG9zaXRpb25PYnNlcnZlcnMiLCJpbmRleCIsImluZGV4T2YiLCJzcGxpY2UiLCJoYW5kbGVTY3JvbGxFbmQiLCJEYXRlIiwibm93Iiwic2Nyb2xsVG8iLCJiZWhhdmlvciIsImNvbnNvbGUiLCJ3YXJuIiwic2Nyb2xsVG9Cb3R0b20iLCJzY3JvbGxUb1RvcCIsInNjcm9sbFRvRW5kIiwib3B0aW9ucyIsInNjcm9sbFRvU3RhcnQiLCJzdGlja3lCdXROb3RBdEVuZFNpbmNlIiwidGltZW91dCIsIk1hdGgiLCJtYXgiLCJjbGVhckludGVydmFsIiwiaGFuZGxlU2Nyb2xsIiwidGltZVN0YW1wTG93IiwibmV4dE9mZnNldEhlaWdodCIsIm5leHRTY3JvbGxIZWlnaHQiLCJvZmZzZXRIZWlnaHRDaGFuZ2VkIiwic2Nyb2xsSGVpZ2h0Q2hhbmdlZCIsImFjdHVhbFNjcm9sbFRvcCIsImZvckVhY2giLCJvYnNlcnZlciIsImludGVybmFsQ29udGV4dCIsImFuaW1hdGluZ1RvRW5kIiwic3RhdGVDb250ZXh0IiwiZnVuY3Rpb25Db250ZXh0IiwiaGFuZGxlRm9jdXMiLCJhZGRFdmVudExpc3RlbmVyIiwiY2FwdHVyZSIsInBhc3NpdmUiLCJyZW1vdmVFdmVudExpc3RlbmVyIiwiZGVmYXVsdFByb3BzIiwidW5kZWZpbmVkIiwicHJvcFR5cGVzIiwiUHJvcFR5cGVzIiwibnVtYmVyIiwiYW55Iiwib25lT2YiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUVBOztBQUNBOztBQUNBOztBQUNBOztBQUNBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUVBLElBQU1BLGtCQUFrQixHQUFHLEVBQTNCLEMsQ0FBK0I7O0FBQy9CLElBQU1DLFdBQVcsR0FBRyxRQUFwQjtBQUNBLElBQU1DLFFBQVEsR0FBRyxLQUFqQjtBQUNBLElBQU1DLGtCQUFrQixHQUFHLENBQTNCO0FBQ0EsSUFBTUMsd0JBQXdCLEdBQUcsRUFBakMsQyxDQUFxQzs7QUFFckMsU0FBU0Msb0JBQVQsQ0FBOEJDLEVBQTlCLEVBQWtDQyxFQUFsQyxFQUFzQztBQUNwQ0QsRUFBQUEsRUFBRTtBQUVGLFNBQU9FLFdBQVcsQ0FBQ0YsRUFBRCxFQUFLQyxFQUFMLENBQWxCO0FBQ0Q7O0FBRUQsU0FBU0UsZ0JBQVQsT0FBdUY7QUFBQSxNQUEzREMsSUFBMkQsUUFBM0RBLElBQTJEO0FBQUEseUJBQXJEQyxNQUFxRDtBQUFBLE1BQTNDQyxZQUEyQyxlQUEzQ0EsWUFBMkM7QUFBQSxNQUE3QkMsWUFBNkIsZUFBN0JBLFlBQTZCO0FBQUEsTUFBZkMsU0FBZSxlQUFmQSxTQUFlO0FBQ3JGLE1B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QyxRQUFuQztBQUE0QyxJQUFBLE9BQU8sRUFBRXVDLFlBQXJEO0FBQW1FLElBQUEsTUFBTSxFQUFFbkQ7QUFBM0UsSUFGYixFQUdHQSxNQUFNLElBQUlHLFNBQVMsS0FBSyxJQUF4QixpQkFDQyw2QkFBQyxnQkFBRDtBQUFTLElBQUEsSUFBSSxFQUFDLFdBQWQ7QUFBMEIsSUFBQSxLQUFLLEVBQUUrQixlQUFqQztBQUFrRCxJQUFBLE1BQU0sRUFBRWxDLE1BQTFEO0FBQWtFLElBQUEsS0FBSyxFQUFFRztBQUF6RSxJQUpKLENBREYsQ0FERixDQURGO0FBYUQsQ0ExU0Q7O0FBNFNBTSxRQUFRLENBQUM0RCxZQUFULEdBQXdCO0FBQ3RCM0QsRUFBQUEsYUFBYSxFQUFFLEdBRE87QUFFdEJDLEVBQUFBLFFBQVEsRUFBRTJELFNBRlk7QUFHdEIxRCxFQUFBQSxRQUFRLEVBQUUsRUFIWTtBQUl0QmIsRUFBQUEsSUFBSSxFQUFFdUU7QUFKZ0IsQ0FBeEI7QUFPQTdELFFBQVEsQ0FBQzhELFNBQVQsR0FBcUI7QUFDbkI3RCxFQUFBQSxhQUFhLEVBQUU4RCxtQkFBVUMsTUFETjtBQUVuQjlELEVBQUFBLFFBQVEsRUFBRTZELG1CQUFVRSxHQUZEO0FBR25COUQsRUFBQUEsUUFBUSxFQUFFNEQsbUJBQVVDLE1BSEQ7QUFJbkIxRSxFQUFBQSxJQUFJLEVBQUV5RSxtQkFBVUcsS0FBVixDQUFnQixDQUFDLFFBQUQsRUFBVyxLQUFYLENBQWhCO0FBSmEsQ0FBckI7ZUFPZWxFLFEiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUHJvcFR5cGVzIGZyb20gJ3Byb3AtdHlwZXMnO1xuaW1wb3J0IFJlYWN0LCB7IHVzZUNhbGxiYWNrLCB1c2VFZmZlY3QsIHVzZU1lbW8sIHVzZVJlZiwgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCc7XG5cbmltcG9ydCBFdmVudFNweSBmcm9tICcuLi9FdmVudFNweSc7XG5pbXBvcnQgRnVuY3Rpb25Db250ZXh0IGZyb20gJy4vRnVuY3Rpb25Db250ZXh0JztcbmltcG9ydCBJbnRlcm5hbENvbnRleHQgZnJvbSAnLi9JbnRlcm5hbENvbnRleHQnO1xuaW1wb3J0IFNwaW5lVG8gZnJvbSAnLi4vU3BpbmVUbyc7XG5pbXBvcnQgU3RhdGVDb250ZXh0IGZyb20gJy4vU3RhdGVDb250ZXh0JztcblxuY29uc3QgTUlOX0NIRUNLX0lOVEVSVkFMID0gMTc7IC8vIDEgZnJhbWVcbmNvbnN0IE1PREVfQk9UVE9NID0gJ2JvdHRvbSc7XG5jb25zdCBNT0RFX1RPUCA9ICd0b3AnO1xuY29uc3QgTkVBUl9FTkRfVEhSRVNIT0xEID0gMTtcbmNvbnN0IFNDUk9MTF9ERUNJU0lPTl9EVVJBVElPTiA9IDM0OyAvLyAyIGZyYW1lc1xuXG5mdW5jdGlvbiBzZXRJbW1lZGlhdGVJbnRlcnZhbChmbiwgbXMpIHtcbiAgZm4oKTtcblxuICByZXR1cm4gc2V0SW50ZXJ2YWwoZm4sIG1zKTtcbn1cblxuZnVuY3Rpb24gY29tcHV0ZVZpZXdTdGF0ZSh7IG1vZGUsIHRhcmdldDogeyBvZmZzZXRIZWlnaHQsIHNjcm9sbEhlaWdodCwgc2Nyb2xsVG9wIH0gfSkge1xuICBjb25zdCBhdEJvdHRvbSA9IHNjcm9sbEhlaWdodCAtIHNjcm9sbFRvcCAtIG9mZnNldEhlaWdodCA8IE5FQVJfRU5EX1RIUkVTSE9MRDtcbiAgY29uc3QgYXRUb3AgPSBzY3JvbGxUb3AgPCBORUFSX0VORF9USFJFU0hPTEQ7XG5cbiAgY29uc3QgYXRFbmQgPSBtb2RlID09PSBNT0RFX1RPUCA/IGF0VG9wIDogYXRCb3R0b207XG4gIGNvbnN0IGF0U3RhcnQgPSBtb2RlICE9PSBNT0RFX1RPUCA/IGF0VG9wIDogYXRCb3R0b207XG5cbiAgcmV0dXJuIHtcbiAgICBhdEJvdHRvbSxcbiAgICBhdEVuZCxcbiAgICBhdFN0YXJ0LFxuICAgIGF0VG9wXG4gIH07XG59XG5cbmZ1bmN0aW9uIGlzRW5kKHNjcm9sbFRvcCwgbW9kZSkge1xuICByZXR1cm4gKG1vZGUgPT09IE1PREVfVE9QICYmIHNjcm9sbFRvcCA9PT0gMCkgfHwgKG1vZGUgPT09IE1PREVfQk9UVE9NICYmIHNjcm9sbFRvcCA9PT0gJzEwMCUnKTtcbn1cblxuY29uc3QgQ29tcG9zZXIgPSAoeyBjaGVja0ludGVydmFsLCBjaGlsZHJlbiwgZGVib3VuY2UsIG1vZGUgfSkgPT4ge1xuICBtb2RlID0gbW9kZSA9PT0gTU9ERV9UT1AgPyBNT0RFX1RPUCA6IE1PREVfQk9UVE9NO1xuXG4gIGNvbnN0IGlnbm9yZVNjcm9sbEV2ZW50QmVmb3JlUmVmID0gdXNlUmVmKDApO1xuICBjb25zdCBbc2Nyb2xsVG9wLCBzZXRTY3JvbGxUb3BdID0gdXNlU3RhdGUobW9kZSA9PT0gTU9ERV9UT1AgPyAwIDogJzEwMCUnKTtcbiAgY29uc3QgW3RhcmdldCwgc2V0VGFyZ2V0XSA9IHVzZVN0YXRlKG51bGwpO1xuXG4gIC8vIEludGVybmFsIGNvbnRleHRcbiAgY29uc3QgW29mZnNldEhlaWdodCwgc2V0T2Zmc2V0SGVpZ2h0XSA9IHVzZVN0YXRlKDApO1xuICBjb25zdCBbc2Nyb2xsSGVpZ2h0LCBzZXRTY3JvbGxIZWlnaHRdID0gdXNlU3RhdGUoMCk7XG5cbiAgLy8gU3RhdGUgY29udGV4dFxuICBjb25zdCBbYW5pbWF0aW5nLCBzZXRBbmltYXRpbmddID0gdXNlU3RhdGUoZmFsc2UpO1xuICBjb25zdCBbYXRCb3R0b20sIHNldEF0Qm90dG9tXSA9IHVzZVN0YXRlKHRydWUpO1xuICBjb25zdCBbYXRFbmQsIHNldEF0RW5kXSA9IHVzZVN0YXRlKHRydWUpO1xuICBjb25zdCBbYXRUb3AsIHNldEF0VG9wXSA9IHVzZVN0YXRlKHRydWUpO1xuICBjb25zdCBbYXRTdGFydCwgc2V0QXRTdGFydF0gPSB1c2VTdGF0ZShmYWxzZSk7XG4gIGNvbnN0IFtzdGlja3ksIHNldFN0aWNreV0gPSB1c2VTdGF0ZSh0cnVlKTtcblxuICAvLyBIaWdoLXJhdGUgc3RhdGUgY29udGV4dFxuICBjb25zdCBzY3JvbGxQb3NpdGlvbk9ic2VydmVyc1JlZiA9IHVzZVJlZihbXSk7XG4gIGNvbnN0IG9ic2VydmVTY3JvbGxQb3NpdGlvbiA9IHVzZUNhbGxiYWNrKFxuICAgIGZuID0+IHtcbiAgICAgIHNjcm9sbFBvc2l0aW9uT2JzZXJ2ZXJzUmVmLmN1cnJlbnQucHVzaChmbik7XG4gICAgICB0YXJnZXQgJiYgZm4oeyBzY3JvbGxUb3A6IHRhcmdldC5zY3JvbGxUb3AgfSk7XG5cbiAgICAgIHJldHVybiAoKSA9PiB7XG4gICAgICAgIGNvbnN0IHsgY3VycmVudDogc2Nyb2xsUG9zaXRpb25PYnNlcnZlcnMgfSA9IHNjcm9sbFBvc2l0aW9uT2JzZXJ2ZXJzUmVmO1xuICAgICAgICBjb25zdCBpbmRleCA9IHNjcm9sbFBvc2l0aW9uT2JzZXJ2ZXJzLmluZGV4T2YoZm4pO1xuXG4gICAgICAgIH5pbmRleCAmJiBzY3JvbGxQb3NpdGlvbk9ic2VydmVycy5zcGxpY2UoaW5kZXgsIDEpO1xuICAgICAgfTtcbiAgICB9LFxuICAgIFtzY3JvbGxQb3NpdGlvbk9ic2VydmVyc1JlZiwgdGFyZ2V0XVxuICApO1xuXG4gIGNvbnN0IGhhbmRsZVNjcm9sbEVuZCA9IHVzZUNhbGxiYWNrKCgpID0+IHtcbiAgICBpZ25vcmVTY3JvbGxFdmVudEJlZm9yZVJlZi5jdXJyZW50ID0gRGF0ZS5ub3coKTtcbiAgICBzZXRBbmltYXRpbmcoZmFsc2UpO1xuICAgIHNldFNjcm9sbFRvcChudWxsKTtcbiAgfSwgW2lnbm9yZVNjcm9sbEV2ZW50QmVmb3JlUmVmLCBzZXRBbmltYXRpbmcsIHNldFNjcm9sbFRvcF0pO1xuXG4gIC8vIEZ1bmN0aW9uIGNvbnRleHRcbiAgY29uc3Qgc2Nyb2xsVG8gPSB1c2VDYWxsYmFjayhcbiAgICAoc2Nyb2xsVG9wLCB7IGJlaGF2aW9yIH0gPSB7fSkgPT4ge1xuICAgICAgaWYgKGJlaGF2aW9yID09PSAnYXV0bycpIHtcbiAgICAgICAgLy8gU3RvcCBhbnkgZXhpc3RpbmcgYW5pbWF0aW9uXG4gICAgICAgIGhhbmRsZVNjcm9sbEVuZCgpO1xuXG4gICAgICAgIC8vIEp1bXAgdG8gdGhlIHNjcm9sbCBwb3NpdGlvblxuICAgICAgICB0YXJnZXQuc2Nyb2xsVG9wID0gc2Nyb2xsVG9wID09PSAnMTAwJScgPyB0YXJnZXQuc2Nyb2xsSGVpZ2h0IC0gdGFyZ2V0Lm9mZnNldEhlaWdodCA6IHNjcm9sbFRvcDtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIGJlaGF2aW9yICE9PSAnc21vb3RoJyAmJlxuICAgICAgICAgIGNvbnNvbGUud2FybihcbiAgICAgICAgICAgICdyZWFjdC1zY3JvbGwtdG8tYm90dG9tOiBQbGVhc2Ugc2V0IFwiYmVoYXZpb3JcIiB3aGVuIGNhbGxpbmcgXCJzY3JvbGxUb1wiLiBJbiBmdXR1cmUgdmVyc2lvbnMsIHRoZSBkZWZhdWx0IGJlaGF2aW9yIHdpbGwgYmUgY2hhbmdlZCBmcm9tIHNtb290aCBzY3JvbGxpbmcgdG8gZGlzY3JldGUgc2Nyb2xsaW5nIHRvIGFsaWduIHdpdGggSFRNTCBTdGFuZGFyZC4nXG4gICAgICAgICAgKTtcblxuICAgICAgICBzZXRBbmltYXRpbmcodHJ1ZSk7XG4gICAgICAgIHNldFNjcm9sbFRvcChzY3JvbGxUb3ApO1xuICAgICAgfVxuICAgIH0sXG4gICAgW2hhbmRsZVNjcm9sbEVuZCwgc2V0QW5pbWF0aW5nLCBzZXRTY3JvbGxUb3AsIHRhcmdldF1cbiAgKTtcblxuICBjb25zdCBzY3JvbGxUb0JvdHRvbSA9IHVzZUNhbGxiYWNrKFxuICAgICh7IGJlaGF2aW9yIH0gPSB7fSkgPT4ge1xuICAgICAgYmVoYXZpb3IgIT09ICdzbW9vdGgnICYmXG4gICAgICAgIGNvbnNvbGUud2FybihcbiAgICAgICAgICAncmVhY3Qtc2Nyb2xsLXRvLWJvdHRvbTogUGxlYXNlIHNldCBcImJlaGF2aW9yXCIgd2hlbiBjYWxsaW5nIFwic2Nyb2xsVG9Cb3R0b21cIi4gSW4gZnV0dXJlIHZlcnNpb25zLCB0aGUgZGVmYXVsdCBiZWhhdmlvciB3aWxsIGJlIGNoYW5nZWQgZnJvbSBzbW9vdGggc2Nyb2xsaW5nIHRvIGRpc2NyZXRlIHNjcm9sbGluZyB0byBhbGlnbiB3aXRoIEhUTUwgU3RhbmRhcmQuJ1xuICAgICAgICApO1xuXG4gICAgICBzY3JvbGxUbygnMTAwJScsIHsgYmVoYXZpb3I6IGJlaGF2aW9yIHx8ICdzbW9vdGgnIH0pO1xuICAgIH0sXG4gICAgW3Njcm9sbFRvXVxuICApO1xuXG4gIGNvbnN0IHNjcm9sbFRvVG9wID0gdXNlQ2FsbGJhY2soXG4gICAgKHsgYmVoYXZpb3IgfSA9IHt9KSA9PiB7XG4gICAgICBiZWhhdmlvciAhPT0gJ3Ntb290aCcgJiZcbiAgICAgICAgY29uc29sZS53YXJuKFxuICAgICAgICAgICdyZWFjdC1zY3JvbGwtdG8tYm90dG9tOiBQbGVhc2Ugc2V0IFwiYmVoYXZpb3JcIiB3aGVuIGNhbGxpbmcgXCJzY3JvbGxUb1RvcFwiLiBJbiBmdXR1cmUgdmVyc2lvbnMsIHRoZSBkZWZhdWx0IGJlaGF2aW9yIHdpbGwgYmUgY2hhbmdlZCBmcm9tIHNtb290aCBzY3JvbGxpbmcgdG8gZGlzY3JldGUgc2Nyb2xsaW5nIHRvIGFsaWduIHdpdGggSFRNTCBTdGFuZGFyZC4nXG4gICAgICAgICk7XG5cbiAgICAgIHNjcm9sbFRvKDAsIHsgYmVoYXZpb3I6IGJlaGF2aW9yIHx8ICdzbW9vdGgnIH0pO1xuICAgIH0sXG4gICAgW3Njcm9sbFRvXVxuICApO1xuXG4gIGNvbnN0IHNjcm9sbFRvRW5kID0gdXNlQ2FsbGJhY2soXG4gICAgKHsgYmVoYXZpb3IgfSA9IHt9KSA9PiB7XG4gICAgICBiZWhhdmlvciAhPT0gJ3Ntb290aCcgJiZcbiAgICAgICAgY29uc29sZS53YXJuKFxuICAgICAgICAgICdyZWFjdC1zY3JvbGwtdG8tYm90dG9tOiBQbGVhc2Ugc2V0IFwiYmVoYXZpb3JcIiB3aGVuIGNhbGxpbmcgXCJzY3JvbGxUb0VuZFwiLiBJbiBmdXR1cmUgdmVyc2lvbnMsIHRoZSBkZWZhdWx0IGJlaGF2aW9yIHdpbGwgYmUgY2hhbmdlZCBmcm9tIHNtb290aCBzY3JvbGxpbmcgdG8gZGlzY3JldGUgc2Nyb2xsaW5nIHRvIGFsaWduIHdpdGggSFRNTCBTdGFuZGFyZC4nXG4gICAgICAgICk7XG5cbiAgICAgIGNvbnN0IG9wdGlvbnMgPSB7IGJlaGF2aW9yOiBiZWhhdmlvciB8fCAnc21vb3RoJyB9O1xuXG4gICAgICBtb2RlID09PSBNT0RFX1RPUCA/IHNjcm9sbFRvVG9wKG9wdGlvbnMpIDogc2Nyb2xsVG9Cb3R0b20ob3B0aW9ucyk7XG4gICAgfSxcbiAgICBbbW9kZSwgc2Nyb2xsVG9Cb3R0b20sIHNjcm9sbFRvVG9wXVxuICApO1xuXG4gIGNvbnN0IHNjcm9sbFRvU3RhcnQgPSB1c2VDYWxsYmFjayhcbiAgICAoeyBiZWhhdmlvciB9ID0ge30pID0+IHtcbiAgICAgIGJlaGF2aW9yICE9PSAnc21vb3RoJyAmJlxuICAgICAgICBjb25zb2xlLndhcm4oXG4gICAgICAgICAgJ3JlYWN0LXNjcm9sbC10by1ib3R0b206IFBsZWFzZSBzZXQgXCJiZWhhdmlvclwiIHdoZW4gY2FsbGluZyBcInNjcm9sbFRvU3RhcnRcIi4gSW4gZnV0dXJlIHZlcnNpb25zLCB0aGUgZGVmYXVsdCBiZWhhdmlvciB3aWxsIGJlIGNoYW5nZWQgZnJvbSBzbW9vdGggc2Nyb2xsaW5nIHRvIGRpc2NyZXRlIHNjcm9sbGluZyB0byBhbGlnbiB3aXRoIEhUTUwgU3RhbmRhcmQuJ1xuICAgICAgICApO1xuXG4gICAgICBjb25zdCBvcHRpb25zID0geyBiZWhhdmlvcjogYmVoYXZpb3IgfHwgJ3Ntb290aCcgfTtcblxuICAgICAgbW9kZSA9PT0gTU9ERV9UT1AgPyBzY3JvbGxUb0JvdHRvbShvcHRpb25zKSA6IHNjcm9sbFRvVG9wKG9wdGlvbnMpO1xuICAgIH0sXG4gICAgW21vZGUsIHNjcm9sbFRvQm90dG9tLCBzY3JvbGxUb1RvcF1cbiAgKTtcblxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGlmIChzdGlja3kpIHtcbiAgICAgIGxldCBzdGlja3lCdXROb3RBdEVuZFNpbmNlID0gZmFsc2U7XG5cbiAgICAgIGNvbnN0IHRpbWVvdXQgPSBzZXRJbW1lZGlhdGVJbnRlcnZhbCgoKSA9PiB7XG4gICAgICAgIGlmIChzdGlja3kgJiYgdGFyZ2V0ICYmICFjb21wdXRlVmlld1N0YXRlKHsgbW9kZSwgdGFyZ2V0IH0pLmF0RW5kKSB7XG4gICAgICAgICAgaWYgKCFzdGlja3lCdXROb3RBdEVuZFNpbmNlKSB7XG4gICAgICAgICAgICBzdGlja3lCdXROb3RBdEVuZFNpbmNlID0gRGF0ZS5ub3coKTtcbiAgICAgICAgICB9IGVsc2UgaWYgKERhdGUubm93KCkgLSBzdGlja3lCdXROb3RBdEVuZFNpbmNlID4gU0NST0xMX0RFQ0lTSU9OX0RVUkFUSU9OKSB7XG4gICAgICAgICAgICAvLyBRdWlya3M6IEluIEZpcmVmb3gsIGFmdGVyIHVzZXIgc2Nyb2xsIGRvd24sIEZpcmVmb3ggZG8gdHdvIHRoaW5nczpcbiAgICAgICAgICAgIC8vICAgICAgICAgMS4gU2V0IHRvIGEgbmV3IFwic2Nyb2xsVG9wXCJcbiAgICAgICAgICAgIC8vICAgICAgICAgMi4gRmlyZSBcInNjcm9sbFwiIGV2ZW50XG4gICAgICAgICAgICAvLyAgICAgICAgIEZvciB3aGF0IHdlIG9ic2VydmVkLCAjMSBpcyBmaXJlZCBhYm91dCAyMG1zIGJlZm9yZSAjMi4gVGhlcmUgaXMgYSBjaGFuY2UgdGhhdCB0aGlzIHN0aWNreUNoZWNrVGltZW91dCBpcyBiZWluZyBzY2hlZHVsZWQgYmV0d2VlbiAxIGFuZCAyLlxuICAgICAgICAgICAgLy8gICAgICAgICBUaGF0IG1lYW5zLCBpZiB3ZSBqdXN0IGxvb2sgYXQgIzEgdG8gZGVjaWRlIGlmIHdlIHNob3VsZCBzY3JvbGwsIHdlIHdpbGwgYWx3YXlzIHNjcm9sbCwgaW4gb3Bwb3NlIHRvIHRoZSB1c2VyJ3MgaW50ZW50aW9uLlxuICAgICAgICAgICAgLy8gUmVwcm86IE9wZW4gRmlyZWZveCwgc2V0IGNoZWNrSW50ZXJ2YWwgdG8gYSBsb3dlciBudW1iZXIsIGFuZCB0cnkgdG8gc2Nyb2xsIGJ5IGRyYWdnaW5nIHRoZSBzY3JvbGwgaGFuZGxlci4gSXQgd2lsbCBqdW1wIGJhY2suXG5cbiAgICAgICAgICAgICFhbmltYXRpbmcgJiYgc2Nyb2xsVG9FbmQoeyBiZWhhdmlvcjogJ3Ntb290aCcgfSk7XG4gICAgICAgICAgICBzdGlja3lCdXROb3RBdEVuZFNpbmNlID0gZmFsc2U7XG4gICAgICAgICAgfVxuICAgICAgICB9IGVsc2Uge1xuICAgICAgICAgIHN0aWNreUJ1dE5vdEF0RW5kU2luY2UgPSBmYWxzZTtcbiAgICAgICAgfVxuICAgICAgfSwgTWF0aC5tYXgoTUlOX0NIRUNLX0lOVEVSVkFMLCBjaGVja0ludGVydmFsKSB8fCBNSU5fQ0hFQ0tfSU5URVJWQUwpO1xuXG4gICAgICByZXR1cm4gKCkgPT4gY2xlYXJJbnRlcnZhbCh0aW1lb3V0KTtcbiAgICB9XG4gIH0sIFthbmltYXRpbmcsIGNoZWNrSW50ZXJ2YWwsIG1vZGUsIHNjcm9sbFRvRW5kLCBzdGlja3ksIHRhcmdldF0pO1xuXG4gIGNvbnN0IGhhbmRsZVNjcm9sbCA9IHVzZUNhbGxiYWNrKFxuICAgICh7IHRpbWVTdGFtcExvdyB9KSA9PiB7XG4gICAgICAvLyBDdXJyZW50bHksIHRoZXJlIGFyZSBubyByZWxpYWJsZSB3YXkgdG8gY2hlY2sgaWYgdGhlIFwic2Nyb2xsXCIgZXZlbnQgaXMgdHJpZ2dlciBkdWUgdG9cbiAgICAgIC8vIHVzZXIgZ2VzdHVyZSwgcHJvZ3JhbW1hdGljIHNjcm9sbGluZywgb3IgQ2hyb21lLXN5bnRoZXNpemVkIFwic2Nyb2xsXCIgZXZlbnQgdG8gY29tcGVuc2F0ZSBzaXplIGNoYW5nZS5cbiAgICAgIC8vIFRodXMsIHdlIHVzZSBvdXIgYmVzdC1lZmZvcnQgdG8gZ3Vlc3MgaWYgaXQgaXMgdHJpZ2dlcmVkIGJ5IHVzZXIgZ2VzdHVyZSwgYW5kIGRpc2FibGUgc3RpY2t5IGlmIGl0IGlzIGhlYWRpbmcgdG93YXJkcyB0aGUgc3RhcnQgZGlyZWN0aW9uLlxuXG4gICAgICBpZiAodGltZVN0YW1wTG93IDw9IGlnbm9yZVNjcm9sbEV2ZW50QmVmb3JlUmVmLmN1cnJlbnQpIHtcbiAgICAgICAgLy8gU2luY2Ugd2UgZGVib3VuY2UgXCJzY3JvbGxcIiBldmVudCwgdGhpcyBoYW5kbGVyIG1pZ2h0IGJlIGNhbGxlZCBhZnRlciBzcGluZVRvLm9uRW5kIChhLmsuYS4gYXJ0aWZpY2lhbCBzY3JvbGxpbmcpLlxuICAgICAgICAvLyBXZSBzaG91bGQgaWdub3JlIGRlYm91bmNlZCBldmVudCBmaXJlZCBhZnRlciBzY3JvbGxFbmQsIGJlY2F1c2Ugd2l0aG91dCBza2lwcGluZyB0aGVtLCB0aGUgdXNlckluaXRpYXRlZFNjcm9sbCBjYWxjdWxhdGVkIGJlbG93IHdpbGwgbm90IGJlIGFjY3VyYXRlLlxuICAgICAgICAvLyBUaHVzLCBvbiBhIGZhc3QgbWFjaGluZSwgYWRkaW5nIGVsZW1lbnRzIHN1cGVyIGZhc3Qgd2lsbCBsb3NlIHRoZSBcInN0aWNraW5lc3NcIi5cblxuICAgICAgICByZXR1cm47XG4gICAgICB9XG5cbiAgICAgIGlmICh0YXJnZXQpIHtcbiAgICAgICAgY29uc3QgeyBhdEJvdHRvbSwgYXRFbmQsIGF0U3RhcnQsIGF0VG9wIH0gPSBjb21wdXRlVmlld1N0YXRlKHsgbW9kZSwgdGFyZ2V0IH0pO1xuXG4gICAgICAgIHNldEF0Qm90dG9tKGF0Qm90dG9tKTtcbiAgICAgICAgc2V0QXRFbmQoYXRFbmQpO1xuICAgICAgICBzZXRBdFN0YXJ0KGF0U3RhcnQpO1xuICAgICAgICBzZXRBdFRvcChhdFRvcCk7XG5cbiAgICAgICAgLy8gQ2hyb21lIHdpbGwgZW1pdCBcInN5bnRoZXRpY1wiIHNjcm9sbCBldmVudCBpZiB0aGUgY29udGFpbmVyIGlzIHJlc2l6ZWQgb3IgYW4gZWxlbWVudCBpcyBhZGRlZFxuICAgICAgICAvLyBXZSBuZWVkIHRvIGlnbm9yZSB0aGVzZSBcInN5bnRoZXRpY1wiIGV2ZW50c1xuICAgICAgICAvLyBSZXBybzogSW4gcGxheWdyb3VuZCwgcHJlc3MgNC0xLTUtMS0xIChzbWFsbCwgYWRkIG9uZSwgbm9ybWFsLCBhZGQgb25lLCBhZGQgb25lKVxuICAgICAgICAvLyAgICAgICAgTm9tYXR0ZXIgaG93IGZhc3Qgb3Igc2xvdyB0aGUgc2VxdWVuY2UgaXMgYmVpbmcgcHJlc3NlZCwgaXQgc2hvdWxkIHN0aWxsIHN0aWNrIHRvIHRoZSBib3R0b21cbiAgICAgICAgY29uc3QgeyBvZmZzZXRIZWlnaHQ6IG5leHRPZmZzZXRIZWlnaHQsIHNjcm9sbEhlaWdodDogbmV4dFNjcm9sbEhlaWdodCB9ID0gdGFyZ2V0O1xuICAgICAgICBjb25zdCBvZmZzZXRIZWlnaHRDaGFuZ2VkID0gbmV4dE9mZnNldEhlaWdodCAhPT0gb2Zmc2V0SGVpZ2h0O1xuICAgICAgICBjb25zdCBzY3JvbGxIZWlnaHRDaGFuZ2VkID0gbmV4dFNjcm9sbEhlaWdodCAhPT0gc2Nyb2xsSGVpZ2h0O1xuXG4gICAgICAgIG9mZnNldEhlaWdodENoYW5nZWQgJiYgc2V0T2Zmc2V0SGVpZ2h0KG5leHRPZmZzZXRIZWlnaHQpO1xuICAgICAgICBzY3JvbGxIZWlnaHRDaGFuZ2VkICYmIHNldFNjcm9sbEhlaWdodChuZXh0U2Nyb2xsSGVpZ2h0KTtcblxuICAgICAgICAvLyBTdGlja3kgbWVhbnM6XG4gICAgICAgIC8vIC0gSWYgaXQgaXMgc2Nyb2xsZWQgcHJvZ3JhbWF0aWNhbGx5LCB3ZSBhcmUgc3RpbGwgaW4gc3RpY2t5IG1vZGVcbiAgICAgICAgLy8gLSBJZiBpdCBpcyBzY3JvbGxlZCBieSB0aGUgdXNlciwgdGhlbiBzdGlja3kgbWVhbnMgaWYgd2UgYXJlIGF0IHRoZSBlbmRcblxuICAgICAgICAvLyBPbmx5IHVwZGF0ZSBzdGlja2luZXNzIGlmIHRoZSBzY3JvbGwgZXZlbnQgaXMgbm90IGR1ZSB0byBzeW50aGV0aWMgc2Nyb2xsIGRvbmUgYnkgQ2hyb21lXG4gICAgICAgICFvZmZzZXRIZWlnaHRDaGFuZ2VkICYmXG4gICAgICAgICAgIXNjcm9sbEhlaWdodENoYW5nZWQgJiZcbiAgICAgICAgICBzZXRTdGlja3koXG4gICAgICAgICAgICAvLyBXZSBhcmUgc3RpY2t5IGlmIHdlIGFyZSBhbmltYXRpbmcgdG8gdGhlIGVuZCwgb3Igd2UgYXJlIGFscmVhZHkgYXQgdGhlIGVuZC5cbiAgICAgICAgICAgIC8vIFdlIGNhbiBiZSBcImFuaW1hdGluZyBidXQgbm90IHN0aWNreVwiIGJ5IGNhbGxpbmcgXCJzY3JvbGxUbygxMDApXCIgd2hlcmUgdGhlIGNvbnRhaW5lciBzY3JvbGxIZWlnaHQgaXMgMjAwcHguXG4gICAgICAgICAgICAoYW5pbWF0aW5nICYmIGlzRW5kKHNjcm9sbFRvcCwgbW9kZSkpIHx8IGF0RW5kXG4gICAgICAgICAgKTtcblxuICAgICAgICAvLyBJZiBubyBzY3JvbGxUb3AgaXMgc2V0IChub3QgaW4gcHJvZ3JhbW1hdGljIHNjcm9sbGluZyBtb2RlKSwgd2Ugc2hvdWxkIHNldCBcImFuaW1hdGluZ1wiIHRvIGZhbHNlXG4gICAgICAgIC8vIFwiYW5pbWF0aW5nXCIgaXMgdXNlZCB0byBjYWxjdWxhdGUgdGhlIFwic3RpY2t5XCIgcHJvcGVydHlcbiAgICAgICAgc2Nyb2xsVG9wID09PSBudWxsICYmIHNldEFuaW1hdGluZyhmYWxzZSk7XG5cbiAgICAgICAgY29uc3QgeyBzY3JvbGxUb3A6IGFjdHVhbFNjcm9sbFRvcCB9ID0gdGFyZ2V0O1xuXG4gICAgICAgIHNjcm9sbFBvc2l0aW9uT2JzZXJ2ZXJzUmVmLmN1cnJlbnQuZm9yRWFjaChvYnNlcnZlciA9PiBvYnNlcnZlcih7IHNjcm9sbFRvcDogYWN0dWFsU2Nyb2xsVG9wIH0pKTtcbiAgICAgIH1cbiAgICB9LFxuICAgIFtcbiAgICAgIGFuaW1hdGluZyxcbiAgICAgIGlnbm9yZVNjcm9sbEV2ZW50QmVmb3JlUmVmLFxuICAgICAgbW9kZSxcbiAgICAgIG9mZnNldEhlaWdodCxcbiAgICAgIHNjcm9sbEhlaWdodCxcbiAgICAgIHNjcm9sbFBvc2l0aW9uT2JzZXJ2ZXJzUmVmLFxuICAgICAgc2Nyb2xsVG9wLFxuICAgICAgc2V0QW5pbWF0aW5nLFxuICAgICAgc2V0QXRCb3R0b20sXG4gICAgICBzZXRBdEVuZCxcbiAgICAgIHNldEF0U3RhcnQsXG4gICAgICBzZXRBdFRvcCxcbiAgICAgIHNldE9mZnNldEhlaWdodCxcbiAgICAgIHNldFNjcm9sbEhlaWdodCxcbiAgICAgIHNldFN0aWNreSxcbiAgICAgIHRhcmdldFxuICAgIF1cbiAgKTtcblxuICBjb25zdCBpbnRlcm5hbENvbnRleHQgPSB1c2VNZW1vKFxuICAgICgpID0+ICh7XG4gICAgICBvYnNlcnZlU2Nyb2xsUG9zaXRpb24sXG4gICAgICBvZmZzZXRIZWlnaHQsXG4gICAgICBzY3JvbGxIZWlnaHQsXG4gICAgICBzZXRUYXJnZXRcbiAgICB9KSxcbiAgICBbb2JzZXJ2ZVNjcm9sbFBvc2l0aW9uLCBvZmZzZXRIZWlnaHQsIHNjcm9sbEhlaWdodCwgc2V0VGFyZ2V0XVxuICApO1xuXG4gIGNvbnN0IGFuaW1hdGluZ1RvRW5kID0gYW5pbWF0aW5nICYmIGlzRW5kKHNjcm9sbFRvcCwgbW9kZSk7XG5cbiAgY29uc3Qgc3RhdGVDb250ZXh0ID0gdXNlTWVtbyhcbiAgICAoKSA9PiAoe1xuICAgICAgYW5pbWF0aW5nLFxuICAgICAgYW5pbWF0aW5nVG9FbmQsXG4gICAgICBhdEJvdHRvbSxcbiAgICAgIGF0RW5kLFxuICAgICAgYXRTdGFydCxcbiAgICAgIGF0VG9wLFxuICAgICAgbW9kZSxcbiAgICAgIHN0aWNreVxuICAgIH0pLFxuICAgIFthbmltYXRpbmcsIGFuaW1hdGluZ1RvRW5kLCBhdEJvdHRvbSwgYXRFbmQsIGF0U3RhcnQsIGF0VG9wLCBtb2RlLCBzdGlja3ldXG4gICk7XG5cbiAgY29uc3QgZnVuY3Rpb25Db250ZXh0ID0gdXNlTWVtbyhcbiAgICAoKSA9PiAoe1xuICAgICAgc2Nyb2xsVG8sXG4gICAgICBzY3JvbGxUb0JvdHRvbSxcbiAgICAgIHNjcm9sbFRvRW5kLFxuICAgICAgc2Nyb2xsVG9TdGFydCxcbiAgICAgIHNjcm9sbFRvVG9wXG4gICAgfSksXG4gICAgW3Njcm9sbFRvLCBzY3JvbGxUb0JvdHRvbSwgc2Nyb2xsVG9FbmQsIHNjcm9sbFRvU3RhcnQsIHNjcm9sbFRvVG9wXVxuICApO1xuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgLy8gV2UgbmVlZCB0byB1cGRhdGUgdGhlIFwic2Nyb2xsSGVpZ2h0XCIgdmFsdWUgdG8gbGF0ZXN0IHdoZW4gdGhlIHVzZXIgZG8gYSBmb2N1cyBpbnNpZGUgdGhlIGJveC5cbiAgICAvL1xuICAgIC8vIFRoaXMgaXMgYmVjYXVzZTpcbiAgICAvLyAtIEluIG91ciBjb2RlIHRoYXQgbWl0aWdhdGUgQ2hyb21lIHN5bnRoZXRpYyBzY3JvbGxpbmcsIHRoYXQgY29kZSB3aWxsIGxvb2sgYXQgd2hldGhlciBcInNjcm9sbEhlaWdodFwiIHZhbHVlIGlzIGxhdGVzdCBvciBub3QuXG4gICAgLy8gLSBUaGF0IGNvZGUgb25seSBydW4gb24gXCJzY3JvbGxcIiBldmVudC5cbiAgICAvLyAtIFRoYXQgbWVhbnMsIG9uIGV2ZXJ5IFwic2Nyb2xsXCIgZXZlbnQsIGlmIHRoZSBcInNjcm9sbEhlaWdodFwiIHZhbHVlIGlzIG5vdCBsYXRlc3QsIHdlIHdpbGwgc2tpcCBtb2RpZnlpbmcgdGhlIHN0aWNraW5lc3MuXG4gICAgLy8gLSBUaGF0IG1lYW5zLCBpZiB0aGUgdXNlciBcImZvY3VzXCIgdG8gYW4gZWxlbWVudCB0aGF0IGNhdXNlIHRoZSBzY3JvbGwgdmlldyB0byBzY3JvbGwgdG8gdGhlIGJvdHRvbSwgdGhlIHVzZXIgYWdlbnQgd2lsbCBmaXJlIFwic2Nyb2xsXCIgZXZlbnQuXG4gICAgLy8gICBTaW5jZSB0aGUgXCJzY3JvbGxIZWlnaHRcIiBpcyBub3QgbGF0ZXN0IHZhbHVlLCB0aGlzIFwic2Nyb2xsXCIgZXZlbnQgd2lsbCBiZSBpZ25vcmVkIGFuZCBzdGlja2luZXNzIHdpbGwgbm90IGJlIG1vZGlmaWVkLlxuICAgIC8vIC0gVGhhdCBtZWFucywgaWYgdGhlIHVzZXIgXCJmb2N1c1wiIHRvIGEgbmV3bHkgYWRkZWQgZWxlbWVudCB0aGF0IGlzIGF0IHRoZSBlbmQgb2YgdGhlIHNjcm9sbCB2aWV3LCB0aGUgXCJzY3JvbGwgdG8gYm90dG9tXCIgYnV0dG9uIHdpbGwgY29udGludWUgdG8gc2hvdy5cbiAgICAvL1xuICAgIC8vIFJlcHJvIGluIENocm9tZTpcbiAgICAvLyAxLiBGaWxsIHVwIGEgc2Nyb2xsIHZpZXdcbiAgICAvLyAyLiBTY3JvbGwgdXAsIHRoZSBcInNjcm9sbCB0byBib3R0b21cIiBidXR0b24gc2hvdWxkIHNob3cgdXBcbiAgICAvLyAzLiBDbGljayBcIkFkZCBhIGJ1dHRvblwiXG4gICAgLy8gNC4gQ2xpY2sgb24gdGhlIHNjcm9sbCB2aWV3ICh0byBwc2V1ZG8tZm9jdXMgb24gaXQpXG4gICAgLy8gNS4gUHJlc3MgVEFCLCB0aGUgc2Nyb2xsIHZpZXcgd2lsbCBiZSBhdCB0aGUgYm90dG9tXG4gICAgLy9cbiAgICAvLyBFeHBlY3Q6XG4gICAgLy8gLSBUaGUgXCJzY3JvbGwgdG8gYm90dG9tXCIgYnV0dG9uIHNob3VsZCBiZSBnb25lLlxuICAgIGlmICh0YXJnZXQpIHtcbiAgICAgIGNvbnN0IGhhbmRsZUZvY3VzID0gKCkgPT4gc2V0U2Nyb2xsSGVpZ2h0KHRhcmdldC5zY3JvbGxIZWlnaHQpO1xuXG4gICAgICB0YXJnZXQuYWRkRXZlbnRMaXN0ZW5lcignZm9jdXMnLCBoYW5kbGVGb2N1cywgeyBjYXB0dXJlOiB0cnVlLCBwYXNzaXZlOiB0cnVlIH0pO1xuXG4gICAgICByZXR1cm4gKCkgPT4gdGFyZ2V0LnJlbW92ZUV2ZW50TGlzdGVuZXIoJ2ZvY3VzJywgaGFuZGxlRm9jdXMpO1xuICAgIH1cbiAgfSwgW3RhcmdldF0pO1xuXG4gIHJldHVybiAoXG4gICAgPEludGVybmFsQ29udGV4dC5Qcm92aWRlciB2YWx1ZT17aW50ZXJuYWxDb250ZXh0fT5cbiAgICAgIDxGdW5jdGlvbkNvbnRleHQuUHJvdmlkZXIgdmFsdWU9e2Z1bmN0aW9uQ29udGV4dH0+XG4gICAgICAgIDxTdGF0ZUNvbnRleHQuUHJvdmlkZXIgdmFsdWU9e3N0YXRlQ29udGV4dH0+XG4gICAgICAgICAge2NoaWxkcmVufVxuICAgICAgICAgIHt0YXJnZXQgJiYgPEV2ZW50U3B5IGRlYm91bmNlPXtkZWJvdW5jZX0gbmFtZT1cInNjcm9sbFwiIG9uRXZlbnQ9e2hhbmRsZVNjcm9sbH0gdGFyZ2V0PXt0YXJnZXR9IC8+fVxuICAgICAgICAgIHt0YXJnZXQgJiYgc2Nyb2xsVG9wICE9PSBudWxsICYmIChcbiAgICAgICAgICAgIDxTcGluZVRvIG5hbWU9XCJzY3JvbGxUb3BcIiBvbkVuZD17aGFuZGxlU2Nyb2xsRW5kfSB0YXJnZXQ9e3RhcmdldH0gdmFsdWU9e3Njcm9sbFRvcH0gLz5cbiAgICAgICAgICApfVxuICAgICAgICA8L1N0YXRlQ29udGV4dC5Qcm92aWRlcj5cbiAgICAgIDwvRnVuY3Rpb25Db250ZXh0LlByb3ZpZGVyPlxuICAgIDwvSW50ZXJuYWxDb250ZXh0LlByb3ZpZGVyPlxuICApO1xufTtcblxuQ29tcG9zZXIuZGVmYXVsdFByb3BzID0ge1xuICBjaGVja0ludGVydmFsOiAxMDAsXG4gIGNoaWxkcmVuOiB1bmRlZmluZWQsXG4gIGRlYm91bmNlOiAxNyxcbiAgbW9kZTogdW5kZWZpbmVkXG59O1xuXG5Db21wb3Nlci5wcm9wVHlwZXMgPSB7XG4gIGNoZWNrSW50ZXJ2YWw6IFByb3BUeXBlcy5udW1iZXIsXG4gIGNoaWxkcmVuOiBQcm9wVHlwZXMuYW55LFxuICBkZWJvdW5jZTogUHJvcFR5cGVzLm51bWJlcixcbiAgbW9kZTogUHJvcFR5cGVzLm9uZU9mKFsnYm90dG9tJywgJ3RvcCddKVxufTtcblxuZXhwb3J0IGRlZmF1bHQgQ29tcG9zZXI7XG4iXX0=
+exports.default = (0, _scrollLink2.default)(ButtonElement);
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js ***!
-  \***********************************************************************************/
+/***/ "./node_modules/react-scroll/modules/components/Element.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/components/Element.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -69370,331 +66115,79 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
 
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var context = /*#__PURE__*/_react.default.createContext({
-  scrollTo: function scrollTo() {
-    return 0;
-  },
-  scrollToBottom: function scrollToBottom() {
-    return 0;
-  },
-  scrollToEnd: function scrollToEnd() {
-    return 0;
-  },
-  scrollToStart: function scrollToStart() {
-    return 0;
-  },
-  scrollToTop: function scrollToTop() {
-    return 0;
-  }
-});
-
-context.displayName = 'ScrollToBottomFunctionContext';
-var _default = context;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9TY3JvbGxUb0JvdHRvbS9GdW5jdGlvbkNvbnRleHQuanMiXSwibmFtZXMiOlsiY29udGV4dCIsIlJlYWN0IiwiY3JlYXRlQ29udGV4dCIsInNjcm9sbFRvIiwic2Nyb2xsVG9Cb3R0b20iLCJzY3JvbGxUb0VuZCIsInNjcm9sbFRvU3RhcnQiLCJzY3JvbGxUb1RvcCIsImRpc3BsYXlOYW1lIl0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUE7Ozs7QUFFQSxJQUFNQSxPQUFPLGdCQUFHQyxlQUFNQyxhQUFOLENBQW9CO0FBQ2xDQyxFQUFBQSxRQUFRLEVBQUU7QUFBQSxXQUFNLENBQU47QUFBQSxHQUR3QjtBQUVsQ0MsRUFBQUEsY0FBYyxFQUFFO0FBQUEsV0FBTSxDQUFOO0FBQUEsR0FGa0I7QUFHbENDLEVBQUFBLFdBQVcsRUFBRTtBQUFBLFdBQU0sQ0FBTjtBQUFBLEdBSHFCO0FBSWxDQyxFQUFBQSxhQUFhLEVBQUU7QUFBQSxXQUFNLENBQU47QUFBQSxHQUptQjtBQUtsQ0MsRUFBQUEsV0FBVyxFQUFFO0FBQUEsV0FBTSxDQUFOO0FBQUE7QUFMcUIsQ0FBcEIsQ0FBaEI7O0FBUUFQLE9BQU8sQ0FBQ1EsV0FBUixHQUFzQiwrQkFBdEI7ZUFFZVIsTyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5cbmNvbnN0IGNvbnRleHQgPSBSZWFjdC5jcmVhdGVDb250ZXh0KHtcbiAgc2Nyb2xsVG86ICgpID0+IDAsXG4gIHNjcm9sbFRvQm90dG9tOiAoKSA9PiAwLFxuICBzY3JvbGxUb0VuZDogKCkgPT4gMCxcbiAgc2Nyb2xsVG9TdGFydDogKCkgPT4gMCxcbiAgc2Nyb2xsVG9Ub3A6ICgpID0+IDBcbn0pO1xuXG5jb250ZXh0LmRpc3BsYXlOYW1lID0gJ1Njcm9sbFRvQm90dG9tRnVuY3Rpb25Db250ZXh0JztcblxuZXhwb3J0IGRlZmF1bHQgY29udGV4dDtcbiJdfQ==
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/InternalContext.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/InternalContext.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var context = /*#__PURE__*/_react.default.createContext({
-  offsetHeight: 0,
-  scrollHeight: 0,
-  setTarget: function setTarget() {
-    return 0;
-  }
-});
-
-context.displayName = 'ScrollToBottomInternalContext';
-var _default = context;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9TY3JvbGxUb0JvdHRvbS9JbnRlcm5hbENvbnRleHQuanMiXSwibmFtZXMiOlsiY29udGV4dCIsIlJlYWN0IiwiY3JlYXRlQ29udGV4dCIsIm9mZnNldEhlaWdodCIsInNjcm9sbEhlaWdodCIsInNldFRhcmdldCIsImRpc3BsYXlOYW1lIl0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUE7Ozs7QUFFQSxJQUFNQSxPQUFPLGdCQUFHQyxlQUFNQyxhQUFOLENBQW9CO0FBQ2xDQyxFQUFBQSxZQUFZLEVBQUUsQ0FEb0I7QUFFbENDLEVBQUFBLFlBQVksRUFBRSxDQUZvQjtBQUdsQ0MsRUFBQUEsU0FBUyxFQUFFO0FBQUEsV0FBTSxDQUFOO0FBQUE7QUFIdUIsQ0FBcEIsQ0FBaEI7O0FBTUFMLE9BQU8sQ0FBQ00sV0FBUixHQUFzQiwrQkFBdEI7ZUFFZU4sTyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5cbmNvbnN0IGNvbnRleHQgPSBSZWFjdC5jcmVhdGVDb250ZXh0KHtcbiAgb2Zmc2V0SGVpZ2h0OiAwLFxuICBzY3JvbGxIZWlnaHQ6IDAsXG4gIHNldFRhcmdldDogKCkgPT4gMFxufSk7XG5cbmNvbnRleHQuZGlzcGxheU5hbWUgPSAnU2Nyb2xsVG9Cb3R0b21JbnRlcm5hbENvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBjb250ZXh0O1xuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _glamor = __webpack_require__(/*! glamor */ "./node_modules/glamor/lib/index.js");
-
-var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
-
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js"));
-
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-var _InternalContext = _interopRequireDefault(__webpack_require__(/*! ./InternalContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/InternalContext.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ROOT_CSS = (0, _glamor.css)({
-  height: '100%',
-  overflowY: 'auto',
-  width: '100%'
-});
-
-var Panel = function Panel(_ref) {
-  var children = _ref.children,
-      className = _ref.className;
-
-  var _useContext = (0, _react.useContext)(_InternalContext.default),
-      setTarget = _useContext.setTarget;
-
-  return /*#__PURE__*/_react.default.createElement("div", {
-    className: (0, _classnames.default)(ROOT_CSS + '', (className || '') + ''),
-    ref: setTarget
-  }, children);
-};
-
-Panel.defaultProps = {
-  children: undefined,
-  className: undefined
-};
-Panel.propTypes = {
-  children: _propTypes.default.any,
-  className: _propTypes.default.string
-};
-var _default = Panel;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9TY3JvbGxUb0JvdHRvbS9QYW5lbC5qcyJdLCJuYW1lcyI6WyJST09UX0NTUyIsImhlaWdodCIsIm92ZXJmbG93WSIsIndpZHRoIiwiUGFuZWwiLCJjaGlsZHJlbiIsImNsYXNzTmFtZSIsIkludGVybmFsQ29udGV4dCIsInNldFRhcmdldCIsImRlZmF1bHRQcm9wcyIsInVuZGVmaW5lZCIsInByb3BUeXBlcyIsIlByb3BUeXBlcyIsImFueSIsInN0cmluZyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBRUE7Ozs7Ozs7O0FBRUEsSUFBTUEsUUFBUSxHQUFHLGlCQUFJO0FBQ25CQyxFQUFBQSxNQUFNLEVBQUUsTUFEVztBQUVuQkMsRUFBQUEsU0FBUyxFQUFFLE1BRlE7QUFHbkJDLEVBQUFBLEtBQUssRUFBRTtBQUhZLENBQUosQ0FBakI7O0FBTUEsSUFBTUMsS0FBSyxHQUFHLFNBQVJBLEtBQVEsT0FBNkI7QUFBQSxNQUExQkMsUUFBMEIsUUFBMUJBLFFBQTBCO0FBQUEsTUFBaEJDLFNBQWdCLFFBQWhCQSxTQUFnQjs7QUFBQSxvQkFDbkIsdUJBQVdDLHdCQUFYLENBRG1CO0FBQUEsTUFDakNDLFNBRGlDLGVBQ2pDQSxTQURpQzs7QUFHekMsc0JBQ0U7QUFBSyxJQUFBLFNBQVMsRUFBRSx5QkFBV1IsUUFBUSxHQUFHLEVBQXRCLEVBQTBCLENBQUNNLFNBQVMsSUFBSSxFQUFkLElBQW9CLEVBQTlDLENBQWhCO0FBQW1FLElBQUEsR0FBRyxFQUFFRTtBQUF4RSxLQUNHSCxRQURILENBREY7QUFLRCxDQVJEOztBQVVBRCxLQUFLLENBQUNLLFlBQU4sR0FBcUI7QUFDbkJKLEVBQUFBLFFBQVEsRUFBRUssU0FEUztBQUVuQkosRUFBQUEsU0FBUyxFQUFFSTtBQUZRLENBQXJCO0FBS0FOLEtBQUssQ0FBQ08sU0FBTixHQUFrQjtBQUNoQk4sRUFBQUEsUUFBUSxFQUFFTyxtQkFBVUMsR0FESjtBQUVoQlAsRUFBQUEsU0FBUyxFQUFFTSxtQkFBVUU7QUFGTCxDQUFsQjtlQUtlVixLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgY3NzIH0gZnJvbSAnZ2xhbW9yJztcbmltcG9ydCBjbGFzc05hbWVzIGZyb20gJ2NsYXNzbmFtZXMnO1xuaW1wb3J0IFByb3BUeXBlcyBmcm9tICdwcm9wLXR5cGVzJztcbmltcG9ydCBSZWFjdCwgeyB1c2VDb250ZXh0IH0gZnJvbSAncmVhY3QnO1xuXG5pbXBvcnQgSW50ZXJuYWxDb250ZXh0IGZyb20gJy4vSW50ZXJuYWxDb250ZXh0JztcblxuY29uc3QgUk9PVF9DU1MgPSBjc3Moe1xuICBoZWlnaHQ6ICcxMDAlJyxcbiAgb3ZlcmZsb3dZOiAnYXV0bycsXG4gIHdpZHRoOiAnMTAwJSdcbn0pO1xuXG5jb25zdCBQYW5lbCA9ICh7IGNoaWxkcmVuLCBjbGFzc05hbWUgfSkgPT4ge1xuICBjb25zdCB7IHNldFRhcmdldCB9ID0gdXNlQ29udGV4dChJbnRlcm5hbENvbnRleHQpO1xuXG4gIHJldHVybiAoXG4gICAgPGRpdiBjbGFzc05hbWU9e2NsYXNzTmFtZXMoUk9PVF9DU1MgKyAnJywgKGNsYXNzTmFtZSB8fCAnJykgKyAnJyl9IHJlZj17c2V0VGFyZ2V0fT5cbiAgICAgIHtjaGlsZHJlbn1cbiAgICA8L2Rpdj5cbiAgKTtcbn07XG5cblBhbmVsLmRlZmF1bHRQcm9wcyA9IHtcbiAgY2hpbGRyZW46IHVuZGVmaW5lZCxcbiAgY2xhc3NOYW1lOiB1bmRlZmluZWRcbn07XG5cblBhbmVsLnByb3BUeXBlcyA9IHtcbiAgY2hpbGRyZW46IFByb3BUeXBlcy5hbnksXG4gIGNsYXNzTmFtZTogUHJvcFR5cGVzLnN0cmluZ1xufTtcblxuZXhwb3J0IGRlZmF1bHQgUGFuZWw7XG4iXX0=
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var context = /*#__PURE__*/_react.default.createContext({
-  animating: false,
-  atBottom: true,
-  atEnd: true,
-  atTop: true,
-  mode: 'bottom',
-  sticky: true
-});
-
-context.displayName = 'ScrollToBottomStateContext';
-var _default = context;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQuanMiXSwibmFtZXMiOlsiY29udGV4dCIsIlJlYWN0IiwiY3JlYXRlQ29udGV4dCIsImFuaW1hdGluZyIsImF0Qm90dG9tIiwiYXRFbmQiLCJhdFRvcCIsIm1vZGUiLCJzdGlja3kiLCJkaXNwbGF5TmFtZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOzs7O0FBRUEsSUFBTUEsT0FBTyxnQkFBR0MsZUFBTUMsYUFBTixDQUFvQjtBQUNsQ0MsRUFBQUEsU0FBUyxFQUFFLEtBRHVCO0FBRWxDQyxFQUFBQSxRQUFRLEVBQUUsSUFGd0I7QUFHbENDLEVBQUFBLEtBQUssRUFBRSxJQUgyQjtBQUlsQ0MsRUFBQUEsS0FBSyxFQUFFLElBSjJCO0FBS2xDQyxFQUFBQSxJQUFJLEVBQUUsUUFMNEI7QUFNbENDLEVBQUFBLE1BQU0sRUFBRTtBQU4wQixDQUFwQixDQUFoQjs7QUFTQVIsT0FBTyxDQUFDUyxXQUFSLEdBQXNCLDRCQUF0QjtlQUVlVCxPIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcblxuY29uc3QgY29udGV4dCA9IFJlYWN0LmNyZWF0ZUNvbnRleHQoe1xuICBhbmltYXRpbmc6IGZhbHNlLFxuICBhdEJvdHRvbTogdHJ1ZSxcbiAgYXRFbmQ6IHRydWUsXG4gIGF0VG9wOiB0cnVlLFxuICBtb2RlOiAnYm90dG9tJyxcbiAgc3RpY2t5OiB0cnVlXG59KTtcblxuY29udGV4dC5kaXNwbGF5TmFtZSA9ICdTY3JvbGxUb0JvdHRvbVN0YXRlQ29udGV4dCc7XG5cbmV4cG9ydCBkZWZhdWx0IGNvbnRleHQ7XG4iXX0=
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/SpineTo.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/SpineTo.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js"));
+var _react2 = _interopRequireDefault(_react);
+
+var _scrollElement = __webpack_require__(/*! ../mixins/scroll-element */ "./node_modules/react-scroll/modules/mixins/scroll-element.js");
+
+var _scrollElement2 = _interopRequireDefault(_scrollElement);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/react-scroll/node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 1.5, 5] }] */
-function squareStepper(current, to) {
-  var sign = Math.sign(to - current);
-  var step = Math.sqrt(Math.abs(to - current));
-  var next = current + step * sign;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  if (sign > 0) {
-    return Math.min(to, next);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ElementWrapper = function (_React$Component) {
+  _inherits(ElementWrapper, _React$Component);
+
+  function ElementWrapper() {
+    _classCallCheck(this, ElementWrapper);
+
+    return _possibleConstructorReturn(this, (ElementWrapper.__proto__ || Object.getPrototypeOf(ElementWrapper)).apply(this, arguments));
   }
 
-  return Math.max(to, next);
-}
+  _createClass(ElementWrapper, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-function step(from, to, stepper, index) {
-  var next = from;
+      // Remove `parentBindings` from props
+      var newProps = _extends({}, this.props);
+      if (newProps.parentBindings) {
+        delete newProps.parentBindings;
+      }
 
-  for (var i = 0; i < index; i++) {
-    next = stepper(next, to);
-  }
-
-  return next;
-}
-
-var SpineTo = function SpineTo(_ref) {
-  var name = _ref.name,
-      onEnd = _ref.onEnd,
-      target = _ref.target,
-      value = _ref.value;
-  var animator = (0, _react.useRef)();
-  var animate = (0, _react.useCallback)(function (name, from, to, index) {
-    var start = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : Date.now();
-
-    if (to === '100%' || typeof to === 'number') {
-      cancelAnimationFrame(animator.current);
-      animator.current = requestAnimationFrame(function () {
-        if (target) {
-          var toNumber = to === '100%' ? target.scrollHeight - target.offsetHeight : to;
-          var nextValue = step(from, toNumber, squareStepper, (Date.now() - start) / 5);
-
-          if (Math.abs(toNumber - nextValue) < 1.5) {
-            nextValue = toNumber;
-          }
-
-          target[name] = nextValue;
-
-          if (toNumber === nextValue) {
-            onEnd && onEnd(true);
-          } else {
-            animate(name, from, to, index + 1, start);
-          }
-        }
-      });
+      return _react2.default.createElement(
+        'div',
+        _extends({}, newProps, { ref: function ref(el) {
+            _this2.props.parentBindings.domNode = el;
+          } }),
+        this.props.children
+      );
     }
-  }, [animator, onEnd, target]);
-  var handleCancelAnimation = (0, _react.useCallback)(function () {
-    cancelAnimationFrame(animator.current);
-    onEnd && onEnd(false);
-  }, [onEnd]);
-  (0, _react.useLayoutEffect)(function () {
-    animate(name, target[name], value, 1);
+  }]);
 
-    if (target) {
-      target.addEventListener('pointerdown', handleCancelAnimation, {
-        passive: true
-      });
-      target.addEventListener('wheel', handleCancelAnimation, {
-        passive: true
-      });
-      return function () {
-        target.removeEventListener('pointerdown', handleCancelAnimation);
-        target.removeEventListener('wheel', handleCancelAnimation);
-        cancelAnimationFrame(animator.current);
-      };
-    }
+  return ElementWrapper;
+}(_react2.default.Component);
 
-    return function () {
-      return cancelAnimationFrame(animator.current);
-    };
-  }, [animate, animator, handleCancelAnimation, name, target, value]);
-  return false;
+;
+
+ElementWrapper.propTypes = {
+  name: _propTypes2.default.string,
+  id: _propTypes2.default.string
 };
 
-SpineTo.propTypes = {
-  name: _propTypes.default.string.isRequired,
-  onEnd: _propTypes.default.func,
-  target: _propTypes.default.any.isRequired,
-  value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.oneOf(['100%'])]).isRequired
-};
-var _default = SpineTo;
-exports.default = _default;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9TcGluZVRvLmpzIl0sIm5hbWVzIjpbInNxdWFyZVN0ZXBwZXIiLCJjdXJyZW50IiwidG8iLCJzaWduIiwiTWF0aCIsInN0ZXAiLCJzcXJ0IiwiYWJzIiwibmV4dCIsIm1pbiIsIm1heCIsImZyb20iLCJzdGVwcGVyIiwiaW5kZXgiLCJpIiwiU3BpbmVUbyIsIm5hbWUiLCJvbkVuZCIsInRhcmdldCIsInZhbHVlIiwiYW5pbWF0b3IiLCJhbmltYXRlIiwic3RhcnQiLCJEYXRlIiwibm93IiwiY2FuY2VsQW5pbWF0aW9uRnJhbWUiLCJyZXF1ZXN0QW5pbWF0aW9uRnJhbWUiLCJ0b051bWJlciIsInNjcm9sbEhlaWdodCIsIm9mZnNldEhlaWdodCIsIm5leHRWYWx1ZSIsImhhbmRsZUNhbmNlbEFuaW1hdGlvbiIsImFkZEV2ZW50TGlzdGVuZXIiLCJwYXNzaXZlIiwicmVtb3ZlRXZlbnRMaXN0ZW5lciIsInByb3BUeXBlcyIsIlByb3BUeXBlcyIsInN0cmluZyIsImlzUmVxdWlyZWQiLCJmdW5jIiwiYW55Iiwib25lT2ZUeXBlIiwibnVtYmVyIiwib25lT2YiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFFQTs7QUFDQTs7OztBQUhBO0FBS0EsU0FBU0EsYUFBVCxDQUF1QkMsT0FBdkIsRUFBZ0NDLEVBQWhDLEVBQW9DO0FBQ2xDLE1BQU1DLElBQUksR0FBR0MsSUFBSSxDQUFDRCxJQUFMLENBQVVELEVBQUUsR0FBR0QsT0FBZixDQUFiO0FBQ0EsTUFBTUksSUFBSSxHQUFHRCxJQUFJLENBQUNFLElBQUwsQ0FBVUYsSUFBSSxDQUFDRyxHQUFMLENBQVNMLEVBQUUsR0FBR0QsT0FBZCxDQUFWLENBQWI7QUFDQSxNQUFNTyxJQUFJLEdBQUdQLE9BQU8sR0FBR0ksSUFBSSxHQUFHRixJQUE5Qjs7QUFFQSxNQUFJQSxJQUFJLEdBQUcsQ0FBWCxFQUFjO0FBQ1osV0FBT0MsSUFBSSxDQUFDSyxHQUFMLENBQVNQLEVBQVQsRUFBYU0sSUFBYixDQUFQO0FBQ0Q7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YmVyczogW1wiZXJyb3JcIiwgeyBcImlnbm9yZVwiOiBbMCwgMSwgMS41LCA1XSB9XSAqL1xuXG5pbXBvcnQgeyB1c2VDYWxsYmFjaywgdXNlTGF5b3V0RWZmZWN0LCB1c2VSZWYgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgUHJvcFR5cGVzIGZyb20gJ3Byb3AtdHlwZXMnO1xuXG5mdW5jdGlvbiBzcXVhcmVTdGVwcGVyKGN1cnJlbnQsIHRvKSB7XG4gIGNvbnN0IHNpZ24gPSBNYXRoLnNpZ24odG8gLSBjdXJyZW50KTtcbiAgY29uc3Qgc3RlcCA9IE1hdGguc3FydChNYXRoLmFicyh0byAtIGN1cnJlbnQpKTtcbiAgY29uc3QgbmV4dCA9IGN1cnJlbnQgKyBzdGVwICogc2lnbjtcblxuICBpZiAoc2lnbiA+IDApIHtcbiAgICByZXR1cm4gTWF0aC5taW4odG8sIG5leHQpO1xuICB9XG5cbiAgcmV0dXJuIE1hdGgubWF4KHRvLCBuZXh0KTtcbn1cblxuZnVuY3Rpb24gc3RlcChmcm9tLCB0bywgc3RlcHBlciwgaW5kZXgpIHtcbiAgbGV0IG5leHQgPSBmcm9tO1xuXG4gIGZvciAobGV0IGkgPSAwOyBpIDwgaW5kZXg7IGkrKykge1xuICAgIG5leHQgPSBzdGVwcGVyKG5leHQsIHRvKTtcbiAgfVxuXG4gIHJldHVybiBuZXh0O1xufVxuXG5jb25zdCBTcGluZVRvID0gKHsgbmFtZSwgb25FbmQsIHRhcmdldCwgdmFsdWUgfSkgPT4ge1xuICBjb25zdCBhbmltYXRvciA9IHVzZVJlZigpO1xuXG4gIGNvbnN0IGFuaW1hdGUgPSB1c2VDYWxsYmFjayhcbiAgICAobmFtZSwgZnJvbSwgdG8sIGluZGV4LCBzdGFydCA9IERhdGUubm93KCkpID0+IHtcbiAgICAgIGlmICh0byA9PT0gJzEwMCUnIHx8IHR5cGVvZiB0byA9PT0gJ251bWJlcicpIHtcbiAgICAgICAgY2FuY2VsQW5pbWF0aW9uRnJhbWUoYW5pbWF0b3IuY3VycmVudCk7XG5cbiAgICAgICAgYW5pbWF0b3IuY3VycmVudCA9IHJlcXVlc3RBbmltYXRpb25GcmFtZSgoKSA9PiB7XG4gICAgICAgICAgaWYgKHRhcmdldCkge1xuICAgICAgICAgICAgY29uc3QgdG9OdW1iZXIgPSB0byA9PT0gJzEwMCUnID8gdGFyZ2V0LnNjcm9sbEhlaWdodCAtIHRhcmdldC5vZmZzZXRIZWlnaHQgOiB0bztcbiAgICAgICAgICAgIGxldCBuZXh0VmFsdWUgPSBzdGVwKGZyb20sIHRvTnVtYmVyLCBzcXVhcmVTdGVwcGVyLCAoRGF0ZS5ub3coKSAtIHN0YXJ0KSAvIDUpO1xuXG4gICAgICAgICAgICBpZiAoTWF0aC5hYnModG9OdW1iZXIgLSBuZXh0VmFsdWUpIDwgMS41KSB7XG4gICAgICAgICAgICAgIG5leHRWYWx1ZSA9IHRvTnVtYmVyO1xuICAgICAgICAgICAgfVxuXG4gICAgICAgICAgICB0YXJnZXRbbmFtZV0gPSBuZXh0VmFsdWU7XG5cbiAgICAgICAgICAgIGlmICh0b051bWJlciA9PT0gbmV4dFZhbHVlKSB7XG4gICAgICAgICAgICAgIG9uRW5kICYmIG9uRW5kKHRydWUpO1xuICAgICAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAgICAgYW5pbWF0ZShuYW1lLCBmcm9tLCB0bywgaW5kZXggKyAxLCBzdGFydCk7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgfVxuICAgICAgICB9KTtcbiAgICAgIH1cbiAgICB9LFxuICAgIFthbmltYXRvciwgb25FbmQsIHRhcmdldF1cbiAgKTtcblxuICBjb25zdCBoYW5kbGVDYW5jZWxBbmltYXRpb24gPSB1c2VDYWxsYmFjaygoKSA9PiB7XG4gICAgY2FuY2VsQW5pbWF0aW9uRnJhbWUoYW5pbWF0b3IuY3VycmVudCk7XG4gICAgb25FbmQgJiYgb25FbmQoZmFsc2UpO1xuICB9LCBbb25FbmRdKTtcblxuICB1c2VMYXlvdXRFZmZlY3QoKCkgPT4ge1xuICAgIGFuaW1hdGUobmFtZSwgdGFyZ2V0W25hbWVdLCB2YWx1ZSwgMSk7XG5cbiAgICBpZiAodGFyZ2V0KSB7XG4gICAgICB0YXJnZXQuYWRkRXZlbnRMaXN0ZW5lcigncG9pbnRlcmRvd24nLCBoYW5kbGVDYW5jZWxBbmltYXRpb24sIHsgcGFzc2l2ZTogdHJ1ZSB9KTtcbiAgICAgIHRhcmdldC5hZGRFdmVudExpc3RlbmVyKCd3aGVlbCcsIGhhbmRsZUNhbmNlbEFuaW1hdGlvbiwgeyBwYXNzaXZlOiB0cnVlIH0pO1xuXG4gICAgICByZXR1cm4gKCkgPT4ge1xuICAgICAgICB0YXJnZXQucmVtb3ZlRXZlbnRMaXN0ZW5lcigncG9pbnRlcmRvd24nLCBoYW5kbGVDYW5jZWxBbmltYXRpb24pO1xuICAgICAgICB0YXJnZXQucmVtb3ZlRXZlbnRMaXN0ZW5lcignd2hlZWwnLCBoYW5kbGVDYW5jZWxBbmltYXRpb24pO1xuICAgICAgICBjYW5jZWxBbmltYXRpb25GcmFtZShhbmltYXRvci5jdXJyZW50KTtcbiAgICAgIH07XG4gICAgfVxuXG4gICAgcmV0dXJuICgpID0+IGNhbmNlbEFuaW1hdGlvbkZyYW1lKGFuaW1hdG9yLmN1cnJlbnQpO1xuICB9LCBbYW5pbWF0ZSwgYW5pbWF0b3IsIGhhbmRsZUNhbmNlbEFuaW1hdGlvbiwgbmFtZSwgdGFyZ2V0LCB2YWx1ZV0pO1xuXG4gIHJldHVybiBmYWxzZTtcbn07XG5cblNwaW5lVG8ucHJvcFR5cGVzID0ge1xuICBuYW1lOiBQcm9wVHlwZXMuc3RyaW5nLmlzUmVxdWlyZWQsXG4gIG9uRW5kOiBQcm9wVHlwZXMuZnVuYyxcbiAgdGFyZ2V0OiBQcm9wVHlwZXMuYW55LmlzUmVxdWlyZWQsXG4gIHZhbHVlOiBQcm9wVHlwZXMub25lT2ZUeXBlKFtQcm9wVHlwZXMubnVtYmVyLCBQcm9wVHlwZXMub25lT2YoWycxMDAlJ10pXSkuaXNSZXF1aXJlZFxufTtcblxuZXhwb3J0IGRlZmF1bHQgU3BpbmVUbztcbiJdfQ==
+exports.default = (0, _scrollElement2.default)(ElementWrapper);
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/addVersionToMetaTag.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/addVersionToMetaTag.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addVersionToMetaTag;
-
-/* global global:readonly, process:readonly */
-
-/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
-function setMetaTag(name, content) {
-  try {
-    var _global = global,
-        document = _global.document;
-
-    if (typeof document !== 'undefined' && document.createElement && document.head && document.head.appendChild) {
-      var meta = document.querySelector("html meta[name=\"".concat(encodeURI(name), "\"]")) || document.createElement('meta');
-      meta.setAttribute('name', name);
-      meta.setAttribute('content', content);
-      document.head.appendChild(meta);
-    }
-  } catch (err) {}
-}
-
-function addVersionToMetaTag() {
-  setMetaTag('react-scroll-to-bottom:version', "3.0.0");
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9hZGRWZXJzaW9uVG9NZXRhVGFnLmpzIl0sIm5hbWVzIjpbInNldE1ldGFUYWciLCJuYW1lIiwiY29udGVudCIsImdsb2JhbCIsImRvY3VtZW50IiwiY3JlYXRlRWxlbWVudCIsImhlYWQiLCJhcHBlbmRDaGlsZCIsIm1ldGEiLCJxdWVyeVNlbGVjdG9yIiwiZW5jb2RlVVJJIiwic2V0QXR0cmlidXRlIiwiZXJyIiwiYWRkVmVyc2lvblRvTWV0YVRhZyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUNBO0FBRUEsU0FBU0EsVUFBVCxDQUFvQkMsSUFBcEIsRUFBMEJDLE9BQTFCLEVBQW1DO0FBQ2pDLE1BQUk7QUFBQSxrQkFDbUJDLE1BRG5CO0FBQUEsUUFDTUMsUUFETixXQUNNQSxRQUROOztBQUdGLFFBQUksT0FBT0EsUUFBUCxLQUFvQixXQUFwQixJQUFtQ0EsUUFBUSxDQUFDQyxhQUE1QyxJQUE2REQsUUFBUSxDQUFDRSxJQUF0RSxJQUE4RUYsUUFBUSxDQUFDRSxJQUFULENBQWNDLFdBQWhHLEVBQTZHO0FBQzNHLFVBQU1DLElBQUksR0FBR0osUUFBUSxDQUFDSyxhQUFULDRCQUEwQ0MsU0FBUyxDQUFDVCxJQUFELENBQW5ELGFBQWtFRyxRQUFRLENBQUNDLGFBQVQsQ0FBdUIsTUFBdkIsQ0FBL0U7QUFFQUcsTUFBQUEsSUFBSSxDQUFDRyxZQUFMLENBQWtCLE1BQWxCLEVBQTBCVixJQUExQjtBQUNBTyxNQUFBQSxJQUFJLENBQUNHLFlBQUwsQ0FBa0IsU0FBbEIsRUFBNkJULE9BQTdCO0FBRUFFLE1BQUFBLFFBQVEsQ0FBQ0UsSUFBVCxDQUFjQyxXQUFkLENBQTBCQyxJQUExQjtBQUNEO0FBQ0YsR0FYRCxDQVdFLE9BQU9JLEdBQVAsRUFBWSxDQUFFO0FBQ2pCOztBQUVjLFNBQVNDLG1CQUFULEdBQStCO0FBQzVDYixFQUFBQSxVQUFVLENBQUMsZ0NBQUQsVUFBVjtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiLyogZ2xvYmFsIGdsb2JhbDpyZWFkb25seSwgcHJvY2VzczpyZWFkb25seSAqL1xuLyogZXNsaW50IG5vLWVtcHR5OiBbXCJlcnJvclwiLCB7IFwiYWxsb3dFbXB0eUNhdGNoXCI6IHRydWUgfV0gKi9cblxuZnVuY3Rpb24gc2V0TWV0YVRhZyhuYW1lLCBjb250ZW50KSB7XG4gIHRyeSB7XG4gICAgY29uc3QgeyBkb2N1bWVudCB9ID0gZ2xvYmFsO1xuXG4gICAgaWYgKHR5cGVvZiBkb2N1bWVudCAhPT0gJ3VuZGVmaW5lZCcgJiYgZG9jdW1lbnQuY3JlYXRlRWxlbWVudCAmJiBkb2N1bWVudC5oZWFkICYmIGRvY3VtZW50LmhlYWQuYXBwZW5kQ2hpbGQpIHtcbiAgICAgIGNvbnN0IG1ldGEgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBodG1sIG1ldGFbbmFtZT1cIiR7ZW5jb2RlVVJJKG5hbWUpfVwiXWApIHx8IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ21ldGEnKTtcblxuICAgICAgbWV0YS5zZXRBdHRyaWJ1dGUoJ25hbWUnLCBuYW1lKTtcbiAgICAgIG1ldGEuc2V0QXR0cmlidXRlKCdjb250ZW50JywgY29udGVudCk7XG5cbiAgICAgIGRvY3VtZW50LmhlYWQuYXBwZW5kQ2hpbGQobWV0YSk7XG4gICAgfVxuICB9IGNhdGNoIChlcnIpIHt9XG59XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIGFkZFZlcnNpb25Ub01ldGFUYWcoKSB7XG4gIHNldE1ldGFUYWcoJ3JlYWN0LXNjcm9sbC10by1ib3R0b206dmVyc2lvbicsIHByb2Nlc3MuZW52Lm5wbV9wYWNrYWdlX3ZlcnNpb24pO1xufVxuIl19
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/debounce.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/debounce.js ***!
-  \*************************************************************/
+/***/ "./node_modules/react-scroll/modules/components/Link.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/components/Link.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -69704,300 +66197,59 @@ function addVersionToMetaTag() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = _default;
 
-function _default(fn, ms) {
-  if (!ms) {
-    return fn;
-  }
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-  var last = 0;
-  var timeout = null;
-  return function () {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+var _react2 = _interopRequireDefault(_react);
+
+var _scrollLink = __webpack_require__(/*! ../mixins/scroll-link */ "./node_modules/react-scroll/modules/mixins/scroll-link.js");
+
+var _scrollLink2 = _interopRequireDefault(_scrollLink);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LinkElement = function (_React$Component) {
+  _inherits(LinkElement, _React$Component);
+
+  function LinkElement() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, LinkElement);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    var now = Date.now();
-
-    if (now - last > ms) {
-      fn.apply(void 0, args);
-      last = now;
-    } else {
-      clearTimeout(timeout);
-      timeout = setTimeout(function () {
-        fn.apply(void 0, args);
-        last = Date.now();
-      }, Math.max(0, ms - now + last));
-    }
-  };
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9kZWJvdW5jZS5qcyJdLCJuYW1lcyI6WyJmbiIsIm1zIiwibGFzdCIsInRpbWVvdXQiLCJhcmdzIiwibm93IiwiRGF0ZSIsImNsZWFyVGltZW91dCIsInNldFRpbWVvdXQiLCJNYXRoIiwibWF4Il0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQWUsa0JBQVVBLEVBQVYsRUFBY0MsRUFBZCxFQUFrQjtBQUMvQixNQUFJLENBQUNBLEVBQUwsRUFBUztBQUNQLFdBQU9ELEVBQVA7QUFDRDs7QUFFRCxNQUFJRSxJQUFJLEdBQUcsQ0FBWDtBQUNBLE1BQUlDLE9BQU8sR0FBRyxJQUFkO0FBRUEsU0FBTyxZQUFhO0FBQUEsc0NBQVRDLElBQVM7QUFBVEEsTUFBQUEsSUFBUztBQUFBOztBQUNsQixRQUFNQyxHQUFHLEdBQUdDLElBQUksQ0FBQ0QsR0FBTCxFQUFaOztBQUVBLFFBQUlBLEdBQUcsR0FBR0gsSUFBTixHQUFhRCxFQUFqQixFQUFxQjtBQUNuQkQsTUFBQUEsRUFBRSxNQUFGLFNBQU1JLElBQU47QUFDQUYsTUFBQUEsSUFBSSxHQUFHRyxHQUFQO0FBQ0QsS0FIRCxNQUdPO0FBQ0xFLE1BQUFBLFlBQVksQ0FBQ0osT0FBRCxDQUFaO0FBRUFBLE1BQUFBLE9BQU8sR0FBR0ssVUFBVSxDQUFDLFlBQU07QUFDekJSLFFBQUFBLEVBQUUsTUFBRixTQUFNSSxJQUFOO0FBQ0FGLFFBQUFBLElBQUksR0FBR0ksSUFBSSxDQUFDRCxHQUFMLEVBQVA7QUFDRCxPQUhtQixFQUdqQkksSUFBSSxDQUFDQyxHQUFMLENBQVMsQ0FBVCxFQUFZVCxFQUFFLEdBQUdJLEdBQUwsR0FBV0gsSUFBdkIsQ0FIaUIsQ0FBcEI7QUFJRDtBQUNGLEdBZEQ7QUFlRCIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIChmbiwgbXMpIHtcbiAgaWYgKCFtcykge1xuICAgIHJldHVybiBmbjtcbiAgfVxuXG4gIGxldCBsYXN0ID0gMDtcbiAgbGV0IHRpbWVvdXQgPSBudWxsO1xuXG4gIHJldHVybiAoLi4uYXJncykgPT4ge1xuICAgIGNvbnN0IG5vdyA9IERhdGUubm93KCk7XG5cbiAgICBpZiAobm93IC0gbGFzdCA+IG1zKSB7XG4gICAgICBmbiguLi5hcmdzKTtcbiAgICAgIGxhc3QgPSBub3c7XG4gICAgfSBlbHNlIHtcbiAgICAgIGNsZWFyVGltZW91dCh0aW1lb3V0KTtcblxuICAgICAgdGltZW91dCA9IHNldFRpbWVvdXQoKCkgPT4ge1xuICAgICAgICBmbiguLi5hcmdzKTtcbiAgICAgICAgbGFzdCA9IERhdGUubm93KCk7XG4gICAgICB9LCBNYXRoLm1heCgwLCBtcyAtIG5vdyArIGxhc3QpKTtcbiAgICB9XG4gIH07XG59XG4iXX0=
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useAnimating.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useAnimating.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useAnimating;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useAnimating() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.animating];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VBbmltYXRpbmcuanMiXSwibmFtZXMiOlsidXNlQW5pbWF0aW5nIiwiY29udGV4dCIsIlN0YXRlQ29udGV4dCIsImFuaW1hdGluZyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsWUFBVCxHQUF3QjtBQUNyQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLFNBQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VBbmltYXRpbmcoKSB7XG4gIGNvbnN0IGNvbnRleHQgPSB1c2VDb250ZXh0KFN0YXRlQ29udGV4dCk7XG5cbiAgcmV0dXJuIFtjb250ZXh0LmFuaW1hdGluZ107XG59XG4iXX0=
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useAnimatingToEnd.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useAnimatingToEnd.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useAnimatingToEnd;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useAnimatingToEnd() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.animatingToEnd];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VBbmltYXRpbmdUb0VuZC5qcyJdLCJuYW1lcyI6WyJ1c2VBbmltYXRpbmdUb0VuZCIsImNvbnRleHQiLCJTdGF0ZUNvbnRleHQiLCJhbmltYXRpbmdUb0VuZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsaUJBQVQsR0FBNkI7QUFDMUMsTUFBTUMsT0FBTyxHQUFHLHVCQUFXQyxxQkFBWCxDQUFoQjtBQUVBLFNBQU8sQ0FBQ0QsT0FBTyxDQUFDRSxjQUFULENBQVA7QUFDRCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZUNvbnRleHQgfSBmcm9tICdyZWFjdCc7XG5cbmltcG9ydCBTdGF0ZUNvbnRleHQgZnJvbSAnLi4vU2Nyb2xsVG9Cb3R0b20vU3RhdGVDb250ZXh0JztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gdXNlQW5pbWF0aW5nVG9FbmQoKSB7XG4gIGNvbnN0IGNvbnRleHQgPSB1c2VDb250ZXh0KFN0YXRlQ29udGV4dCk7XG5cbiAgcmV0dXJuIFtjb250ZXh0LmFuaW1hdGluZ1RvRW5kXTtcbn1cbiJdfQ==
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtBottom.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useAtBottom.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useAtBottom;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useAtBottom() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.atBottom];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VBdEJvdHRvbS5qcyJdLCJuYW1lcyI6WyJ1c2VBdEJvdHRvbSIsImNvbnRleHQiLCJTdGF0ZUNvbnRleHQiLCJhdEJvdHRvbSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsV0FBVCxHQUF1QjtBQUNwQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLFFBQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VBdEJvdHRvbSgpIHtcbiAgY29uc3QgY29udGV4dCA9IHVzZUNvbnRleHQoU3RhdGVDb250ZXh0KTtcblxuICByZXR1cm4gW2NvbnRleHQuYXRCb3R0b21dO1xufVxuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtEnd.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useAtEnd.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useAtEnd;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useAtEnd() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.atEnd];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VBdEVuZC5qcyJdLCJuYW1lcyI6WyJ1c2VBdEVuZCIsImNvbnRleHQiLCJTdGF0ZUNvbnRleHQiLCJhdEVuZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsUUFBVCxHQUFvQjtBQUNqQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLEtBQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VBdEVuZCgpIHtcbiAgY29uc3QgY29udGV4dCA9IHVzZUNvbnRleHQoU3RhdGVDb250ZXh0KTtcblxuICByZXR1cm4gW2NvbnRleHQuYXRFbmRdO1xufVxuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtStart.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useAtStart.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useAtStart;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useAtStart() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.atStart];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VBdFN0YXJ0LmpzIl0sIm5hbWVzIjpbInVzZUF0U3RhcnQiLCJjb250ZXh0IiwiU3RhdGVDb250ZXh0IiwiYXRTdGFydCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsVUFBVCxHQUFzQjtBQUNuQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLE9BQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VBdFN0YXJ0KCkge1xuICBjb25zdCBjb250ZXh0ID0gdXNlQ29udGV4dChTdGF0ZUNvbnRleHQpO1xuXG4gIHJldHVybiBbY29udGV4dC5hdFN0YXJ0XTtcbn1cbiJdfQ==
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtTop.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useAtTop.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useAtTop;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useAtTop() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.atTop];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VBdFRvcC5qcyJdLCJuYW1lcyI6WyJ1c2VBdFRvcCIsImNvbnRleHQiLCJTdGF0ZUNvbnRleHQiLCJhdFRvcCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsUUFBVCxHQUFvQjtBQUNqQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLEtBQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VBdFRvcCgpIHtcbiAgY29uc3QgY29udGV4dCA9IHVzZUNvbnRleHQoU3RhdGVDb250ZXh0KTtcblxuICByZXR1cm4gW2NvbnRleHQuYXRUb3BdO1xufVxuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useMode.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useMode.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useMode;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useMode() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.mode];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VNb2RlLmpzIl0sIm5hbWVzIjpbInVzZU1vZGUiLCJjb250ZXh0IiwiU3RhdGVDb250ZXh0IiwibW9kZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsT0FBVCxHQUFtQjtBQUNoQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLElBQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VNb2RlKCkge1xuICBjb25zdCBjb250ZXh0ID0gdXNlQ29udGV4dChTdGF0ZUNvbnRleHQpO1xuXG4gIHJldHVybiBbY29udGV4dC5tb2RlXTtcbn1cbiJdfQ==
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useObserveScrollPosition.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useObserveScrollPosition.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useObserveScrollPosition;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _InternalContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/InternalContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/InternalContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function useObserveScrollPosition(observer) {
-  var deps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-  if (typeof observer !== 'function') {
-    console.error('react-scroll-to-bottom: First argument passed to "useObserveScrollPosition" must be a function.');
-  } else if (!Array.isArray(deps)) {
-    console.error('react-scroll-to-bottom: Second argument passed to "useObserveScrollPosition" must be an array if specified.');
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = LinkElement.__proto__ || Object.getPrototypeOf(LinkElement)).call.apply(_ref, [this].concat(args))), _this), _this.render = function () {
+      return _react2.default.createElement(
+        'a',
+        _this.props,
+        _this.props.children
+      );
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  var _useContext = (0, _react.useContext)(_InternalContext.default),
-      observeScrollPosition = _useContext.observeScrollPosition;
-  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  return LinkElement;
+}(_react2.default.Component);
 
+;
 
-  (0, _react.useEffect)(function () {
-    return observer && observeScrollPosition(observer);
-  }, [].concat(_toConsumableArray(deps), [observeScrollPosition]));
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VPYnNlcnZlU2Nyb2xsUG9zaXRpb24uanMiXSwibmFtZXMiOlsidXNlT2JzZXJ2ZVNjcm9sbFBvc2l0aW9uIiwib2JzZXJ2ZXIiLCJkZXBzIiwiY29uc29sZSIsImVycm9yIiwiQXJyYXkiLCJpc0FycmF5IiwiSW50ZXJuYWxDb250ZXh0Iiwib2JzZXJ2ZVNjcm9sbFBvc2l0aW9uIl0sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBQUE7O0FBRUE7Ozs7Ozs7Ozs7Ozs7Ozs7QUFFZSxTQUFTQSx3QkFBVCxDQUFrQ0MsUUFBbEMsRUFBdUQ7QUFBQSxNQUFYQyxJQUFXLHVFQUFKLEVBQUk7O0FBQ3BFLE1BQUksT0FBT0QsUUFBUCxLQUFvQixVQUF4QixFQUFvQztBQUNsQ0UsSUFBQUEsT0FBTyxDQUFDQyxLQUFSLENBQWMsaUdBQWQ7QUFDRCxHQUZELE1BRU8sSUFBSSxDQUFDQyxLQUFLLENBQUNDLE9BQU4sQ0FBY0osSUFBZCxDQUFMLEVBQTBCO0FBQy9CQyxJQUFBQSxPQUFPLENBQUNDLEtBQVIsQ0FDRSw2R0FERjtBQUdEOztBQVBtRSxvQkFTbEMsdUJBQVdHLHdCQUFYLENBVGtDO0FBQUEsTUFTNURDLHFCQVQ0RCxlQVM1REEscUJBVDREO0FBV3BFOzs7QUFDQSx3QkFBVTtBQUFBLFdBQU1QLFFBQVEsSUFBSU8scUJBQXFCLENBQUNQLFFBQUQsQ0FBdkM7QUFBQSxHQUFWLCtCQUFpRUMsSUFBakUsSUFBdUVNLHFCQUF2RTtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCwgdXNlRWZmZWN0IH0gZnJvbSAncmVhY3QnO1xuXG5pbXBvcnQgSW50ZXJuYWxDb250ZXh0IGZyb20gJy4uL1Njcm9sbFRvQm90dG9tL0ludGVybmFsQ29udGV4dCc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZU9ic2VydmVTY3JvbGxQb3NpdGlvbihvYnNlcnZlciwgZGVwcyA9IFtdKSB7XG4gIGlmICh0eXBlb2Ygb2JzZXJ2ZXIgIT09ICdmdW5jdGlvbicpIHtcbiAgICBjb25zb2xlLmVycm9yKCdyZWFjdC1zY3JvbGwtdG8tYm90dG9tOiBGaXJzdCBhcmd1bWVudCBwYXNzZWQgdG8gXCJ1c2VPYnNlcnZlU2Nyb2xsUG9zaXRpb25cIiBtdXN0IGJlIGEgZnVuY3Rpb24uJyk7XG4gIH0gZWxzZSBpZiAoIUFycmF5LmlzQXJyYXkoZGVwcykpIHtcbiAgICBjb25zb2xlLmVycm9yKFxuICAgICAgJ3JlYWN0LXNjcm9sbC10by1ib3R0b206IFNlY29uZCBhcmd1bWVudCBwYXNzZWQgdG8gXCJ1c2VPYnNlcnZlU2Nyb2xsUG9zaXRpb25cIiBtdXN0IGJlIGFuIGFycmF5IGlmIHNwZWNpZmllZC4nXG4gICAgKTtcbiAgfVxuXG4gIGNvbnN0IHsgb2JzZXJ2ZVNjcm9sbFBvc2l0aW9uIH0gPSB1c2VDb250ZXh0KEludGVybmFsQ29udGV4dCk7XG5cbiAgLyogZXNsaW50LWRpc2FibGUtbmV4dC1saW5lIHJlYWN0LWhvb2tzL2V4aGF1c3RpdmUtZGVwcyAqL1xuICB1c2VFZmZlY3QoKCkgPT4gb2JzZXJ2ZXIgJiYgb2JzZXJ2ZVNjcm9sbFBvc2l0aW9uKG9ic2VydmVyKSwgWy4uLmRlcHMsIG9ic2VydmVTY3JvbGxQb3NpdGlvbl0pO1xufVxuIl19
+exports.default = (0, _scrollLink2.default)(LinkElement);
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollTo.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useScrollTo.js ***!
-  \**********************************************************************/
+/***/ "./node_modules/react-scroll/modules/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-scroll/modules/index.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70007,141 +66259,402 @@ function useObserveScrollPosition(observer) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = useScrollTo;
+exports.Helpers = exports.ScrollElement = exports.ScrollLink = exports.animateScroll = exports.scrollSpy = exports.Events = exports.scroller = exports.Element = exports.Button = exports.Link = undefined;
 
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _Link = __webpack_require__(/*! ./components/Link.js */ "./node_modules/react-scroll/modules/components/Link.js");
 
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
+var _Link2 = _interopRequireDefault(_Link);
+
+var _Button = __webpack_require__(/*! ./components/Button.js */ "./node_modules/react-scroll/modules/components/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _Element = __webpack_require__(/*! ./components/Element.js */ "./node_modules/react-scroll/modules/components/Element.js");
+
+var _Element2 = _interopRequireDefault(_Element);
+
+var _scroller = __webpack_require__(/*! ./mixins/scroller.js */ "./node_modules/react-scroll/modules/mixins/scroller.js");
+
+var _scroller2 = _interopRequireDefault(_scroller);
+
+var _scrollEvents = __webpack_require__(/*! ./mixins/scroll-events.js */ "./node_modules/react-scroll/modules/mixins/scroll-events.js");
+
+var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
+
+var _scrollSpy = __webpack_require__(/*! ./mixins/scroll-spy.js */ "./node_modules/react-scroll/modules/mixins/scroll-spy.js");
+
+var _scrollSpy2 = _interopRequireDefault(_scrollSpy);
+
+var _animateScroll = __webpack_require__(/*! ./mixins/animate-scroll.js */ "./node_modules/react-scroll/modules/mixins/animate-scroll.js");
+
+var _animateScroll2 = _interopRequireDefault(_animateScroll);
+
+var _scrollLink = __webpack_require__(/*! ./mixins/scroll-link.js */ "./node_modules/react-scroll/modules/mixins/scroll-link.js");
+
+var _scrollLink2 = _interopRequireDefault(_scrollLink);
+
+var _scrollElement = __webpack_require__(/*! ./mixins/scroll-element.js */ "./node_modules/react-scroll/modules/mixins/scroll-element.js");
+
+var _scrollElement2 = _interopRequireDefault(_scrollElement);
+
+var _Helpers = __webpack_require__(/*! ./mixins/Helpers.js */ "./node_modules/react-scroll/modules/mixins/Helpers.js");
+
+var _Helpers2 = _interopRequireDefault(_Helpers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function useScrollTo() {
-  var context = (0, _react.useContext)(_FunctionContext.default);
-  return context.scrollTo;
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VTY3JvbGxUby5qcyJdLCJuYW1lcyI6WyJ1c2VTY3JvbGxUbyIsImNvbnRleHQiLCJGdW5jdGlvbkNvbnRleHQiLCJzY3JvbGxUbyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsV0FBVCxHQUF1QjtBQUNwQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHdCQUFYLENBQWhCO0FBRUEsU0FBT0QsT0FBTyxDQUFDRSxRQUFmO0FBQ0QiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VDb250ZXh0IH0gZnJvbSAncmVhY3QnO1xuXG5pbXBvcnQgRnVuY3Rpb25Db250ZXh0IGZyb20gJy4uL1Njcm9sbFRvQm90dG9tL0Z1bmN0aW9uQ29udGV4dCc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVNjcm9sbFRvKCkge1xuICBjb25zdCBjb250ZXh0ID0gdXNlQ29udGV4dChGdW5jdGlvbkNvbnRleHQpO1xuXG4gIHJldHVybiBjb250ZXh0LnNjcm9sbFRvO1xufVxuIl19
+exports.Link = _Link2.default;
+exports.Button = _Button2.default;
+exports.Element = _Element2.default;
+exports.scroller = _scroller2.default;
+exports.Events = _scrollEvents2.default;
+exports.scrollSpy = _scrollSpy2.default;
+exports.animateScroll = _animateScroll2.default;
+exports.ScrollLink = _scrollLink2.default;
+exports.ScrollElement = _scrollElement2.default;
+exports.Helpers = _Helpers2.default;
+exports.default = { Link: _Link2.default, Button: _Button2.default, Element: _Element2.default, scroller: _scroller2.default, Events: _scrollEvents2.default, scrollSpy: _scrollSpy2.default, animateScroll: _animateScroll2.default, ScrollLink: _scrollLink2.default, ScrollElement: _scrollElement2.default, Helpers: _Helpers2.default };
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToBottom.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToBottom.js ***!
-  \****************************************************************************/
+/***/ "./node_modules/react-scroll/modules/mixins/Helpers.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/Helpers.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useScrollToBottom;
+/* DEPRECATED */
 
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function useScrollToBottom() {
-  var context = (0, _react.useContext)(_FunctionContext.default);
-  return context.scrollToBottom;
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VTY3JvbGxUb0JvdHRvbS5qcyJdLCJuYW1lcyI6WyJ1c2VTY3JvbGxUb0JvdHRvbSIsImNvbnRleHQiLCJGdW5jdGlvbkNvbnRleHQiLCJzY3JvbGxUb0JvdHRvbSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsaUJBQVQsR0FBNkI7QUFDMUMsTUFBTUMsT0FBTyxHQUFHLHVCQUFXQyx3QkFBWCxDQUFoQjtBQUVBLFNBQU9ELE9BQU8sQ0FBQ0UsY0FBZjtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IEZ1bmN0aW9uQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9GdW5jdGlvbkNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VTY3JvbGxUb0JvdHRvbSgpIHtcbiAgY29uc3QgY29udGV4dCA9IHVzZUNvbnRleHQoRnVuY3Rpb25Db250ZXh0KTtcblxuICByZXR1cm4gY29udGV4dC5zY3JvbGxUb0JvdHRvbTtcbn1cbiJdfQ==
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
+var scrollSpy = __webpack_require__(/*! ./scroll-spy */ "./node_modules/react-scroll/modules/mixins/scroll-spy.js");
+var defaultScroller = __webpack_require__(/*! ./scroller */ "./node_modules/react-scroll/modules/mixins/scroller.js");
+var PropTypes = __webpack_require__(/*! prop-types */ "./node_modules/react-scroll/node_modules/prop-types/index.js");
+var scrollHash = __webpack_require__(/*! ./scroll-hash */ "./node_modules/react-scroll/modules/mixins/scroll-hash.js");
+
+var protoTypes = {
+  to: PropTypes.string.isRequired,
+  containerId: PropTypes.string,
+  container: PropTypes.object,
+  activeClass: PropTypes.string,
+  spy: PropTypes.bool,
+  smooth: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  offset: PropTypes.number,
+  delay: PropTypes.number,
+  isDynamic: PropTypes.bool,
+  onClick: PropTypes.func,
+  duration: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+  absolute: PropTypes.bool,
+  onSetActive: PropTypes.func,
+  onSetInactive: PropTypes.func,
+  ignoreCancelEvents: PropTypes.bool,
+  hashSpy: PropTypes.bool
+};
+
+var Helpers = {
+  Scroll: function Scroll(Component, customScroller) {
+
+    console.warn("Helpers.Scroll is deprecated since v1.7.0");
+
+    var scroller = customScroller || defaultScroller;
+
+    var Scroll = function (_React$Component) {
+      _inherits(Scroll, _React$Component);
+
+      function Scroll(props) {
+        _classCallCheck(this, Scroll);
+
+        var _this = _possibleConstructorReturn(this, (Scroll.__proto__ || Object.getPrototypeOf(Scroll)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        _this.state = {
+          active: false
+        };
+        return _this;
+      }
+
+      _createClass(Scroll, [{
+        key: 'getScrollSpyContainer',
+        value: function getScrollSpyContainer() {
+          var containerId = this.props.containerId;
+          var container = this.props.container;
+
+          if (containerId) {
+            return document.getElementById(containerId);
+          }
+
+          if (container && container.nodeType) {
+            return container;
+          }
+
+          return document;
+        }
+      }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+          if (this.props.spy || this.props.hashSpy) {
+            var scrollSpyContainer = this.getScrollSpyContainer();
+
+            if (!scrollSpy.isMounted(scrollSpyContainer)) {
+              scrollSpy.mount(scrollSpyContainer);
+            }
+
+            if (this.props.hashSpy) {
+              if (!scrollHash.isMounted()) {
+                scrollHash.mount(scroller);
+              }
+              scrollHash.mapContainer(this.props.to, scrollSpyContainer);
+            }
+
+            if (this.props.spy) {
+              scrollSpy.addStateHandler(this.stateHandler);
+            }
+
+            scrollSpy.addSpyHandler(this.spyHandler, scrollSpyContainer);
+
+            this.setState({
+              container: scrollSpyContainer
+            });
+          }
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          scrollSpy.unmount(this.stateHandler, this.spyHandler);
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          var className = "";
+
+          if (this.state && this.state.active) {
+            className = ((this.props.className || "") + " " + (this.props.activeClass || "active")).trim();
+          } else {
+            className = this.props.className;
+          }
+
+          var props = _extends({}, this.props);
+
+          for (var prop in protoTypes) {
+            if (props.hasOwnProperty(prop)) {
+              delete props[prop];
+            }
+          }
+
+          props.className = className;
+          props.onClick = this.handleClick;
+
+          return React.createElement(Component, props);
+        }
+      }]);
+
+      return Scroll;
+    }(React.Component);
+
+    var _initialiseProps = function _initialiseProps() {
+      var _this2 = this;
+
+      this.scrollTo = function (to, props) {
+        scroller.scrollTo(to, _extends({}, _this2.state, props));
+      };
+
+      this.handleClick = function (event) {
+
+        /*
+         * give the posibility to override onClick
+         */
+
+        if (_this2.props.onClick) {
+          _this2.props.onClick(event);
+        }
+
+        /*
+         * dont bubble the navigation
+         */
+
+        if (event.stopPropagation) event.stopPropagation();
+        if (event.preventDefault) event.preventDefault();
+
+        /*
+         * do the magic!
+         */
+        _this2.scrollTo(_this2.props.to, _this2.props);
+      };
+
+      this.stateHandler = function () {
+        if (scroller.getActiveLink() !== _this2.props.to) {
+          if (_this2.state !== null && _this2.state.active && _this2.props.onSetInactive) {
+            _this2.props.onSetInactive();
+          }
+          _this2.setState({ active: false });
+        }
+      };
+
+      this.spyHandler = function (y) {
+
+        var scrollSpyContainer = _this2.getScrollSpyContainer();
+
+        if (scrollHash.isMounted() && !scrollHash.isInitialized()) {
+          return;
+        }
+
+        var to = _this2.props.to;
+        var element = null;
+        var elemTopBound = 0;
+        var elemBottomBound = 0;
+        var containerTop = 0;
+
+        if (scrollSpyContainer.getBoundingClientRect) {
+          var containerCords = scrollSpyContainer.getBoundingClientRect();
+          containerTop = containerCords.top;
+        }
+
+        if (!element || _this2.props.isDynamic) {
+          element = scroller.get(to);
+          if (!element) {
+            return;
+          }
+
+          var cords = element.getBoundingClientRect();
+          elemTopBound = cords.top - containerTop + y;
+          elemBottomBound = elemTopBound + cords.height;
+        }
+
+        var offsetY = y - _this2.props.offset;
+        var isInside = offsetY >= Math.floor(elemTopBound) && offsetY < Math.floor(elemBottomBound);
+        var isOutside = offsetY < Math.floor(elemTopBound) || offsetY >= Math.floor(elemBottomBound);
+        var activeLink = scroller.getActiveLink();
+
+        if (isOutside) {
+          if (to === activeLink) {
+            scroller.setActiveLink(void 0);
+          }
+
+          if (_this2.props.hashSpy && scrollHash.getHash() === to) {
+            scrollHash.changeHash();
+          }
+
+          if (_this2.props.spy && _this2.state.active) {
+            _this2.setState({ active: false });
+            _this2.props.onSetInactive && _this2.props.onSetInactive();
+          }
+
+          return scrollSpy.updateStates();
+        }
+
+        if (isInside && activeLink !== to) {
+          scroller.setActiveLink(to);
+
+          _this2.props.hashSpy && scrollHash.changeHash(to);
+
+          if (_this2.props.spy) {
+            _this2.setState({ active: true });
+            _this2.props.onSetActive && _this2.props.onSetActive(to);
+          }
+          return scrollSpy.updateStates();
+        }
+      };
+    };
+
+    ;
+
+    Scroll.propTypes = protoTypes;
+
+    Scroll.defaultProps = { offset: 0 };
+
+    return Scroll;
+  },
+  Element: function Element(Component) {
+
+    console.warn("Helpers.Element is deprecated since v1.7.0");
+
+    var Element = function (_React$Component2) {
+      _inherits(Element, _React$Component2);
+
+      function Element(props) {
+        _classCallCheck(this, Element);
+
+        var _this3 = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
+
+        _this3.childBindings = {
+          domNode: null
+        };
+        return _this3;
+      }
+
+      _createClass(Element, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+          if (typeof window === 'undefined') {
+            return false;
+          }
+          this.registerElems(this.props.name);
+        }
+      }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps) {
+          if (this.props.name !== prevProps.name) {
+            this.registerElems(this.props.name);
+          }
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          if (typeof window === 'undefined') {
+            return false;
+          }
+          defaultScroller.unregister(this.props.name);
+        }
+      }, {
+        key: 'registerElems',
+        value: function registerElems(name) {
+          defaultScroller.register(name, this.childBindings.domNode);
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          return React.createElement(Component, _extends({}, this.props, { parentBindings: this.childBindings }));
+        }
+      }]);
+
+      return Element;
+    }(React.Component);
+
+    ;
+
+    Element.propTypes = {
+      name: PropTypes.string,
+      id: PropTypes.string
+    };
+
+    return Element;
+  }
+};
+
+module.exports = Helpers;
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToEnd.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToEnd.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useScrollToEnd;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useScrollToEnd() {
-  var context = (0, _react.useContext)(_FunctionContext.default);
-  return context.scrollToEnd;
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VTY3JvbGxUb0VuZC5qcyJdLCJuYW1lcyI6WyJ1c2VTY3JvbGxUb0VuZCIsImNvbnRleHQiLCJGdW5jdGlvbkNvbnRleHQiLCJzY3JvbGxUb0VuZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsY0FBVCxHQUEwQjtBQUN2QyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHdCQUFYLENBQWhCO0FBRUEsU0FBT0QsT0FBTyxDQUFDRSxXQUFmO0FBQ0QiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VDb250ZXh0IH0gZnJvbSAncmVhY3QnO1xuXG5pbXBvcnQgRnVuY3Rpb25Db250ZXh0IGZyb20gJy4uL1Njcm9sbFRvQm90dG9tL0Z1bmN0aW9uQ29udGV4dCc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVNjcm9sbFRvRW5kKCkge1xuICBjb25zdCBjb250ZXh0ID0gdXNlQ29udGV4dChGdW5jdGlvbkNvbnRleHQpO1xuXG4gIHJldHVybiBjb250ZXh0LnNjcm9sbFRvRW5kO1xufVxuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToStart.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToStart.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useScrollToStart;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useScrollToStart() {
-  var context = (0, _react.useContext)(_FunctionContext.default);
-  return context.scrollToStart;
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VTY3JvbGxUb1N0YXJ0LmpzIl0sIm5hbWVzIjpbInVzZVNjcm9sbFRvU3RhcnQiLCJjb250ZXh0IiwiRnVuY3Rpb25Db250ZXh0Iiwic2Nyb2xsVG9TdGFydCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsZ0JBQVQsR0FBNEI7QUFDekMsTUFBTUMsT0FBTyxHQUFHLHVCQUFXQyx3QkFBWCxDQUFoQjtBQUVBLFNBQU9ELE9BQU8sQ0FBQ0UsYUFBZjtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IEZ1bmN0aW9uQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9GdW5jdGlvbkNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VTY3JvbGxUb1N0YXJ0KCkge1xuICBjb25zdCBjb250ZXh0ID0gdXNlQ29udGV4dChGdW5jdGlvbkNvbnRleHQpO1xuXG4gIHJldHVybiBjb250ZXh0LnNjcm9sbFRvU3RhcnQ7XG59XG4iXX0=
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToTop.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToTop.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = useScrollToTop;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function useScrollToTop() {
-  var context = (0, _react.useContext)(_FunctionContext.default);
-  return context.scrollToTop;
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VTY3JvbGxUb1RvcC5qcyJdLCJuYW1lcyI6WyJ1c2VTY3JvbGxUb1RvcCIsImNvbnRleHQiLCJGdW5jdGlvbkNvbnRleHQiLCJzY3JvbGxUb1RvcCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsY0FBVCxHQUEwQjtBQUN2QyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHdCQUFYLENBQWhCO0FBRUEsU0FBT0QsT0FBTyxDQUFDRSxXQUFmO0FBQ0QiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VDb250ZXh0IH0gZnJvbSAncmVhY3QnO1xuXG5pbXBvcnQgRnVuY3Rpb25Db250ZXh0IGZyb20gJy4uL1Njcm9sbFRvQm90dG9tL0Z1bmN0aW9uQ29udGV4dCc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVNjcm9sbFRvVG9wKCkge1xuICBjb25zdCBjb250ZXh0ID0gdXNlQ29udGV4dChGdW5jdGlvbkNvbnRleHQpO1xuXG4gIHJldHVybiBjb250ZXh0LnNjcm9sbFRvVG9wO1xufVxuIl19
-
-/***/ }),
-
-/***/ "./node_modules/react-scroll-to-bottom/lib/hooks/useSticky.js":
+/***/ "./node_modules/react-scroll/modules/mixins/animate-scroll.js":
 /*!********************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/hooks/useSticky.js ***!
+  !*** ./node_modules/react-scroll/modules/mixins/animate-scroll.js ***!
   \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -70152,26 +66665,268 @@ function useScrollToTop() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = useSticky;
 
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ../ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
+var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _smooth = __webpack_require__(/*! ./smooth */ "./node_modules/react-scroll/modules/mixins/smooth.js");
+
+var _smooth2 = _interopRequireDefault(_smooth);
+
+var _cancelEvents = __webpack_require__(/*! ./cancel-events */ "./node_modules/react-scroll/modules/mixins/cancel-events.js");
+
+var _cancelEvents2 = _interopRequireDefault(_cancelEvents);
+
+var _scrollEvents = __webpack_require__(/*! ./scroll-events */ "./node_modules/react-scroll/modules/mixins/scroll-events.js");
+
+var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function useSticky() {
-  var context = (0, _react.useContext)(_StateContext.default);
-  return [context.sticky];
-}
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ob29rcy91c2VTdGlja3kuanMiXSwibmFtZXMiOlsidXNlU3RpY2t5IiwiY29udGV4dCIsIlN0YXRlQ29udGV4dCIsInN0aWNreSJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUVBOzs7O0FBRWUsU0FBU0EsU0FBVCxHQUFxQjtBQUNsQyxNQUFNQyxPQUFPLEdBQUcsdUJBQVdDLHFCQUFYLENBQWhCO0FBRUEsU0FBTyxDQUFDRCxPQUFPLENBQUNFLE1BQVQsQ0FBUDtBQUNEIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlQ29udGV4dCB9IGZyb20gJ3JlYWN0JztcblxuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuLi9TY3JvbGxUb0JvdHRvbS9TdGF0ZUNvbnRleHQnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VTdGlja3koKSB7XG4gIGNvbnN0IGNvbnRleHQgPSB1c2VDb250ZXh0KFN0YXRlQ29udGV4dCk7XG5cbiAgcmV0dXJuIFtjb250ZXh0LnN0aWNreV07XG59XG4iXX0=
+/*
+ * Gets the easing type from the smooth prop within options.
+ */
+var getAnimationType = function getAnimationType(options) {
+  return _smooth2.default[options.smooth] || _smooth2.default.defaultEasing;
+};
+/*
+ * Function helper
+ */
+var functionWrapper = function functionWrapper(value) {
+  return typeof value === 'function' ? value : function () {
+    return value;
+  };
+};
+/*
+ * Wraps window properties to allow server side rendering
+ */
+var currentWindowProperties = function currentWindowProperties() {
+  if (typeof window !== 'undefined') {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+  }
+};
+
+/*
+ * Helper function to never extend 60fps on the webpage.
+ */
+var requestAnimationFrameHelper = function () {
+  return currentWindowProperties() || function (callback, element, delay) {
+    window.setTimeout(callback, delay || 1000 / 60, new Date().getTime());
+  };
+}();
+
+var makeData = function makeData() {
+  return {
+    currentPosition: 0,
+    startPosition: 0,
+    targetPosition: 0,
+    progress: 0,
+    duration: 0,
+    cancel: false,
+
+    target: null,
+    containerElement: null,
+    to: null,
+    start: null,
+    delta: null,
+    percent: null,
+    delayTimeout: null
+  };
+};
+
+var currentPositionX = function currentPositionX(options) {
+  var containerElement = options.data.containerElement;
+  if (containerElement && containerElement !== document && containerElement !== document.body) {
+    return containerElement.scrollLeft;
+  } else {
+    var supportPageOffset = window.pageXOffset !== undefined;
+    var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+    return supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
+  }
+};
+
+var currentPositionY = function currentPositionY(options) {
+  var containerElement = options.data.containerElement;
+  if (containerElement && containerElement !== document && containerElement !== document.body) {
+    return containerElement.scrollTop;
+  } else {
+    var supportPageOffset = window.pageXOffset !== undefined;
+    var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+    return supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+  }
+};
+
+var scrollContainerWidth = function scrollContainerWidth(options) {
+  var containerElement = options.data.containerElement;
+  if (containerElement && containerElement !== document && containerElement !== document.body) {
+    return containerElement.scrollWidth - containerElement.offsetWidth;
+  } else {
+    var body = document.body;
+    var html = document.documentElement;
+
+    return Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth);
+  }
+};
+
+var scrollContainerHeight = function scrollContainerHeight(options) {
+  var containerElement = options.data.containerElement;
+  if (containerElement && containerElement !== document && containerElement !== document.body) {
+    return containerElement.scrollHeight - containerElement.offsetHeight;
+  } else {
+    var body = document.body;
+    var html = document.documentElement;
+
+    return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+  }
+};
+
+var animateScroll = function animateScroll(easing, options, timestamp) {
+  var data = options.data;
+
+  // Cancel on specific events
+  if (!options.ignoreCancelEvents && data.cancel) {
+    if (_scrollEvents2.default.registered['end']) {
+      _scrollEvents2.default.registered['end'](data.to, data.target, data.currentPositionY);
+    }
+    return;
+  };
+
+  data.delta = Math.round(data.targetPosition - data.startPosition);
+
+  if (data.start === null) {
+    data.start = timestamp;
+  }
+
+  data.progress = timestamp - data.start;
+
+  data.percent = data.progress >= data.duration ? 1 : easing(data.progress / data.duration);
+
+  data.currentPosition = data.startPosition + Math.ceil(data.delta * data.percent);
+
+  if (data.containerElement && data.containerElement !== document && data.containerElement !== document.body) {
+    if (options.horizontal) {
+      data.containerElement.scrollLeft = data.currentPosition;
+    } else {
+      data.containerElement.scrollTop = data.currentPosition;
+    }
+  } else {
+    if (options.horizontal) {
+      window.scrollTo(data.currentPosition, 0);
+    } else {
+      window.scrollTo(0, data.currentPosition);
+    }
+  }
+
+  if (data.percent < 1) {
+    var easedAnimate = animateScroll.bind(null, easing, options);
+    requestAnimationFrameHelper.call(window, easedAnimate);
+    return;
+  }
+
+  if (_scrollEvents2.default.registered['end']) {
+    _scrollEvents2.default.registered['end'](data.to, data.target, data.currentPosition);
+  }
+};
+
+var setContainer = function setContainer(options) {
+  options.data.containerElement = !options ? null : options.containerId ? document.getElementById(options.containerId) : options.container && options.container.nodeType ? options.container : document;
+};
+
+var animateTopScroll = function animateTopScroll(scrollOffset, options, to, target) {
+  options.data = options.data || makeData();
+
+  window.clearTimeout(options.data.delayTimeout);
+
+  _cancelEvents2.default.subscribe(function () {
+    options.data.cancel = true;
+  });
+
+  setContainer(options);
+
+  options.data.start = null;
+  options.data.cancel = false;
+  options.data.startPosition = options.horizontal ? currentPositionX(options) : currentPositionY(options);
+  options.data.targetPosition = options.absolute ? scrollOffset : scrollOffset + options.data.startPosition;
+
+  if (options.data.startPosition === options.data.targetPosition) {
+    if (_scrollEvents2.default.registered['end']) {
+      _scrollEvents2.default.registered['end'](options.data.to, options.data.target, options.data.currentPosition);
+    }
+    return;
+  }
+
+  options.data.delta = Math.round(options.data.targetPosition - options.data.startPosition);
+
+  options.data.duration = functionWrapper(options.duration)(options.data.delta);
+  options.data.duration = isNaN(parseFloat(options.data.duration)) ? 1000 : parseFloat(options.data.duration);
+  options.data.to = to;
+  options.data.target = target;
+
+  var easing = getAnimationType(options);
+  var easedAnimate = animateScroll.bind(null, easing, options);
+
+  if (options && options.delay > 0) {
+    options.data.delayTimeout = window.setTimeout(function () {
+      if (_scrollEvents2.default.registered['begin']) {
+        _scrollEvents2.default.registered['begin'](options.data.to, options.data.target);
+      }
+      requestAnimationFrameHelper.call(window, easedAnimate);
+    }, options.delay);
+    return;
+  }
+
+  if (_scrollEvents2.default.registered['begin']) {
+    _scrollEvents2.default.registered['begin'](options.data.to, options.data.target);
+  }
+  requestAnimationFrameHelper.call(window, easedAnimate);
+};
+
+var proceedOptions = function proceedOptions(options) {
+  options = _extends({}, options);
+  options.data = options.data || makeData();
+  options.absolute = true;
+  return options;
+};
+
+var scrollToTop = function scrollToTop(options) {
+  animateTopScroll(0, proceedOptions(options));
+};
+
+var scrollTo = function scrollTo(toPosition, options) {
+  animateTopScroll(toPosition, proceedOptions(options));
+};
+
+var scrollToBottom = function scrollToBottom(options) {
+  options = proceedOptions(options);
+  setContainer(options);
+  animateTopScroll(options.horizontal ? scrollContainerWidth(options) : scrollContainerHeight(options), options);
+};
+
+var scrollMore = function scrollMore(toPosition, options) {
+  options = proceedOptions(options);
+  setContainer(options);
+  var currentPosition = options.horizontal ? currentPositionX(options) : currentPositionY(options);
+  animateTopScroll(toPosition + currentPosition, options);
+};
+
+exports.default = {
+  animateTopScroll: animateTopScroll,
+  getAnimationType: getAnimationType,
+  scrollToTop: scrollToTop,
+  scrollToBottom: scrollToBottom,
+  scrollTo: scrollTo,
+  scrollMore: scrollMore
+};
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/lib/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/lib/index.js ***!
-  \**********************************************************/
+/***/ "./node_modules/react-scroll/modules/mixins/cancel-events.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/cancel-events.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70181,177 +66936,953 @@ function useSticky() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "AutoHideFollowButton", {
-  enumerable: true,
-  get: function get() {
-    return _AutoHideFollowButton.default;
+
+var _passiveEventListeners = __webpack_require__(/*! ./passive-event-listeners */ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js");
+
+var events = ['mousedown', 'mousewheel', 'touchmove', 'keydown'];
+
+exports.default = {
+  subscribe: function subscribe(cancelEvent) {
+    return typeof document !== 'undefined' && events.forEach(function (event) {
+      return (0, _passiveEventListeners.addPassiveEventListener)(document, event, cancelEvent);
+    });
   }
-});
-Object.defineProperty(exports, "Composer", {
-  enumerable: true,
-  get: function get() {
-    return _Composer.default;
-  }
-});
-Object.defineProperty(exports, "FunctionContext", {
-  enumerable: true,
-  get: function get() {
-    return _FunctionContext.default;
-  }
-});
-Object.defineProperty(exports, "Panel", {
-  enumerable: true,
-  get: function get() {
-    return _Panel.default;
-  }
-});
-Object.defineProperty(exports, "StateContext", {
-  enumerable: true,
-  get: function get() {
-    return _StateContext.default;
-  }
-});
-Object.defineProperty(exports, "useAnimating", {
-  enumerable: true,
-  get: function get() {
-    return _useAnimating.default;
-  }
-});
-Object.defineProperty(exports, "useAnimatingToEnd", {
-  enumerable: true,
-  get: function get() {
-    return _useAnimatingToEnd.default;
-  }
-});
-Object.defineProperty(exports, "useAtBottom", {
-  enumerable: true,
-  get: function get() {
-    return _useAtBottom.default;
-  }
-});
-Object.defineProperty(exports, "useAtEnd", {
-  enumerable: true,
-  get: function get() {
-    return _useAtEnd.default;
-  }
-});
-Object.defineProperty(exports, "useAtStart", {
-  enumerable: true,
-  get: function get() {
-    return _useAtStart.default;
-  }
-});
-Object.defineProperty(exports, "useAtTop", {
-  enumerable: true,
-  get: function get() {
-    return _useAtTop.default;
-  }
-});
-Object.defineProperty(exports, "useMode", {
-  enumerable: true,
-  get: function get() {
-    return _useMode.default;
-  }
-});
-Object.defineProperty(exports, "useObserveScrollPosition", {
-  enumerable: true,
-  get: function get() {
-    return _useObserveScrollPosition.default;
-  }
-});
-Object.defineProperty(exports, "useScrollTo", {
-  enumerable: true,
-  get: function get() {
-    return _useScrollTo.default;
-  }
-});
-Object.defineProperty(exports, "useScrollToBottom", {
-  enumerable: true,
-  get: function get() {
-    return _useScrollToBottom.default;
-  }
-});
-Object.defineProperty(exports, "useScrollToEnd", {
-  enumerable: true,
-  get: function get() {
-    return _useScrollToEnd.default;
-  }
-});
-Object.defineProperty(exports, "useScrollToStart", {
-  enumerable: true,
-  get: function get() {
-    return _useScrollToStart.default;
-  }
-});
-Object.defineProperty(exports, "useScrollToTop", {
-  enumerable: true,
-  get: function get() {
-    return _useScrollToTop.default;
-  }
-});
-Object.defineProperty(exports, "useSticky", {
-  enumerable: true,
-  get: function get() {
-    return _useSticky.default;
-  }
-});
-exports.default = void 0;
-
-var _addVersionToMetaTag = _interopRequireDefault(__webpack_require__(/*! ./addVersionToMetaTag */ "./node_modules/react-scroll-to-bottom/lib/addVersionToMetaTag.js"));
-
-var _AutoHideFollowButton = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/AutoHideFollowButton */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/AutoHideFollowButton.js"));
-
-var _BasicScrollToBottom = _interopRequireDefault(__webpack_require__(/*! ./BasicScrollToBottom */ "./node_modules/react-scroll-to-bottom/lib/BasicScrollToBottom.js"));
-
-var _Composer = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/Composer */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Composer.js"));
-
-var _FunctionContext = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/FunctionContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/FunctionContext.js"));
-
-var _Panel = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/Panel */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/Panel.js"));
-
-var _StateContext = _interopRequireDefault(__webpack_require__(/*! ./ScrollToBottom/StateContext */ "./node_modules/react-scroll-to-bottom/lib/ScrollToBottom/StateContext.js"));
-
-var _useAnimating = _interopRequireDefault(__webpack_require__(/*! ./hooks/useAnimating */ "./node_modules/react-scroll-to-bottom/lib/hooks/useAnimating.js"));
-
-var _useAnimatingToEnd = _interopRequireDefault(__webpack_require__(/*! ./hooks/useAnimatingToEnd */ "./node_modules/react-scroll-to-bottom/lib/hooks/useAnimatingToEnd.js"));
-
-var _useAtBottom = _interopRequireDefault(__webpack_require__(/*! ./hooks/useAtBottom */ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtBottom.js"));
-
-var _useAtEnd = _interopRequireDefault(__webpack_require__(/*! ./hooks/useAtEnd */ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtEnd.js"));
-
-var _useAtStart = _interopRequireDefault(__webpack_require__(/*! ./hooks/useAtStart */ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtStart.js"));
-
-var _useAtTop = _interopRequireDefault(__webpack_require__(/*! ./hooks/useAtTop */ "./node_modules/react-scroll-to-bottom/lib/hooks/useAtTop.js"));
-
-var _useMode = _interopRequireDefault(__webpack_require__(/*! ./hooks/useMode */ "./node_modules/react-scroll-to-bottom/lib/hooks/useMode.js"));
-
-var _useObserveScrollPosition = _interopRequireDefault(__webpack_require__(/*! ./hooks/useObserveScrollPosition */ "./node_modules/react-scroll-to-bottom/lib/hooks/useObserveScrollPosition.js"));
-
-var _useScrollTo = _interopRequireDefault(__webpack_require__(/*! ./hooks/useScrollTo */ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollTo.js"));
-
-var _useScrollToBottom = _interopRequireDefault(__webpack_require__(/*! ./hooks/useScrollToBottom */ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToBottom.js"));
-
-var _useScrollToEnd = _interopRequireDefault(__webpack_require__(/*! ./hooks/useScrollToEnd */ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToEnd.js"));
-
-var _useScrollToStart = _interopRequireDefault(__webpack_require__(/*! ./hooks/useScrollToStart */ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToStart.js"));
-
-var _useScrollToTop = _interopRequireDefault(__webpack_require__(/*! ./hooks/useScrollToTop */ "./node_modules/react-scroll-to-bottom/lib/hooks/useScrollToTop.js"));
-
-var _useSticky = _interopRequireDefault(__webpack_require__(/*! ./hooks/useSticky */ "./node_modules/react-scroll-to-bottom/lib/hooks/useSticky.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _default = _BasicScrollToBottom.default;
-exports.default = _default;
-(0, _addVersionToMetaTag.default)();
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9pbmRleC5qcyJdLCJuYW1lcyI6WyJCYXNpY1Njcm9sbFRvQm90dG9tIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBRUE7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBRUE7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7O0FBQ0E7Ozs7ZUFFZUEsNEI7O0FBd0JmIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGFkZFZlcnNpb25Ub01ldGFUYWcgZnJvbSAnLi9hZGRWZXJzaW9uVG9NZXRhVGFnJztcblxuaW1wb3J0IEF1dG9IaWRlRm9sbG93QnV0dG9uIGZyb20gJy4vU2Nyb2xsVG9Cb3R0b20vQXV0b0hpZGVGb2xsb3dCdXR0b24nO1xuaW1wb3J0IEJhc2ljU2Nyb2xsVG9Cb3R0b20gZnJvbSAnLi9CYXNpY1Njcm9sbFRvQm90dG9tJztcbmltcG9ydCBDb21wb3NlciBmcm9tICcuL1Njcm9sbFRvQm90dG9tL0NvbXBvc2VyJztcbmltcG9ydCBGdW5jdGlvbkNvbnRleHQgZnJvbSAnLi9TY3JvbGxUb0JvdHRvbS9GdW5jdGlvbkNvbnRleHQnO1xuaW1wb3J0IFBhbmVsIGZyb20gJy4vU2Nyb2xsVG9Cb3R0b20vUGFuZWwnO1xuaW1wb3J0IFN0YXRlQ29udGV4dCBmcm9tICcuL1Njcm9sbFRvQm90dG9tL1N0YXRlQ29udGV4dCc7XG5cbmltcG9ydCB1c2VBbmltYXRpbmcgZnJvbSAnLi9ob29rcy91c2VBbmltYXRpbmcnO1xuaW1wb3J0IHVzZUFuaW1hdGluZ1RvRW5kIGZyb20gJy4vaG9va3MvdXNlQW5pbWF0aW5nVG9FbmQnO1xuaW1wb3J0IHVzZUF0Qm90dG9tIGZyb20gJy4vaG9va3MvdXNlQXRCb3R0b20nO1xuaW1wb3J0IHVzZUF0RW5kIGZyb20gJy4vaG9va3MvdXNlQXRFbmQnO1xuaW1wb3J0IHVzZUF0U3RhcnQgZnJvbSAnLi9ob29rcy91c2VBdFN0YXJ0JztcbmltcG9ydCB1c2VBdFRvcCBmcm9tICcuL2hvb2tzL3VzZUF0VG9wJztcbmltcG9ydCB1c2VNb2RlIGZyb20gJy4vaG9va3MvdXNlTW9kZSc7XG5pbXBvcnQgdXNlT2JzZXJ2ZVNjcm9sbFBvc2l0aW9uIGZyb20gJy4vaG9va3MvdXNlT2JzZXJ2ZVNjcm9sbFBvc2l0aW9uJztcbmltcG9ydCB1c2VTY3JvbGxUbyBmcm9tICcuL2hvb2tzL3VzZVNjcm9sbFRvJztcbmltcG9ydCB1c2VTY3JvbGxUb0JvdHRvbSBmcm9tICcuL2hvb2tzL3VzZVNjcm9sbFRvQm90dG9tJztcbmltcG9ydCB1c2VTY3JvbGxUb0VuZCBmcm9tICcuL2hvb2tzL3VzZVNjcm9sbFRvRW5kJztcbmltcG9ydCB1c2VTY3JvbGxUb1N0YXJ0IGZyb20gJy4vaG9va3MvdXNlU2Nyb2xsVG9TdGFydCc7XG5pbXBvcnQgdXNlU2Nyb2xsVG9Ub3AgZnJvbSAnLi9ob29rcy91c2VTY3JvbGxUb1RvcCc7XG5pbXBvcnQgdXNlU3RpY2t5IGZyb20gJy4vaG9va3MvdXNlU3RpY2t5JztcblxuZXhwb3J0IGRlZmF1bHQgQmFzaWNTY3JvbGxUb0JvdHRvbTtcblxuZXhwb3J0IHtcbiAgQXV0b0hpZGVGb2xsb3dCdXR0b24sXG4gIENvbXBvc2VyLFxuICBGdW5jdGlvbkNvbnRleHQsXG4gIFBhbmVsLFxuICBTdGF0ZUNvbnRleHQsXG4gIHVzZUFuaW1hdGluZyxcbiAgdXNlQW5pbWF0aW5nVG9FbmQsXG4gIHVzZUF0Qm90dG9tLFxuICB1c2VBdEVuZCxcbiAgdXNlQXRTdGFydCxcbiAgdXNlQXRUb3AsXG4gIHVzZU1vZGUsXG4gIHVzZU9ic2VydmVTY3JvbGxQb3NpdGlvbixcbiAgdXNlU2Nyb2xsVG8sXG4gIHVzZVNjcm9sbFRvQm90dG9tLFxuICB1c2VTY3JvbGxUb0VuZCxcbiAgdXNlU2Nyb2xsVG9TdGFydCxcbiAgdXNlU2Nyb2xsVG9Ub3AsXG4gIHVzZVN0aWNreVxufTtcblxuYWRkVmVyc2lvblRvTWV0YVRhZygpO1xuIl19
+};
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/node_modules/object-assign/index.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/node_modules/object-assign/index.js ***!
-  \*********************************************************************************/
+/***/ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/passive-event-listeners.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/*
+ * Tell the browser that the event listener won't prevent a scroll.
+ * Allowing the browser to continue scrolling without having to
+ * to wait for the listener to return.
+ */
+var addPassiveEventListener = exports.addPassiveEventListener = function addPassiveEventListener(target, eventName, listener) {
+  var supportsPassiveOption = function () {
+    var supportsPassiveOption = false;
+    try {
+      var opts = Object.defineProperty({}, 'passive', {
+        get: function get() {
+          supportsPassiveOption = true;
+        }
+      });
+      window.addEventListener('test', null, opts);
+    } catch (e) {}
+    return supportsPassiveOption;
+  }();
+  target.addEventListener(eventName, listener, supportsPassiveOption ? { passive: true } : false);
+};
+
+var removePassiveEventListener = exports.removePassiveEventListener = function removePassiveEventListener(target, eventName, listener) {
+  target.removeEventListener(eventName, listener);
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/scroll-element.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/scroll-element.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _scroller = __webpack_require__(/*! ./scroller */ "./node_modules/react-scroll/modules/mixins/scroller.js");
+
+var _scroller2 = _interopRequireDefault(_scroller);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/react-scroll/node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+exports.default = function (Component) {
+  var Element = function (_React$Component) {
+    _inherits(Element, _React$Component);
+
+    function Element(props) {
+      _classCallCheck(this, Element);
+
+      var _this = _possibleConstructorReturn(this, (Element.__proto__ || Object.getPrototypeOf(Element)).call(this, props));
+
+      _this.childBindings = {
+        domNode: null
+      };
+      return _this;
+    }
+
+    _createClass(Element, [{
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        if (typeof window === 'undefined') {
+          return false;
+        }
+        this.registerElems(this.props.name);
+      }
+    }, {
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate(prevProps) {
+        if (this.props.name !== prevProps.name) {
+          this.registerElems(this.props.name);
+        }
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        if (typeof window === 'undefined') {
+          return false;
+        }
+        _scroller2.default.unregister(this.props.name);
+      }
+    }, {
+      key: 'registerElems',
+      value: function registerElems(name) {
+        _scroller2.default.register(name, this.childBindings.domNode);
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(Component, _extends({}, this.props, { parentBindings: this.childBindings }));
+      }
+    }]);
+
+    return Element;
+  }(_react2.default.Component);
+
+  ;
+
+  Element.propTypes = {
+    name: _propTypes2.default.string,
+    id: _propTypes2.default.string
+  };
+
+  return Element;
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/scroll-events.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/scroll-events.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var Events = {
+	registered: {},
+	scrollEvent: {
+		register: function register(evtName, callback) {
+			Events.registered[evtName] = callback;
+		},
+		remove: function remove(evtName) {
+			Events.registered[evtName] = null;
+		}
+	}
+};
+
+exports.default = Events;
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/scroll-hash.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/scroll-hash.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _passiveEventListeners = __webpack_require__(/*! ./passive-event-listeners */ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js");
+
+var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var scrollHash = {
+  mountFlag: false,
+  initialized: false,
+  scroller: null,
+  containers: {},
+
+  mount: function mount(scroller) {
+    this.scroller = scroller;
+
+    this.handleHashChange = this.handleHashChange.bind(this);
+    window.addEventListener('hashchange', this.handleHashChange);
+
+    this.initStateFromHash();
+    this.mountFlag = true;
+  },
+  mapContainer: function mapContainer(to, container) {
+    this.containers[to] = container;
+  },
+  isMounted: function isMounted() {
+    return this.mountFlag;
+  },
+  isInitialized: function isInitialized() {
+    return this.initialized;
+  },
+  initStateFromHash: function initStateFromHash() {
+    var _this = this;
+
+    var hash = this.getHash();
+    if (hash) {
+      window.setTimeout(function () {
+        _this.scrollTo(hash, true);
+        _this.initialized = true;
+      }, 10);
+    } else {
+      this.initialized = true;
+    }
+  },
+  scrollTo: function scrollTo(to, isInit) {
+    var scroller = this.scroller;
+    var element = scroller.get(to);
+    if (element && (isInit || to !== scroller.getActiveLink())) {
+      var container = this.containers[to] || document;
+      scroller.scrollTo(to, { container: container });
+    }
+  },
+  getHash: function getHash() {
+    return _utils2.default.getHash();
+  },
+  changeHash: function changeHash(to) {
+    if (this.isInitialized() && _utils2.default.getHash() !== to) {
+      _utils2.default.pushHash(to);
+    }
+  },
+  handleHashChange: function handleHashChange() {
+    this.scrollTo(this.getHash());
+  },
+  unmount: function unmount() {
+    this.scroller = null;
+    this.containers = null;
+    window.removeEventListener('hashchange', this.handleHashChange);
+  }
+};
+
+exports.default = scrollHash;
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/scroll-link.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/scroll-link.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _scrollSpy = __webpack_require__(/*! ./scroll-spy */ "./node_modules/react-scroll/modules/mixins/scroll-spy.js");
+
+var _scrollSpy2 = _interopRequireDefault(_scrollSpy);
+
+var _scroller = __webpack_require__(/*! ./scroller */ "./node_modules/react-scroll/modules/mixins/scroller.js");
+
+var _scroller2 = _interopRequireDefault(_scroller);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/react-scroll/node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _scrollHash = __webpack_require__(/*! ./scroll-hash */ "./node_modules/react-scroll/modules/mixins/scroll-hash.js");
+
+var _scrollHash2 = _interopRequireDefault(_scrollHash);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var protoTypes = {
+  to: _propTypes2.default.string.isRequired,
+  containerId: _propTypes2.default.string,
+  container: _propTypes2.default.object,
+  activeClass: _propTypes2.default.string,
+  spy: _propTypes2.default.bool,
+  horizontal: _propTypes2.default.bool,
+  smooth: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.string]),
+  offset: _propTypes2.default.number,
+  delay: _propTypes2.default.number,
+  isDynamic: _propTypes2.default.bool,
+  onClick: _propTypes2.default.func,
+  duration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.func]),
+  absolute: _propTypes2.default.bool,
+  onSetActive: _propTypes2.default.func,
+  onSetInactive: _propTypes2.default.func,
+  ignoreCancelEvents: _propTypes2.default.bool,
+  hashSpy: _propTypes2.default.bool
+};
+
+exports.default = function (Component, customScroller) {
+
+  var scroller = customScroller || _scroller2.default;
+
+  var Link = function (_React$PureComponent) {
+    _inherits(Link, _React$PureComponent);
+
+    function Link(props) {
+      _classCallCheck(this, Link);
+
+      var _this = _possibleConstructorReturn(this, (Link.__proto__ || Object.getPrototypeOf(Link)).call(this, props));
+
+      _initialiseProps.call(_this);
+
+      _this.state = {
+        active: false
+      };
+      return _this;
+    }
+
+    _createClass(Link, [{
+      key: 'getScrollSpyContainer',
+      value: function getScrollSpyContainer() {
+        var containerId = this.props.containerId;
+        var container = this.props.container;
+
+        if (containerId && !container) {
+          return document.getElementById(containerId);
+        }
+
+        if (container && container.nodeType) {
+          return container;
+        }
+
+        return document;
+      }
+    }, {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        if (this.props.spy || this.props.hashSpy) {
+          var scrollSpyContainer = this.getScrollSpyContainer();
+
+          if (!_scrollSpy2.default.isMounted(scrollSpyContainer)) {
+            _scrollSpy2.default.mount(scrollSpyContainer);
+          }
+
+          if (this.props.hashSpy) {
+            if (!_scrollHash2.default.isMounted()) {
+              _scrollHash2.default.mount(scroller);
+            }
+            _scrollHash2.default.mapContainer(this.props.to, scrollSpyContainer);
+          }
+
+          _scrollSpy2.default.addSpyHandler(this.spyHandler, scrollSpyContainer);
+
+          this.setState({
+            container: scrollSpyContainer
+          });
+        }
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        _scrollSpy2.default.unmount(this.stateHandler, this.spyHandler);
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var className = "";
+
+        if (this.state && this.state.active) {
+          className = ((this.props.className || "") + " " + (this.props.activeClass || "active")).trim();
+        } else {
+          className = this.props.className;
+        }
+
+        var props = _extends({}, this.props);
+
+        for (var prop in protoTypes) {
+          if (props.hasOwnProperty(prop)) {
+            delete props[prop];
+          }
+        }
+
+        props.className = className;
+        props.onClick = this.handleClick;
+
+        return _react2.default.createElement(Component, props);
+      }
+    }]);
+
+    return Link;
+  }(_react2.default.PureComponent);
+
+  var _initialiseProps = function _initialiseProps() {
+    var _this2 = this;
+
+    this.scrollTo = function (to, props) {
+      scroller.scrollTo(to, _extends({}, _this2.state, props));
+    };
+
+    this.handleClick = function (event) {
+
+      /*
+       * give the posibility to override onClick
+       */
+
+      if (_this2.props.onClick) {
+        _this2.props.onClick(event);
+      }
+
+      /*
+       * dont bubble the navigation
+       */
+
+      if (event.stopPropagation) event.stopPropagation();
+      if (event.preventDefault) event.preventDefault();
+
+      /*
+       * do the magic!
+       */
+      _this2.scrollTo(_this2.props.to, _this2.props);
+    };
+
+    this.spyHandler = function (x, y) {
+      var scrollSpyContainer = _this2.getScrollSpyContainer();
+
+      if (_scrollHash2.default.isMounted() && !_scrollHash2.default.isInitialized()) {
+        return;
+      }
+
+      var horizontal = _this2.props.horizontal;
+
+      var to = _this2.props.to;
+      var element = null;
+      var isInside = void 0;
+      var isOutside = void 0;
+
+      if (horizontal) {
+        var elemLeftBound = 0;
+        var elemRightBound = 0;
+        var containerLeft = 0;
+
+        if (scrollSpyContainer.getBoundingClientRect) {
+          var containerCords = scrollSpyContainer.getBoundingClientRect();
+          containerLeft = containerCords.left;
+        }
+
+        if (!element || _this2.props.isDynamic) {
+          element = scroller.get(to);
+          if (!element) {
+            return;
+          }
+
+          var cords = element.getBoundingClientRect();
+          elemLeftBound = cords.left - containerLeft + x;
+          elemRightBound = elemLeftBound + cords.width;
+        }
+
+        var offsetX = x - _this2.props.offset;
+        isInside = offsetX >= Math.floor(elemLeftBound) && offsetX < Math.floor(elemRightBound);
+        isOutside = offsetX < Math.floor(elemLeftBound) || offsetX >= Math.floor(elemRightBound);
+      } else {
+        var elemTopBound = 0;
+        var elemBottomBound = 0;
+        var containerTop = 0;
+
+        if (scrollSpyContainer.getBoundingClientRect) {
+          var _containerCords = scrollSpyContainer.getBoundingClientRect();
+          containerTop = _containerCords.top;
+        }
+
+        if (!element || _this2.props.isDynamic) {
+          element = scroller.get(to);
+          if (!element) {
+            return;
+          }
+
+          var _cords = element.getBoundingClientRect();
+          elemTopBound = _cords.top - containerTop + y;
+          elemBottomBound = elemTopBound + _cords.height;
+        }
+
+        var offsetY = y - _this2.props.offset;
+        isInside = offsetY >= Math.floor(elemTopBound) && offsetY < Math.floor(elemBottomBound);
+        isOutside = offsetY < Math.floor(elemTopBound) || offsetY >= Math.floor(elemBottomBound);
+      }
+
+      var activeLink = scroller.getActiveLink();
+
+      if (isOutside) {
+        if (to === activeLink) {
+          scroller.setActiveLink(void 0);
+        }
+
+        if (_this2.props.hashSpy && _scrollHash2.default.getHash() === to) {
+          _scrollHash2.default.changeHash();
+        }
+
+        if (_this2.props.spy && _this2.state.active) {
+          _this2.setState({ active: false });
+          _this2.props.onSetInactive && _this2.props.onSetInactive(to, element);
+        }
+      }
+
+      if (isInside && (activeLink !== to || _this2.state.active === false)) {
+        scroller.setActiveLink(to);
+
+        _this2.props.hashSpy && _scrollHash2.default.changeHash(to);
+
+        if (_this2.props.spy) {
+          _this2.setState({ active: true });
+          _this2.props.onSetActive && _this2.props.onSetActive(to, element);
+        }
+      }
+    };
+  };
+
+  ;
+
+  Link.propTypes = protoTypes;
+
+  Link.defaultProps = { offset: 0 };
+
+  return Link;
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/scroll-spy.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/scroll-spy.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _lodash = __webpack_require__(/*! lodash.throttle */ "./node_modules/lodash.throttle/index.js");
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _passiveEventListeners = __webpack_require__(/*! ./passive-event-listeners */ "./node_modules/react-scroll/modules/mixins/passive-event-listeners.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// The eventHandler will execute at a rate of 15fps
+var eventThrottler = function eventThrottler(eventHandler) {
+  return (0, _lodash2.default)(eventHandler, 66);
+};
+
+var scrollSpy = {
+
+  spyCallbacks: [],
+  spySetState: [],
+  scrollSpyContainers: [],
+
+  mount: function mount(scrollSpyContainer) {
+    if (scrollSpyContainer) {
+      var eventHandler = eventThrottler(function (event) {
+        scrollSpy.scrollHandler(scrollSpyContainer);
+      });
+      scrollSpy.scrollSpyContainers.push(scrollSpyContainer);
+      (0, _passiveEventListeners.addPassiveEventListener)(scrollSpyContainer, 'scroll', eventHandler);
+    }
+  },
+  isMounted: function isMounted(scrollSpyContainer) {
+    return scrollSpy.scrollSpyContainers.indexOf(scrollSpyContainer) !== -1;
+  },
+  currentPositionX: function currentPositionX(scrollSpyContainer) {
+    if (scrollSpyContainer === document) {
+      var supportPageOffset = window.pageYOffset !== undefined;
+      var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+      return supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft;
+    } else {
+      return scrollSpyContainer.scrollLeft;
+    }
+  },
+  currentPositionY: function currentPositionY(scrollSpyContainer) {
+    if (scrollSpyContainer === document) {
+      var supportPageOffset = window.pageXOffset !== undefined;
+      var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+      return supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+    } else {
+      return scrollSpyContainer.scrollTop;
+    }
+  },
+  scrollHandler: function scrollHandler(scrollSpyContainer) {
+    var callbacks = scrollSpy.scrollSpyContainers[scrollSpy.scrollSpyContainers.indexOf(scrollSpyContainer)].spyCallbacks || [];
+    callbacks.forEach(function (c) {
+      return c(scrollSpy.currentPositionX(scrollSpyContainer), scrollSpy.currentPositionY(scrollSpyContainer));
+    });
+  },
+  addStateHandler: function addStateHandler(handler) {
+    scrollSpy.spySetState.push(handler);
+  },
+  addSpyHandler: function addSpyHandler(handler, scrollSpyContainer) {
+    var container = scrollSpy.scrollSpyContainers[scrollSpy.scrollSpyContainers.indexOf(scrollSpyContainer)];
+
+    if (!container.spyCallbacks) {
+      container.spyCallbacks = [];
+    }
+
+    container.spyCallbacks.push(handler);
+
+    handler(scrollSpy.currentPositionX(scrollSpyContainer), scrollSpy.currentPositionY(scrollSpyContainer));
+  },
+  updateStates: function updateStates() {
+    scrollSpy.spySetState.forEach(function (s) {
+      return s();
+    });
+  },
+  unmount: function unmount(stateHandler, spyHandler) {
+    scrollSpy.scrollSpyContainers.forEach(function (c) {
+      return c.spyCallbacks && c.spyCallbacks.length && c.spyCallbacks.splice(c.spyCallbacks.indexOf(spyHandler), 1);
+    });
+
+    if (scrollSpy.spySetState && scrollSpy.spySetState.length) {
+      scrollSpy.spySetState.splice(scrollSpy.spySetState.indexOf(stateHandler), 1);
+    }
+
+    document.removeEventListener('scroll', scrollSpy.scrollHandler);
+  },
+
+
+  update: function update() {
+    return scrollSpy.scrollSpyContainers.forEach(function (c) {
+      return scrollSpy.scrollHandler(c);
+    });
+  }
+};
+
+exports.default = scrollSpy;
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/scroller.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/scroller.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _utils = __webpack_require__(/*! ./utils */ "./node_modules/react-scroll/modules/mixins/utils.js");
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _animateScroll = __webpack_require__(/*! ./animate-scroll */ "./node_modules/react-scroll/modules/mixins/animate-scroll.js");
+
+var _animateScroll2 = _interopRequireDefault(_animateScroll);
+
+var _scrollEvents = __webpack_require__(/*! ./scroll-events */ "./node_modules/react-scroll/modules/mixins/scroll-events.js");
+
+var _scrollEvents2 = _interopRequireDefault(_scrollEvents);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var __mapped = {};
+var __activeLink = void 0;
+
+exports.default = {
+
+  unmount: function unmount() {
+    __mapped = {};
+  },
+
+  register: function register(name, element) {
+    __mapped[name] = element;
+  },
+
+  unregister: function unregister(name) {
+    delete __mapped[name];
+  },
+
+  get: function get(name) {
+    return __mapped[name] || document.getElementById(name) || document.getElementsByName(name)[0] || document.getElementsByClassName(name)[0];
+  },
+
+  setActiveLink: function setActiveLink(link) {
+    return __activeLink = link;
+  },
+
+  getActiveLink: function getActiveLink() {
+    return __activeLink;
+  },
+
+  scrollTo: function scrollTo(to, props) {
+
+    var target = this.get(to);
+
+    if (!target) {
+      console.warn("target Element not found");
+      return;
+    }
+
+    props = _extends({}, props, { absolute: false });
+
+    var containerId = props.containerId;
+    var container = props.container;
+
+    var containerElement = void 0;
+    if (containerId) {
+      containerElement = document.getElementById(containerId);
+    } else if (container && container.nodeType) {
+      containerElement = container;
+    } else {
+      containerElement = document;
+    }
+
+    props.absolute = true;
+
+    var horizontal = props.horizontal;
+    var scrollOffset = _utils2.default.scrollOffset(containerElement, target, horizontal) + (props.offset || 0);
+
+    /*
+     * if animate is not provided just scroll into the view
+     */
+    if (!props.smooth) {
+      if (_scrollEvents2.default.registered['begin']) {
+        _scrollEvents2.default.registered['begin'](to, target);
+      }
+
+      if (containerElement === document) {
+        if (props.horizontal) {
+          window.scrollTo(scrollOffset, 0);
+        } else {
+          window.scrollTo(0, scrollOffset);
+        }
+      } else {
+        containerElement.scrollTop = scrollOffset;
+      }
+
+      if (_scrollEvents2.default.registered['end']) {
+        _scrollEvents2.default.registered['end'](to, target);
+      }
+
+      return;
+    }
+
+    /*
+     * Animate scrolling
+     */
+
+    _animateScroll2.default.animateTopScroll(scrollOffset, props, to, target);
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/smooth.js":
+/*!************************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/smooth.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  /*
+   * https://github.com/oblador/angular-scroll (duScrollDefaultEasing)
+   */
+  defaultEasing: function defaultEasing(x) {
+    if (x < 0.5) {
+      return Math.pow(x * 2, 2) / 2;
+    }
+    return 1 - Math.pow((1 - x) * 2, 2) / 2;
+  },
+  /*
+   * https://gist.github.com/gre/1650294
+   */
+  // no easing, no acceleration
+  linear: function linear(x) {
+    return x;
+  },
+  // accelerating from zero velocity
+  easeInQuad: function easeInQuad(x) {
+    return x * x;
+  },
+  // decelerating to zero velocity
+  easeOutQuad: function easeOutQuad(x) {
+    return x * (2 - x);
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuad: function easeInOutQuad(x) {
+    return x < .5 ? 2 * x * x : -1 + (4 - 2 * x) * x;
+  },
+  // accelerating from zero velocity 
+  easeInCubic: function easeInCubic(x) {
+    return x * x * x;
+  },
+  // decelerating to zero velocity π
+  easeOutCubic: function easeOutCubic(x) {
+    return --x * x * x + 1;
+  },
+  // acceleration until halfway, then deceleration 
+  easeInOutCubic: function easeInOutCubic(x) {
+    return x < .5 ? 4 * x * x * x : (x - 1) * (2 * x - 2) * (2 * x - 2) + 1;
+  },
+  // accelerating from zero velocity 
+  easeInQuart: function easeInQuart(x) {
+    return x * x * x * x;
+  },
+  // decelerating to zero velocity 
+  easeOutQuart: function easeOutQuart(x) {
+    return 1 - --x * x * x * x;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuart: function easeInOutQuart(x) {
+    return x < .5 ? 8 * x * x * x * x : 1 - 8 * --x * x * x * x;
+  },
+  // accelerating from zero velocity
+  easeInQuint: function easeInQuint(x) {
+    return x * x * x * x * x;
+  },
+  // decelerating to zero velocity
+  easeOutQuint: function easeOutQuint(x) {
+    return 1 + --x * x * x * x * x;
+  },
+  // acceleration until halfway, then deceleration 
+  easeInOutQuint: function easeInOutQuint(x) {
+    return x < .5 ? 16 * x * x * x * x * x : 1 + 16 * --x * x * x * x * x;
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/modules/mixins/utils.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-scroll/modules/mixins/utils.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var pushHash = function pushHash(hash) {
+  hash = hash ? hash.indexOf("#") === 0 ? hash : "#" + hash : "";
+
+  if (history.pushState) {
+    var loc = window.location;
+    history.pushState(null, null, hash ? loc.pathname + loc.search + hash : // remove hash
+    loc.pathname + loc.search);
+  } else {
+    location.hash = hash;
+  }
+};
+
+var getHash = function getHash() {
+  return window.location.hash.replace(/^#/, "");
+};
+
+var filterElementInContainer = function filterElementInContainer(container) {
+  return function (element) {
+    return container.contains ? container != element && container.contains(element) : !!(container.compareDocumentPosition(element) & 16);
+  };
+};
+
+var scrollOffset = function scrollOffset(c, t, horizontal) {
+  if (horizontal) {
+    return c === document ? t.getBoundingClientRect().left + (window.scrollX || window.pageXOffset) : getComputedStyle(c).position !== "static" ? t.offsetLeft : t.offsetLeft - c.offsetLeft;
+  } else {
+    return c === document ? t.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) : getComputedStyle(c).position !== "static" ? t.offsetTop : t.offsetTop - c.offsetTop;
+  }
+};
+exports.default = {
+  pushHash: pushHash,
+  getHash: getHash,
+  filterElementInContainer: filterElementInContainer,
+  scrollOffset: scrollOffset
+};
+
+/***/ }),
+
+/***/ "./node_modules/react-scroll/node_modules/object-assign/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/react-scroll/node_modules/object-assign/index.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70450,10 +67981,10 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/checkPropTypes.js":
-/*!***************************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/node_modules/prop-types/checkPropTypes.js ***!
-  \***************************************************************************************/
+/***/ "./node_modules/react-scroll/node_modules/prop-types/checkPropTypes.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/react-scroll/node_modules/prop-types/checkPropTypes.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70470,7 +68001,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (true) {
-  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/react-scroll/node_modules/prop-types/lib/ReactPropTypesSecret.js");
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -70564,10 +68095,10 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/factoryWithTypeCheckers.js":
-/*!************************************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/node_modules/prop-types/factoryWithTypeCheckers.js ***!
-  \************************************************************************************************/
+/***/ "./node_modules/react-scroll/node_modules/prop-types/factoryWithTypeCheckers.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/react-scroll/node_modules/prop-types/factoryWithTypeCheckers.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70582,10 +68113,10 @@ module.exports = checkPropTypes;
 
 
 var ReactIs = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
-var assign = __webpack_require__(/*! object-assign */ "./node_modules/react-scroll-to-bottom/node_modules/object-assign/index.js");
+var assign = __webpack_require__(/*! object-assign */ "./node_modules/react-scroll/node_modules/object-assign/index.js");
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/lib/ReactPropTypesSecret.js");
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/checkPropTypes.js");
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/react-scroll/node_modules/prop-types/lib/ReactPropTypesSecret.js");
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/react-scroll/node_modules/prop-types/checkPropTypes.js");
 
 var has = Function.call.bind(Object.prototype.hasOwnProperty);
 var printWarning = function() {};
@@ -71167,10 +68698,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/node_modules/prop-types/index.js ***!
-  \******************************************************************************/
+/***/ "./node_modules/react-scroll/node_modules/prop-types/index.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/react-scroll/node_modules/prop-types/index.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -71187,16 +68718,16 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/react-scroll/node_modules/prop-types/factoryWithTypeCheckers.js")(ReactIs.isElement, throwOnDirectAccess);
 } else {}
 
 
 /***/ }),
 
-/***/ "./node_modules/react-scroll-to-bottom/node_modules/prop-types/lib/ReactPropTypesSecret.js":
-/*!*************************************************************************************************!*\
-  !*** ./node_modules/react-scroll-to-bottom/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
-  \*************************************************************************************************/
+/***/ "./node_modules/react-scroll/node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/react-scroll/node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

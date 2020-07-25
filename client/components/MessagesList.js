@@ -3,6 +3,7 @@ import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
 import { connect } from 'react-redux';
 import { fetchMessages } from '../store.js';
+import { animateScroll } from 'react-scroll';
 
 class MessagesList extends Component {
   constructor(props) {
@@ -11,6 +12,17 @@ class MessagesList extends Component {
 
   componentDidMount() {
     this.props.fetchInitialMessages();
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    animateScroll.scrollToBottom({
+      containerId: 'main',
+    });
   }
 
   render() {
