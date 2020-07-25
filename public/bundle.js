@@ -86,10 +86,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./client/components/ChannelList.js":
-/*!******************************************!*\
-  !*** ./client/components/ChannelList.js ***!
-  \******************************************/
+/***/ "./client/components/DirectMessages/DirectMessages.js":
+/*!************************************************************!*\
+  !*** ./client/components/DirectMessages/DirectMessages.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -106,250 +106,17 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _reactExpandAnimated = __webpack_require__(/*! react-expand-animated */ "./node_modules/react-expand-animated/build/Expand.js");
-
-var _reactExpandAnimated2 = _interopRequireDefault(_reactExpandAnimated);
-
-var _KeyboardArrowRightRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowRightRounded */ "./node_modules/@material-ui/icons/KeyboardArrowRightRounded.js");
-
-var _KeyboardArrowRightRounded2 = _interopRequireDefault(_KeyboardArrowRightRounded);
-
-var _KeyboardArrowDownRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowDownRounded */ "./node_modules/@material-ui/icons/KeyboardArrowDownRounded.js");
-
-var _KeyboardArrowDownRounded2 = _interopRequireDefault(_KeyboardArrowDownRounded);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ChannelList = function (_Component) {
-  _inherits(ChannelList, _Component);
-
-  function ChannelList(props) {
-    _classCallCheck(this, ChannelList);
-
-    var _this = _possibleConstructorReturn(this, (ChannelList.__proto__ || Object.getPrototypeOf(ChannelList)).call(this, props));
-
-    _this.state = {
-      open: true
-    };
-    _this.handleClick = _this.handleClick.bind(_this);
-    return _this;
-  }
-
-  _createClass(ChannelList, [{
-    key: 'handleClick',
-    value: function handleClick() {
-      this.setState({
-        open: !this.state.open
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'channels_expand', onClick: this.handleClick },
-          this.state.open ? _react2.default.createElement(_KeyboardArrowDownRounded2.default, { fontSize: 'large' }) : _react2.default.createElement(_KeyboardArrowRightRounded2.default, { fontSize: 'large' }),
-          _react2.default.createElement(
-            'h5',
-            null,
-            'Channels'
-          )
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'channels_list' },
-          _react2.default.createElement(
-            _reactExpandAnimated2.default,
-            { open: this.state.open, duration: 100 },
-            _react2.default.createElement(
-              'div',
-              null,
-              this.props.channels.map(function (channel) {
-                return _react2.default.createElement(
-                  'li',
-                  { key: channel.id },
-                  _react2.default.createElement(
-                    _reactRouterDom.NavLink,
-                    {
-                      to: '/channels/' + channel.id,
-                      activeClassName: 'active'
-                    },
-                    _react2.default.createElement(
-                      'span',
-                      null,
-                      '# ',
-                      channel.name
-                    ),
-                    _react2.default.createElement(
-                      'span',
-                      { className: 'badge' },
-                      _this2.props.messages.filter(function (message) {
-                        return message.channelId === channel.id;
-                      }).length
-                    )
-                  )
-                );
-              }),
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  _reactRouterDom.NavLink,
-                  { to: '/new-channel' },
-                  'Create a channel ...'
-                )
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ChannelList;
-}(_react.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    messages: state.messages,
-    channels: state.channels
-  };
-};
-
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(ChannelList));
-
-/***/ }),
-
-/***/ "./client/components/ColumnTools.js":
-/*!******************************************!*\
-  !*** ./client/components/ColumnTools.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
-
-var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ColumnTools = function (_Component) {
-  _inherits(ColumnTools, _Component);
-
-  function ColumnTools() {
-    _classCallCheck(this, ColumnTools);
-
-    return _possibleConstructorReturn(this, (ColumnTools.__proto__ || Object.getPrototypeOf(ColumnTools)).apply(this, arguments));
-  }
-
-  _createClass(ColumnTools, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h5',
-          null,
-          'Menu'
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'tool_list' },
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/saved', activeClassName: 'active' },
-              _react2.default.createElement(
-                'span',
-                null,
-                ' ',
-                _react2.default.createElement(_BookmarkRounded2.default, null),
-                'Saved Items'
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ColumnTools;
-}(_react.Component);
-
-exports.default = ColumnTools;
-
-/***/ }),
-
-/***/ "./client/components/DirectMessages.js":
-/*!*********************************************!*\
-  !*** ./client/components/DirectMessages.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Message = __webpack_require__(/*! ./Message */ "./client/components/Message.js");
+var _Message = __webpack_require__(/*! ../Message/Message */ "./client/components/Message/Message.js");
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _NewDirectEntry = __webpack_require__(/*! ./NewDirectEntry */ "./client/components/NewDirectEntry.js");
+var _NewDirectEntry = __webpack_require__(/*! ./NewDirectEntry */ "./client/components/DirectMessages/NewDirectEntry.js");
 
 var _NewDirectEntry2 = _interopRequireDefault(_NewDirectEntry);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../store.js */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store.js */ "./client/store.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -433,10 +200,10 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 
-/***/ "./client/components/DirectMessagesList.js":
-/*!*************************************************!*\
-  !*** ./client/components/DirectMessagesList.js ***!
-  \*************************************************/
+/***/ "./client/components/DirectMessages/DirectMessagesList.js":
+/*!****************************************************************!*\
+  !*** ./client/components/DirectMessages/DirectMessagesList.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -577,6 +344,138 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 
 /***/ }),
 
+/***/ "./client/components/DirectMessages/NewDirectEntry.js":
+/*!************************************************************!*\
+  !*** ./client/components/DirectMessages/NewDirectEntry.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.NewDirectEntry = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NewDirectEntry = exports.NewDirectEntry = function (_Component) {
+  _inherits(NewDirectEntry, _Component);
+
+  function NewDirectEntry(props) {
+    _classCallCheck(this, NewDirectEntry);
+
+    var _this = _possibleConstructorReturn(this, (NewDirectEntry.__proto__ || Object.getPrototypeOf(NewDirectEntry)).call(this, props));
+
+    _this.state = {
+      input: ''
+    };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(NewDirectEntry, [{
+    key: 'handleChange',
+    value: function handleChange(evt) {
+      this.props.write(evt.target.value);
+      this.setState({
+        input: this.props.newMessageEntry
+      });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var message = event.target.content.value;
+      this.props.submitMessage({
+        authorId: this.props.user.id,
+        content: message,
+        directId: Number(this.props.match.params.directId),
+        userId: this.props.user.id,
+        type: 'direct'
+      });
+      this.setState({
+        input: ''
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        { id: 'new-message-form', onSubmit: this.handleSubmit },
+        _react2.default.createElement(
+          'div',
+          { className: 'input-group input-group-lg' },
+          _react2.default.createElement('input', {
+            className: 'form-control',
+            type: 'text',
+            name: 'content',
+            value: this.state.input,
+            onChange: this.handleChange,
+            placeholder: 'Say something nice...'
+          }),
+          _react2.default.createElement(
+            'span',
+            { className: 'input-group-btn' },
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', type: 'submit' },
+              'Chat!'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return NewDirectEntry;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    message: state.newMessageEntry,
+    user: state.user
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    write: function write(message) {
+      return dispatch((0, _store.writeMessage)(message));
+    },
+    submitMessage: function submitMessage(message) {
+      return dispatch((0, _store.sendMessage)(message));
+    }
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewDirectEntry));
+
+/***/ }),
+
 /***/ "./client/components/Main.js":
 /*!***********************************!*\
   !*** ./client/components/Main.js ***!
@@ -601,7 +500,7 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _Sidebar = __webpack_require__(/*! ./Sidebar */ "./client/components/Sidebar.js");
+var _Sidebar = __webpack_require__(/*! ./Sidebar/Sidebar */ "./client/components/Sidebar/Sidebar.js");
 
 var _Sidebar2 = _interopRequireDefault(_Sidebar);
 
@@ -609,19 +508,19 @@ var _Navbar = __webpack_require__(/*! ./Navbar */ "./client/components/Navbar.js
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
 
-var _MessagesList = __webpack_require__(/*! ./MessagesList */ "./client/components/MessagesList.js");
+var _MessagesList = __webpack_require__(/*! ./Message/MessagesList */ "./client/components/Message/MessagesList.js");
 
 var _MessagesList2 = _interopRequireDefault(_MessagesList);
 
-var _NewChannelEntry = __webpack_require__(/*! ./NewChannelEntry */ "./client/components/NewChannelEntry.js");
+var _NewChannelEntry = __webpack_require__(/*! ./SideBar/NewChannelEntry */ "./client/components/SideBar/NewChannelEntry.js");
 
 var _NewChannelEntry2 = _interopRequireDefault(_NewChannelEntry);
 
-var _DirectMessages = __webpack_require__(/*! ./DirectMessages */ "./client/components/DirectMessages.js");
+var _DirectMessages = __webpack_require__(/*! ./DirectMessages/DirectMessages */ "./client/components/DirectMessages/DirectMessages.js");
 
 var _DirectMessages2 = _interopRequireDefault(_DirectMessages);
 
-var _SavedItems = __webpack_require__(/*! ./SavedItems */ "./client/components/SavedItems.js");
+var _SavedItems = __webpack_require__(/*! ./SideBar/SavedItems */ "./client/components/SideBar/SavedItems.js");
 
 var _SavedItems2 = _interopRequireDefault(_SavedItems);
 
@@ -709,10 +608,10 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 
 /***/ }),
 
-/***/ "./client/components/Message.js":
-/*!**************************************!*\
-  !*** ./client/components/Message.js ***!
-  \**************************************/
+/***/ "./client/components/Message/Message.js":
+/*!**********************************************!*\
+  !*** ./client/components/Message/Message.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -731,9 +630,186 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
+var _Container = __webpack_require__(/*! @material-ui/core/Container */ "./node_modules/@material-ui/core/esm/Container/index.js");
 
-var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
+var _Container2 = _interopRequireDefault(_Container);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+__webpack_require__(/*! emoji-mart/css/emoji-mart.css */ "./node_modules/emoji-mart/css/emoji-mart.css");
+
+var _MessageBody = __webpack_require__(/*! ./MessageBody */ "./client/components/Message/MessageBody.js");
+
+var _MessageBody2 = _interopRequireDefault(_MessageBody);
+
+var _MessageEmoji = __webpack_require__(/*! ./MessageEmoji */ "./client/components/Message/MessageEmoji.js");
+
+var _MessageEmoji2 = _interopRequireDefault(_MessageEmoji);
+
+var _MessageAuthorImage = __webpack_require__(/*! ./MessageAuthorImage */ "./client/components/Message/MessageAuthorImage.js");
+
+var _MessageAuthorImage2 = _interopRequireDefault(_MessageAuthorImage);
+
+var _MessageSave = __webpack_require__(/*! ./MessageSave */ "./client/components/Message/MessageSave.js");
+
+var _MessageSave2 = _interopRequireDefault(_MessageSave);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Message(props) {
+  var message = props.message;
+  var user = props.user;
+
+  var _useState = (0, _react.useState)(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      anchorEl = _useState2[0],
+      setAnchorEl = _useState2[1];
+
+  var handleHover = function handleHover(event) {
+    setAnchorEl(event.currentTarget);
+  };
+
+  var handleNotHover = function handleNotHover() {
+    setAnchorEl(null);
+  };
+
+  var open = Boolean(anchorEl);
+
+  return _react2.default.createElement(
+    _Container2.default,
+    { fixed: true },
+    _react2.default.createElement(
+      'li',
+      {
+        className: open ? 'message_hover media' : 'media',
+        onMouseEnter: handleHover,
+        onMouseLeave: handleNotHover
+      },
+      _react2.default.createElement(_MessageSave2.default, { message: message, user: user }),
+      _react2.default.createElement(_MessageAuthorImage2.default, { message: message }),
+      _react2.default.createElement(_MessageBody2.default, { message: message }),
+      _react2.default.createElement(_MessageEmoji2.default, null)
+    )
+  );
+}
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Message));
+
+/***/ }),
+
+/***/ "./client/components/Message/MessageAuthorImage.js":
+/*!*********************************************************!*\
+  !*** ./client/components/Message/MessageAuthorImage.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function MessageAuthorImage(props) {
+  var message = props.message;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'media-left' },
+    _react2.default.createElement(
+      'a',
+      { href: '#' },
+      _react2.default.createElement('img', { className: 'media-object', src: message.author.image, alt: 'image' })
+    )
+  );
+}
+
+exports.default = (0, _reactRouterDom.withRouter)(MessageAuthorImage);
+
+/***/ }),
+
+/***/ "./client/components/Message/MessageBody.js":
+/*!**************************************************!*\
+  !*** ./client/components/Message/MessageBody.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function MessageBody(props) {
+  var message = props.message;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'media-body' },
+    _react2.default.createElement(
+      'h4',
+      { className: 'media-heading' },
+      message.author.name
+    ),
+    _react2.default.createElement(
+      'p',
+      null,
+      message.time
+    ),
+    message.content
+  );
+}
+
+exports.default = (0, _reactRouterDom.withRouter)(MessageBody);
+
+/***/ }),
+
+/***/ "./client/components/Message/MessageEmoji.js":
+/*!***************************************************!*\
+  !*** ./client/components/Message/MessageEmoji.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
 var _IconButton = __webpack_require__(/*! @material-ui/core/IconButton */ "./node_modules/@material-ui/core/esm/IconButton/index.js");
 
@@ -742,14 +818,6 @@ var _IconButton2 = _interopRequireDefault(_IconButton);
 var _EmojiEmotions = __webpack_require__(/*! @material-ui/icons/EmojiEmotions */ "./node_modules/@material-ui/icons/EmojiEmotions.js");
 
 var _EmojiEmotions2 = _interopRequireDefault(_EmojiEmotions);
-
-var _Container = __webpack_require__(/*! @material-ui/core/Container */ "./node_modules/@material-ui/core/esm/Container/index.js");
-
-var _Container2 = _interopRequireDefault(_Container);
-
-var _store = __webpack_require__(/*! ../store */ "./client/store.js");
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
 __webpack_require__(/*! emoji-mart/css/emoji-mart.css */ "./node_modules/emoji-mart/css/emoji-mart.css");
 
@@ -763,7 +831,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function Message(props) {
+function MessageEmoji(props) {
   var message = props.message;
 
   var customReactionEmojis = [{
@@ -810,8 +878,6 @@ function Message(props) {
     keywords: ['hammer_and_wrench']
   }];
 
-  var user = props.user;
-
   var _useState = (0, _react.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
       anchorEl = _useState2[0],
@@ -822,37 +888,15 @@ function Message(props) {
       anchorElEmoji = _useState4[0],
       setAnchorElEmoji = _useState4[1];
 
-  var _useState5 = (0, _react.useState)(message.likes),
+  var _useState5 = (0, _react.useState)([]),
       _useState6 = _slicedToArray(_useState5, 2),
-      likes = _useState6[0],
-      setLikes = _useState6[1];
+      selectedEmojis = _useState6[0],
+      setSelectedEmojis = _useState6[1];
 
-  var _useState7 = (0, _react.useState)([]),
+  var _useState7 = (0, _react.useState)(false),
       _useState8 = _slicedToArray(_useState7, 2),
-      selectedEmojis = _useState8[0],
-      setSelectedEmojis = _useState8[1];
-
-  var _useState9 = (0, _react.useState)(false),
-      _useState10 = _slicedToArray(_useState9, 2),
-      reactionShown = _useState10[0],
-      setReactionShown = _useState10[1];
-
-  var handleHover = function handleHover(event) {
-    setAnchorEl(event.currentTarget);
-  };
-
-  var handleNotHover = function handleNotHover() {
-    setAnchorEl(null);
-  };
-
-  var handleSave = function handleSave(userId, messageId) {
-    props.save(userId, messageId);
-  };
-
-  var handleLike = function handleLike(messageId, channelId) {
-    props.like(messageId, channelId);
-    setLikes(likes + 1);
-  };
+      reactionShown = _useState8[0],
+      setReactionShown = _useState8[1];
 
   var handleClick = function handleClick(event) {
     setReactionShown(!reactionShown);
@@ -905,121 +949,132 @@ function Message(props) {
   var open = Boolean(anchorEl);
   var id = open ? 'simple-popover' : undefined;
   return _react2.default.createElement(
-    _Container2.default,
-    { fixed: true },
+    'div',
+    null,
     _react2.default.createElement(
-      'li',
+      'div',
+      { className: 'media-right' },
+      selectedEmojis.map(function (emoji) {
+        var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        return _react2.default.createElement(
+          _IconButton2.default,
+          {
+            'aria-label': 'reaction',
+            disableFocusRipple: 'true',
+            disableRipple: 'true',
+            size: 'small'
+          },
+          _react2.default.createElement(_emojiMart.Emoji, { key: index, emoji: emoji, size: 18 }),
+          ' ',
+          emoji.quan
+        );
+      }),
+      _react2.default.createElement(
+        _IconButton2.default,
+        { 'aria-label': 'reaction', onClick: handleClick },
+        _react2.default.createElement(_EmojiEmotions2.default, null),
+        '+'
+      )
+    ),
+    _react2.default.createElement(
+      _Popover2.default,
       {
-        className: open ? 'message_hover media' : 'media',
-        onMouseEnter: handleHover,
-        onMouseLeave: handleNotHover
+        id: id,
+        onClick: handleClick,
+        open: reactionShown,
+        anchorEl: anchorElEmoji,
+        onClose: handleClose,
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'left'
+        },
+        transformOrigin: {
+          vertical: 'top',
+          horizontal: 'center'
+        }
       },
       _react2.default.createElement(
         'div',
-        { className: 'media-date' },
-        _react2.default.createElement(
-          'h6',
-          null,
-          message.date
-        ),
-        _react2.default.createElement(
-          _IconButton2.default,
-          {
-            'aria-label': 'save',
-            onClick: function onClick() {
-              handleSave(user.id, message.id);
-            }
-          },
-          _react2.default.createElement(_BookmarkRounded2.default, null)
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'media-left' },
-          _react2.default.createElement(
-            'a',
-            { href: '#' },
-            _react2.default.createElement('img', {
-              className: 'media-object',
-              src: message.author.image,
-              alt: 'image'
-            })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'media-body' },
-          _react2.default.createElement(
-            'h4',
-            { className: 'media-heading' },
-            message.author.name
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            message.time
-          ),
-          message.content
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'media-right' },
-          selectedEmojis.map(function (emoji) {
-            var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-            return _react2.default.createElement(
-              _IconButton2.default,
-              {
-                'aria-label': 'reaction',
-                disableFocusRipple: 'true',
-                disableRipple: 'true',
-                size: 'small'
-              },
-              _react2.default.createElement(_emojiMart.Emoji, { key: index, emoji: emoji, size: 18 }),
-              ' ',
-              emoji.quan
-            );
-          }),
-          _react2.default.createElement(
-            _IconButton2.default,
-            { 'aria-label': 'reaction', onClick: handleClick },
-            _react2.default.createElement(_EmojiEmotions2.default, null),
-            '+'
-          )
-        ),
-        _react2.default.createElement(
-          _Popover2.default,
-          {
-            id: id,
-            onClick: handleClick,
-            open: reactionShown,
-            anchorEl: anchorElEmoji,
-            onClose: handleClose,
-            anchorOrigin: {
-              vertical: 'bottom',
-              horizontal: 'left'
-            },
-            transformOrigin: {
-              vertical: 'top',
-              horizontal: 'center'
-            }
-          },
-          _react2.default.createElement(
-            'div',
-            { className: 'reactions' },
-            _react2.default.createElement(_emojiMart.Picker, {
-              showPreview: false,
-              showSkinTones: false,
-              include: ['custom'],
-              custom: customReactionEmojis,
-              onSelect: handleEmojiSelect
-            })
-          )
-        )
+        { className: 'reactions' },
+        _react2.default.createElement(_emojiMart.Picker, {
+          showPreview: false,
+          showSkinTones: false,
+          include: ['custom'],
+          custom: customReactionEmojis,
+          onSelect: handleEmojiSelect
+        })
       )
+    )
+  );
+}
+
+exports.default = (0, _reactRouterDom.withRouter)(MessageEmoji);
+
+/***/ }),
+
+/***/ "./client/components/Message/MessageSave.js":
+/*!**************************************************!*\
+  !*** ./client/components/Message/MessageSave.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
+
+var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
+
+var _IconButton = __webpack_require__(/*! @material-ui/core/IconButton */ "./node_modules/@material-ui/core/esm/IconButton/index.js");
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+__webpack_require__(/*! emoji-mart/css/emoji-mart.css */ "./node_modules/emoji-mart/css/emoji-mart.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function MessageSave(props) {
+  var message = props.message;
+
+  var user = props.user;
+
+  var handleSave = function handleSave(userId, messageId) {
+    props.save(userId, messageId);
+  };
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'media-date' },
+    _react2.default.createElement(
+      'h6',
+      null,
+      message.date
+    ),
+    _react2.default.createElement(
+      _IconButton2.default,
+      {
+        'aria-label': 'save',
+        onClick: function onClick() {
+          handleSave(user.id, message.id);
+        }
+      },
+      _react2.default.createElement(_BookmarkRounded2.default, null)
     )
   );
 }
@@ -1041,14 +1096,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   };
 };
 
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Message));
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MessageSave));
 
 /***/ }),
 
-/***/ "./client/components/MessagesList.js":
-/*!*******************************************!*\
-  !*** ./client/components/MessagesList.js ***!
-  \*******************************************/
+/***/ "./client/components/Message/MessagesList.js":
+/*!***************************************************!*\
+  !*** ./client/components/Message/MessagesList.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1065,17 +1120,17 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Message = __webpack_require__(/*! ./Message */ "./client/components/Message.js");
+var _Message = __webpack_require__(/*! ./Message */ "./client/components/Message/Message.js");
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _NewMessageEntry = __webpack_require__(/*! ./NewMessageEntry */ "./client/components/NewMessageEntry.js");
+var _NewMessageEntry = __webpack_require__(/*! ./NewMessageEntry */ "./client/components/Message/NewMessageEntry.js");
 
 var _NewMessageEntry2 = _interopRequireDefault(_NewMessageEntry);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../store.js */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store.js */ "./client/store.js");
 
 var _reactScroll = __webpack_require__(/*! react-scroll */ "./node_modules/react-scroll/modules/index.js");
 
@@ -1158,6 +1213,136 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(MessagesList);
+
+/***/ }),
+
+/***/ "./client/components/Message/NewMessageEntry.js":
+/*!******************************************************!*\
+  !*** ./client/components/Message/NewMessageEntry.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.NewMessageEntry = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NewMessageEntry = exports.NewMessageEntry = function (_Component) {
+  _inherits(NewMessageEntry, _Component);
+
+  function NewMessageEntry(props) {
+    _classCallCheck(this, NewMessageEntry);
+
+    var _this = _possibleConstructorReturn(this, (NewMessageEntry.__proto__ || Object.getPrototypeOf(NewMessageEntry)).call(this, props));
+
+    _this.state = {
+      input: ''
+    };
+
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(NewMessageEntry, [{
+    key: 'handleChange',
+    value: function handleChange(evt) {
+      this.props.write(evt.target.value);
+      this.setState({
+        input: this.props.newMessageEntry
+      });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var message = event.target.content.value;
+      this.props.submitMessage({
+        content: message,
+        channelId: this.props.channelId,
+        type: 'message'
+      });
+      this.setState({
+        input: ''
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        { id: 'new-message-form', onSubmit: this.handleSubmit },
+        _react2.default.createElement(
+          'div',
+          { className: 'input-group input-group-lg' },
+          _react2.default.createElement('input', {
+            id: 'message_input',
+            className: 'form-control',
+            type: 'text',
+            name: 'content',
+            value: this.state.input,
+            onChange: this.handleChange,
+            placeholder: 'Say something nice...'
+          }),
+          _react2.default.createElement(
+            'span',
+            { className: 'input-group-btn' },
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-default', type: 'submit' },
+              'Chat!'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return NewMessageEntry;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    message: state.newMessageEntry
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    write: function write(message) {
+      return dispatch((0, _store.writeMessage)(message));
+    },
+    submitMessage: function submitMessage(message) {
+      return dispatch((0, _store.sendMessage)(message));
+    }
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewMessageEntry));
 
 /***/ }),
 
@@ -1353,10 +1538,10 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 
 /***/ }),
 
-/***/ "./client/components/NewChannelEntry.js":
-/*!**********************************************!*\
-  !*** ./client/components/NewChannelEntry.js ***!
-  \**********************************************/
+/***/ "./client/components/SideBar/NewChannelEntry.js":
+/*!******************************************************!*\
+  !*** ./client/components/SideBar/NewChannelEntry.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1373,7 +1558,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
 
 var _reactHookForm = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/react-hook-form.es.js");
 
@@ -1432,272 +1617,10 @@ exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(NewChannelE
 
 /***/ }),
 
-/***/ "./client/components/NewDirectEntry.js":
-/*!*********************************************!*\
-  !*** ./client/components/NewDirectEntry.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.NewDirectEntry = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _store = __webpack_require__(/*! ../store */ "./client/store.js");
-
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NewDirectEntry = exports.NewDirectEntry = function (_Component) {
-  _inherits(NewDirectEntry, _Component);
-
-  function NewDirectEntry(props) {
-    _classCallCheck(this, NewDirectEntry);
-
-    var _this = _possibleConstructorReturn(this, (NewDirectEntry.__proto__ || Object.getPrototypeOf(NewDirectEntry)).call(this, props));
-
-    _this.state = {
-      input: ''
-    };
-
-    _this.handleChange = _this.handleChange.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
-    return _this;
-  }
-
-  _createClass(NewDirectEntry, [{
-    key: 'handleChange',
-    value: function handleChange(evt) {
-      this.props.write(evt.target.value);
-      this.setState({
-        input: this.props.newMessageEntry
-      });
-    }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(event) {
-      event.preventDefault();
-      var message = event.target.content.value;
-      this.props.submitMessage({
-        authorId: this.props.user.id,
-        content: message,
-        directId: Number(this.props.match.params.directId),
-        userId: this.props.user.id,
-        type: 'direct'
-      });
-      this.setState({
-        input: ''
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'form',
-        { id: 'new-message-form', onSubmit: this.handleSubmit },
-        _react2.default.createElement(
-          'div',
-          { className: 'input-group input-group-lg' },
-          _react2.default.createElement('input', {
-            className: 'form-control',
-            type: 'text',
-            name: 'content',
-            value: this.state.input,
-            onChange: this.handleChange,
-            placeholder: 'Say something nice...'
-          }),
-          _react2.default.createElement(
-            'span',
-            { className: 'input-group-btn' },
-            _react2.default.createElement(
-              'button',
-              { className: 'btn btn-default', type: 'submit' },
-              'Chat!'
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return NewDirectEntry;
-}(_react.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    message: state.newMessageEntry,
-    user: state.user
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    write: function write(message) {
-      return dispatch((0, _store.writeMessage)(message));
-    },
-    submitMessage: function submitMessage(message) {
-      return dispatch((0, _store.sendMessage)(message));
-    }
-  };
-};
-
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewDirectEntry));
-
-/***/ }),
-
-/***/ "./client/components/NewMessageEntry.js":
-/*!**********************************************!*\
-  !*** ./client/components/NewMessageEntry.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.NewMessageEntry = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _store = __webpack_require__(/*! ../store */ "./client/store.js");
-
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NewMessageEntry = exports.NewMessageEntry = function (_Component) {
-  _inherits(NewMessageEntry, _Component);
-
-  function NewMessageEntry(props) {
-    _classCallCheck(this, NewMessageEntry);
-
-    var _this = _possibleConstructorReturn(this, (NewMessageEntry.__proto__ || Object.getPrototypeOf(NewMessageEntry)).call(this, props));
-
-    _this.state = {
-      input: ''
-    };
-
-    _this.handleChange = _this.handleChange.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
-    return _this;
-  }
-
-  _createClass(NewMessageEntry, [{
-    key: 'handleChange',
-    value: function handleChange(evt) {
-      this.props.write(evt.target.value);
-      this.setState({
-        input: this.props.newMessageEntry
-      });
-    }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(event) {
-      event.preventDefault();
-      var message = event.target.content.value;
-      this.props.submitMessage({
-        content: message,
-        channelId: this.props.channelId,
-        type: 'message'
-      });
-      this.setState({
-        input: ''
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'form',
-        { id: 'new-message-form', onSubmit: this.handleSubmit },
-        _react2.default.createElement(
-          'div',
-          { className: 'input-group input-group-lg' },
-          _react2.default.createElement('input', {
-            id: 'message_input',
-            className: 'form-control',
-            type: 'text',
-            name: 'content',
-            value: this.state.input,
-            onChange: this.handleChange,
-            placeholder: 'Say something nice...'
-          }),
-          _react2.default.createElement(
-            'span',
-            { className: 'input-group-btn' },
-            _react2.default.createElement(
-              'button',
-              { className: 'btn btn-default', type: 'submit' },
-              'Chat!'
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return NewMessageEntry;
-}(_react.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    message: state.newMessageEntry
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    write: function write(message) {
-      return dispatch((0, _store.writeMessage)(message));
-    },
-    submitMessage: function submitMessage(message) {
-      return dispatch((0, _store.sendMessage)(message));
-    }
-  };
-};
-
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewMessageEntry));
-
-/***/ }),
-
-/***/ "./client/components/SavedItems.js":
-/*!*****************************************!*\
-  !*** ./client/components/SavedItems.js ***!
-  \*****************************************/
+/***/ "./client/components/SideBar/SavedItems.js":
+/*!*************************************************!*\
+  !*** ./client/components/SideBar/SavedItems.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1716,7 +1639,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _Message = __webpack_require__(/*! ./Message */ "./client/components/Message.js");
+var _Message = __webpack_require__(/*! ../Message/Message */ "./client/components/Message/Message.js");
 
 var _Message2 = _interopRequireDefault(_Message);
 
@@ -1789,10 +1712,243 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SaveItems);
 
 /***/ }),
 
-/***/ "./client/components/Sidebar.js":
-/*!**************************************!*\
-  !*** ./client/components/Sidebar.js ***!
-  \**************************************/
+/***/ "./client/components/Sidebar/ChannelList.js":
+/*!**************************************************!*\
+  !*** ./client/components/Sidebar/ChannelList.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactExpandAnimated = __webpack_require__(/*! react-expand-animated */ "./node_modules/react-expand-animated/build/Expand.js");
+
+var _reactExpandAnimated2 = _interopRequireDefault(_reactExpandAnimated);
+
+var _KeyboardArrowRightRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowRightRounded */ "./node_modules/@material-ui/icons/KeyboardArrowRightRounded.js");
+
+var _KeyboardArrowRightRounded2 = _interopRequireDefault(_KeyboardArrowRightRounded);
+
+var _KeyboardArrowDownRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowDownRounded */ "./node_modules/@material-ui/icons/KeyboardArrowDownRounded.js");
+
+var _KeyboardArrowDownRounded2 = _interopRequireDefault(_KeyboardArrowDownRounded);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ChannelList = function (_Component) {
+  _inherits(ChannelList, _Component);
+
+  function ChannelList(props) {
+    _classCallCheck(this, ChannelList);
+
+    var _this = _possibleConstructorReturn(this, (ChannelList.__proto__ || Object.getPrototypeOf(ChannelList)).call(this, props));
+
+    _this.state = {
+      open: true
+    };
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(ChannelList, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      this.setState({
+        open: !this.state.open
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'channels_expand', onClick: this.handleClick },
+          this.state.open ? _react2.default.createElement(_KeyboardArrowDownRounded2.default, { fontSize: 'large' }) : _react2.default.createElement(_KeyboardArrowRightRounded2.default, { fontSize: 'large' }),
+          _react2.default.createElement(
+            'h5',
+            null,
+            'Channels'
+          )
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'channels_list' },
+          _react2.default.createElement(
+            _reactExpandAnimated2.default,
+            { open: this.state.open, duration: 100 },
+            _react2.default.createElement(
+              'div',
+              null,
+              this.props.channels.map(function (channel) {
+                return _react2.default.createElement(
+                  'li',
+                  { key: channel.id },
+                  _react2.default.createElement(
+                    _reactRouterDom.NavLink,
+                    {
+                      to: '/channels/' + channel.id,
+                      activeClassName: 'active'
+                    },
+                    _react2.default.createElement(
+                      'span',
+                      null,
+                      '# ',
+                      channel.name
+                    ),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'badge' },
+                      _this2.props.messages.filter(function (message) {
+                        return message.channelId === channel.id;
+                      }).length
+                    )
+                  )
+                );
+              }),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  _reactRouterDom.NavLink,
+                  { to: '/new-channel' },
+                  'Create a channel ...'
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return ChannelList;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.messages,
+    channels: state.channels
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(ChannelList));
+
+/***/ }),
+
+/***/ "./client/components/Sidebar/ColumnTools.js":
+/*!**************************************************!*\
+  !*** ./client/components/Sidebar/ColumnTools.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
+
+var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ColumnTools = function (_Component) {
+  _inherits(ColumnTools, _Component);
+
+  function ColumnTools() {
+    _classCallCheck(this, ColumnTools);
+
+    return _possibleConstructorReturn(this, (ColumnTools.__proto__ || Object.getPrototypeOf(ColumnTools)).apply(this, arguments));
+  }
+
+  _createClass(ColumnTools, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h5',
+          null,
+          'Menu'
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'tool_list' },
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.NavLink,
+              { to: '/saved', activeClassName: 'active' },
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                _react2.default.createElement(_BookmarkRounded2.default, null),
+                'Saved Items'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return ColumnTools;
+}(_react.Component);
+
+exports.default = ColumnTools;
+
+/***/ }),
+
+/***/ "./client/components/Sidebar/Sidebar.js":
+/*!**********************************************!*\
+  !*** ./client/components/Sidebar/Sidebar.js ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1808,15 +1964,15 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ChannelList = __webpack_require__(/*! ./ChannelList */ "./client/components/ChannelList.js");
+var _ChannelList = __webpack_require__(/*! ./ChannelList */ "./client/components/Sidebar/ChannelList.js");
 
 var _ChannelList2 = _interopRequireDefault(_ChannelList);
 
-var _ColumnTools = __webpack_require__(/*! ./ColumnTools */ "./client/components/ColumnTools.js");
+var _ColumnTools = __webpack_require__(/*! ./ColumnTools */ "./client/components/Sidebar/ColumnTools.js");
 
 var _ColumnTools2 = _interopRequireDefault(_ColumnTools);
 
-var _DirectMessagesList = __webpack_require__(/*! ./DirectMessagesList */ "./client/components/DirectMessagesList.js");
+var _DirectMessagesList = __webpack_require__(/*! ../DirectMessages/DirectMessagesList */ "./client/components/DirectMessages/DirectMessagesList.js");
 
 var _DirectMessagesList2 = _interopRequireDefault(_DirectMessagesList);
 
