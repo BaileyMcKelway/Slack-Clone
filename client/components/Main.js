@@ -7,7 +7,7 @@ import MessagesList from './MessagesList';
 import NewChannelEntry from './NewChannelEntry';
 import DirectMessages from './DirectMessages';
 import SavedItems from './SavedItems';
-import store, {
+import {
   fetchMessages,
   fetchChannels,
   fetchUsers,

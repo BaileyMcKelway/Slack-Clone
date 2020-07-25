@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Author, Message } = require('../db/models');
+const { Author } = require('../db/models');
 
 module.exports = router;
 

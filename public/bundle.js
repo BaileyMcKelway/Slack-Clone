@@ -627,8 +627,6 @@ var _SavedItems2 = _interopRequireDefault(_SavedItems);
 
 var _store = __webpack_require__(/*! ../store */ "./client/store.js");
 
-var _store2 = _interopRequireDefault(_store);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1582,7 +1580,6 @@ var SaveItems = function (_Component) {
     var _this = _possibleConstructorReturn(this, (SaveItems.__proto__ || Object.getPrototypeOf(SaveItems)).call(this, props));
 
     _this.state = {
-      user: _this.props.user,
       messages: _this.props.messages
     };
     return _this;
@@ -1591,10 +1588,10 @@ var SaveItems = function (_Component) {
   _createClass(SaveItems, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var savedMessages = this.state.user.saved;
+      var savedMessages = this.props.user.saved;
       var messages = this.state.messages;
       var newMessages = [];
-
+      console.log(this.props.user);
       messages.map(function (message) {
         if (savedMessages.indexOf(message.id) !== -1) {
           newMessages.push(message);
@@ -2337,7 +2334,7 @@ var initialState = {
     id: 1,
     name: 'Cody Hardy',
     image: '/images/avataaars (1).png',
-    saved: []
+    saved: [1]
   },
   users: [],
   channels: [],

@@ -15,7 +15,6 @@ export default class ColumnTools extends Component {
                 <BookmarkRoundedIcon />
                 Saved Items
               </span>
-              {/* <SavedItems /> */}
             </NavLink>
           </li>
         </ul>
