@@ -177,7 +177,7 @@ const initialState = {
     id: 1,
     name: 'Cody Hardy',
     image: '/images/avataaars (1).png',
-    saved: [],
+    saved: [1],
   },
   users: [],
   channels: [],

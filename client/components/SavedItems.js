@@ -6,15 +6,14 @@ class SaveItems extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user,
       messages: this.props.messages,
     };
   }
   componentDidMount() {
-    const savedMessages = this.state.user.saved;
+    const savedMessages = this.props.user.saved;
     const messages = this.state.messages;
     let newMessages = [];
-
+    console.log(this.props.user);
     messages.map((message) => {
       if (savedMessages.indexOf(message.id) !== -1) {
         newMessages.push(message);
