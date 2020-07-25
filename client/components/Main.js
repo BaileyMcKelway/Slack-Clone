@@ -31,7 +31,8 @@ class Main extends Component {
       <div>
         <Sidebar user={this.props.user} users={this.props.users} />
         <Navbar />
-        <main>
+
+        <main className="main">
           <Switch>
             <Route path="/new-channel" component={NewChannelEntry} />
             <Route path="/channels/:channelId" component={MessagesList} />

@@ -28,7 +28,9 @@ class DirectMessages extends Component {
         }
       }
     });
-
+    filteredMessages = filteredMessages.sort(
+      (a, b) => Number(a.sortTime) - Number(b.sortTime)
+    );
     return (
       <div>
         <ul className="media-list">

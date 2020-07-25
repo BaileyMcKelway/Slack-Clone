@@ -17,6 +17,10 @@ const Messages = db.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    sortTime: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     likes: {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -32,10 +36,12 @@ const Messages = db.define(
         const date = new Date();
         const current_hour = date.getHours();
         const current_minute = date.getMinutes();
+        const current_seconds = date.getSeconds();
         const year = date.getFullYear();
         const month = date.getMonth();
         const day = date.getDay();
-        message.time = `${current_hour}:${current_minute}`;
+        message.sortTime = `${year}${month}${day}${current_hour}${current_minute}${current_seconds}`;
+        message.time = `${current_hour}:${current_minute}:${current_seconds}`;
         message.date = `${year}-${month}-${day}`;
       },
     },
