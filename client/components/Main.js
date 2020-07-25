@@ -7,7 +7,7 @@ import MessagesList from './MessagesList';
 import NewChannelEntry from './NewChannelEntry';
 import DirectMessages from './DirectMessages';
 import SavedItems from './SavedItems';
-import store, {
+import {
   fetchMessages,
   fetchChannels,
   fetchUsers,
@@ -32,7 +32,7 @@ class Main extends Component {
         <Sidebar user={this.props.user} users={this.props.users} />
         <Navbar />
 
-        <main className="main">
+        <main id="main" className="main">
           <Switch>
             <Route path="/new-channel" component={NewChannelEntry} />
             <Route path="/channels/:channelId" component={MessagesList} />

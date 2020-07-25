@@ -1,6 +1,6 @@
 # Slack Clone
 
-A Slack Clone
+A fullstack Slack Clone written in React, Redux, Node.js, and Postgres
 
 https://slackin-slack-clone.herokuapp.com
 

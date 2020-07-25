@@ -17,7 +17,7 @@ module.exports = db.define('author', {
     },
   },
   saved: {
-    type: Sequelize.ARRAY(Sequelize.DECIMAL),
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
     defaultValue: [],
   },
 });
