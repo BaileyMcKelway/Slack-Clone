@@ -8,6 +8,7 @@ import { postLikes, postSaved } from '../store';
 import { connect } from 'react-redux';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker, Emoji } from 'emoji-mart';
+import Popover from '@material-ui/core/Popover';
 
 function Message(props) {
   const message = props.message;
@@ -19,7 +20,6 @@ function Message(props) {
       text: '',
       emoticons: [],
       keywords: ['thumbsup'],
-      quan: 1,
     },
     {
       name: 'clap',
@@ -67,6 +67,7 @@ function Message(props) {
 
   const user = props.user;
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElEmoji, setAnchorElEmoji] = useState(null);
   const [likes, setLikes] = useState(message.likes);
   const [selectedEmojis, setSelectedEmojis] = useState([]);
   const [reactionShown, setReactionShown] = useState(false);
@@ -88,12 +89,35 @@ function Message(props) {
     setLikes(likes + 1);
   };
 
+  const handleClick = (event) => {
+    setReactionShown(!reactionShown);
+    setAnchorElEmoji(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorElEmoji(null);
+  };
+
   const handleEmojiSelect = (emoji) => {
-    setSelectedEmojis([...selectedEmojis, emoji]);
+    setSelectedEmojis(handleEmojiQuanitity(emoji));
+  };
+
+  const handleEmojiQuanitity = (emoji) => {
+    let newSelectedEmojis = selectedEmojis;
+    for (let selectedEmoji of newSelectedEmojis) {
+      console.log(emoji, selectedEmoji);
+      if (selectedEmoji.name === emoji.name) {
+        selectedEmoji.quan += 1;
+        return newSelectedEmojis;
+      }
+    }
+
+    emoji.quan = 1;
+    return [...selectedEmojis, emoji];
   };
 
   const open = Boolean(anchorEl);
-
+  const id = open ? 'simple-popover' : undefined;
   return (
     <Container fixed>
       <li
@@ -129,31 +153,49 @@ function Message(props) {
             {message.content}
           </div>
           <div className="media-right">
-            <IconButton
-              aria-label="reaction"
-              onClick={() => {
-                // handleLike(message.id, message.channelId);
-                setReactionShown(!reactionShown);
-              }}
-            >
-              {reactionShown && (
-                <div className="reactions">
-                  <Picker
-                    showPreview={false}
-                    showSkinTones={false}
-                    include={['custom']}
-                    custom={customReactionEmojis}
-                    onSelect={handleEmojiSelect}
-                  />
-                </div>
-              )}
-              <EmojiEmotionsIcon />
-              {likes}
-            </IconButton>
             {selectedEmojis.map((emoji, index = 0) => {
-              return <Emoji key={index} emoji={emoji} size={16} />;
+              return (
+                <IconButton
+                  aria-label="reaction"
+                  disableFocusRipple="true"
+                  disableRipple="true"
+                  size="small"
+                >
+                  <Emoji key={index} emoji={emoji} size={18} /> {emoji.quan}
+                </IconButton>
+              );
             })}
+            <IconButton aria-label="reaction" onClick={handleClick}>
+              <EmojiEmotionsIcon />
+              {'+'}
+            </IconButton>
           </div>
+
+          <Popover
+            id={id}
+            onClick={handleClick}
+            open={reactionShown}
+            anchorEl={anchorElEmoji}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+          >
+            <div className="reactions">
+              <Picker
+                showPreview={false}
+                showSkinTones={false}
+                include={['custom']}
+                custom={customReactionEmojis}
+                onSelect={handleEmojiSelect}
+              />
+            </div>
+          </Popover>
         </div>
       </li>
     </Container>
