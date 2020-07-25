@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
 import { connect } from 'react-redux';
-import { fetchMessages } from '../store.js';
+import { fetchMessages } from '../../store.js';
 import { animateScroll } from 'react-scroll';
 
 class MessagesList extends Component {

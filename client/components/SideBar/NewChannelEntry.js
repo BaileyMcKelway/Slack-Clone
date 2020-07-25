@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { postChannel } from '../store';
+import { postChannel } from '../../store';
 import { useForm } from 'react-hook-form';
 
 const NewChannelEntry = (props) => {

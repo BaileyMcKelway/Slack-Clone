@@ -1,7 +1,7 @@
 import React from 'react';
 import ChannelList from './ChannelList';
 import ColumnTools from './ColumnTools';
-import DirectMessagesList from './DirectMessagesList';
+import DirectMessagesList from '../DirectMessages/DirectMessagesList';
 import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
 import GroupIcon from '@material-ui/icons/Group';
 

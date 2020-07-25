@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Message from './Message';
+import Message from '../Message/Message';
 
 class SaveItems extends Component {
   constructor(props) {
