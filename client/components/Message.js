@@ -19,6 +19,7 @@ function Message(props) {
       text: '',
       emoticons: [],
       keywords: ['thumbsup'],
+      quan: 1,
     },
     {
       name: 'clap',

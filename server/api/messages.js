@@ -38,7 +38,7 @@ router.put('/:messageId', async (req, res, next) => {
     let message = await Message.findOne({
       where: { id: messageId },
     });
-    await message.update({ likes: message.likes + 1 });
+    await message.update({ likes: [...message.likes] });
 
     res.json(message);
     res.status(204).end();
