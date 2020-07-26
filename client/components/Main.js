@@ -29,7 +29,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="test">
+      <div>
         <SideBar user={this.props.user} users={this.props.users} />
         <Navbar />
         <main id="main" className="main">

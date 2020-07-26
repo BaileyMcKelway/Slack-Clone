@@ -248,6 +248,17 @@ main > div {
 .message_hover {
   background-color: whitesmoke;
 }
+.no-messages-main {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#no-messages-content {
+  width: 400px;
+  height: 400px;
+}
 
 #new-message-form {
   position: fixed;

@@ -12,7 +12,11 @@ export default function Sidebar(props) {
         <div className="sidebar-header">
           <h3 href="#">
             <div>Slackin</div>
-            <img alt="Brand" src={'https://i.imgur.com/oO7j1nt.png'} />
+            <img
+              alt="Brand"
+              src={'https://i.imgur.com/lMVHADL.png'}
+              style={{ width: '25%' }}
+            />
           </h3>
           <span className="sidebar-currentuser">
             <FiberManualRecordSharpIcon
