@@ -8,6 +8,7 @@ import NewChannelEntry from './SideBar/NewChannelEntry';
 import DirectMessages from './DirectMessages/DirectMessages';
 import SavedItems from './SideBar/SavedItems';
 import People from './SideBar/People';
+import Loading from './Loading';
 import {
   fetchMessages,
   fetchChannels,
@@ -18,31 +19,51 @@ import {
 class Main extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true,
+    };
+    this.handleLoad = this.handleLoad.bind(this);
   }
 
-  componentDidMount() {
-    document.body.style.backgroundColor = 'white';
-    this.props.fetchInitialMessages();
-    this.props.fetchInitialChannels();
-    this.props.fetchInitialUsers();
-    this.props.fetchInitialDirects();
+  async componentDidMount() {
+    await this.props.fetchInitialMessages();
+    await this.props.fetchInitialChannels();
+    await this.props.fetchInitialUsers();
+    await this.props.fetchInitialDirects();
+    this.handleLoad();
+  }
+  handleLoad() {
+    setTimeout(() => {
+      this.setState({
+        loading: false,
+      });
+      document.body.style.background = 'white';
+      document.getElementByTag('body').style.display = 'flex';
+      document.getElementByTag('body').style.flex = '1, 1, auto';
+    }, 2000);
   }
 
   render() {
     return (
       <div>
-        <SideBar user={this.props.user} users={this.props.users} />
-        <Navbar />
-        <main id="main" className="main">
-          <Switch>
-            <Route path="/new-channel" component={NewChannelEntry} />
-            <Route path="/channels/:channelId" component={MessagesList} />
-            <Route path="/saved" component={SavedItems} />
-            <Route path="/directs/:directId" component={DirectMessages} />
-            <Route path="/people" component={People} />
-            <Redirect to="/channels/1" />
-          </Switch>
-        </main>
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <div>
+            <SideBar user={this.props.user} users={this.props.users} />
+            <Navbar />
+            <main id="main" className="main">
+              <Switch>
+                <Route path="/new-channel" component={NewChannelEntry} />
+                <Route path="/channels/:channelId" component={MessagesList} />
+                <Route path="/saved" component={SavedItems} />
+                <Route path="/directs/:directId" component={DirectMessages} />
+                <Route path="/people" component={People} />
+                <Redirect to="/channels/1" />
+              </Switch>
+            </main>
+          </div>
+        )}
       </div>
     );
   }
