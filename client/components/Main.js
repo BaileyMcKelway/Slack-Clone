@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import SideBar from './SideBar/SideBar';
+import SideBar from './SideBarMain/SideBar';
 import Navbar from './Navbar';
 import MessagesList from './Message/MessagesList';
-import NewChannelEntry from './SideBar/NewChannelEntry';
+import NewChannelEntry from './SideBarMain/NewChannelEntry';
 import DirectMessages from './DirectMessages/DirectMessages';
-import SavedItems from './SideBar/SavedItems';
-import People from './SideBar/People';
+import SavedItems from './SideBarMain/SavedItems';
+import People from './SideBarMain/People';
 import Loading from './Loading';
 import {
   fetchMessages,

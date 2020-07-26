@@ -540,7 +540,7 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _SideBar = __webpack_require__(/*! ./SideBar/SideBar */ "./client/components/SideBar/SideBar.js");
+var _SideBar = __webpack_require__(/*! ./SideBarMain/SideBar */ "./client/components/SideBarMain/SideBar.js");
 
 var _SideBar2 = _interopRequireDefault(_SideBar);
 
@@ -552,7 +552,7 @@ var _MessagesList = __webpack_require__(/*! ./Message/MessagesList */ "./client/
 
 var _MessagesList2 = _interopRequireDefault(_MessagesList);
 
-var _NewChannelEntry = __webpack_require__(/*! ./SideBar/NewChannelEntry */ "./client/components/SideBar/NewChannelEntry.js");
+var _NewChannelEntry = __webpack_require__(/*! ./SideBarMain/NewChannelEntry */ "./client/components/SideBarMain/NewChannelEntry.js");
 
 var _NewChannelEntry2 = _interopRequireDefault(_NewChannelEntry);
 
@@ -560,11 +560,11 @@ var _DirectMessages = __webpack_require__(/*! ./DirectMessages/DirectMessages */
 
 var _DirectMessages2 = _interopRequireDefault(_DirectMessages);
 
-var _SavedItems = __webpack_require__(/*! ./SideBar/SavedItems */ "./client/components/SideBar/SavedItems.js");
+var _SavedItems = __webpack_require__(/*! ./SideBarMain/SavedItems */ "./client/components/SideBarMain/SavedItems.js");
 
 var _SavedItems2 = _interopRequireDefault(_SavedItems);
 
-var _People = __webpack_require__(/*! ./SideBar/People */ "./client/components/SideBar/People.js");
+var _People = __webpack_require__(/*! ./SideBarMain/People */ "./client/components/SideBarMain/People.js");
 
 var _People2 = _interopRequireDefault(_People);
 
@@ -1666,10 +1666,10 @@ exports.default = (0, _reactRouterDom.withRouter)(NoMessages);
 
 /***/ }),
 
-/***/ "./client/components/SideBar/ChannelList.js":
-/*!**************************************************!*\
-  !*** ./client/components/SideBar/ChannelList.js ***!
-  \**************************************************/
+/***/ "./client/components/SideBarMain/ChannelList.js":
+/*!******************************************************!*\
+  !*** ./client/components/SideBarMain/ChannelList.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1815,10 +1815,10 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 
 /***/ }),
 
-/***/ "./client/components/SideBar/ColumnTools.js":
-/*!**************************************************!*\
-  !*** ./client/components/SideBar/ColumnTools.js ***!
-  \**************************************************/
+/***/ "./client/components/SideBarMain/ColumnTools.js":
+/*!******************************************************!*\
+  !*** ./client/components/SideBarMain/ColumnTools.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1918,10 +1918,10 @@ exports.default = ColumnTools;
 
 /***/ }),
 
-/***/ "./client/components/SideBar/NewChannelEntry.js":
-/*!******************************************************!*\
-  !*** ./client/components/SideBar/NewChannelEntry.js ***!
-  \******************************************************/
+/***/ "./client/components/SideBarMain/NewChannelEntry.js":
+/*!**********************************************************!*\
+  !*** ./client/components/SideBarMain/NewChannelEntry.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1997,10 +1997,10 @@ exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(NewChannelE
 
 /***/ }),
 
-/***/ "./client/components/SideBar/People.js":
-/*!*********************************************!*\
-  !*** ./client/components/SideBar/People.js ***!
-  \*********************************************/
+/***/ "./client/components/SideBarMain/People.js":
+/*!*************************************************!*\
+  !*** ./client/components/SideBarMain/People.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2017,7 +2017,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _PeopleCard = __webpack_require__(/*! ./PeopleCard */ "./client/components/SideBar/PeopleCard.js");
+var _PeopleCard = __webpack_require__(/*! ./PeopleCard */ "./client/components/SideBarMain/PeopleCard.js");
 
 var _PeopleCard2 = _interopRequireDefault(_PeopleCard);
 
@@ -2049,10 +2049,10 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(People);
 
 /***/ }),
 
-/***/ "./client/components/SideBar/PeopleCard.js":
-/*!*************************************************!*\
-  !*** ./client/components/SideBar/PeopleCard.js ***!
-  \*************************************************/
+/***/ "./client/components/SideBarMain/PeopleCard.js":
+/*!*****************************************************!*\
+  !*** ./client/components/SideBarMain/PeopleCard.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2130,10 +2130,10 @@ exports.default = PeopleCard;
 
 /***/ }),
 
-/***/ "./client/components/SideBar/SavedItems.js":
-/*!*************************************************!*\
-  !*** ./client/components/SideBar/SavedItems.js ***!
-  \*************************************************/
+/***/ "./client/components/SideBarMain/SavedItems.js":
+/*!*****************************************************!*\
+  !*** ./client/components/SideBarMain/SavedItems.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2229,10 +2229,10 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SaveItems);
 
 /***/ }),
 
-/***/ "./client/components/SideBar/SideBar.js":
-/*!**********************************************!*\
-  !*** ./client/components/SideBar/SideBar.js ***!
-  \**********************************************/
+/***/ "./client/components/SideBarMain/SideBar.js":
+/*!**************************************************!*\
+  !*** ./client/components/SideBarMain/SideBar.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2248,11 +2248,11 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ChannelList = __webpack_require__(/*! ./ChannelList */ "./client/components/SideBar/ChannelList.js");
+var _ChannelList = __webpack_require__(/*! ./ChannelList */ "./client/components/SideBarMain/ChannelList.js");
 
 var _ChannelList2 = _interopRequireDefault(_ChannelList);
 
-var _ColumnTools = __webpack_require__(/*! ./ColumnTools */ "./client/components/SideBar/ColumnTools.js");
+var _ColumnTools = __webpack_require__(/*! ./ColumnTools */ "./client/components/SideBarMain/ColumnTools.js");
 
 var _ColumnTools2 = _interopRequireDefault(_ColumnTools);
 
@@ -13899,7 +13899,7 @@ var grid = Object(_compose__WEBPACK_IMPORTED_MODULE_1__["default"])(gridGap, gri
 /*!*******************************************************!*\
   !*** ./node_modules/@material-ui/system/esm/index.js ***!
   \*******************************************************/
-/*! exports provided: borders, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, breakpoints, compose, css, display, flexbox, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, grid, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, palette, color, bgcolor, positions, position, zIndex, top, right, bottom, left, shadows, sizing, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, spacing, createUnarySpacing, style, typography, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
+/*! exports provided: borders, breakpoints, compose, css, display, flexbox, grid, palette, positions, shadows, sizing, spacing, style, typography, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, color, bgcolor, position, zIndex, top, right, bottom, left, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, createUnarySpacing, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
