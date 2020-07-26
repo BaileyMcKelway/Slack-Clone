@@ -18,7 +18,12 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: [path.resolve(__dirname, 'client')],
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+          },
+        },
       },
       {
         test: /\.css$/,
