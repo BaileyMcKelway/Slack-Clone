@@ -540,7 +540,7 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _SideBar = __webpack_require__(/*! ./Sidebar/SideBar */ "./client/components/Sidebar/SideBar.js");
+var _SideBar = __webpack_require__(/*! ./SideBar/SideBar */ "./client/components/SideBar/SideBar.js");
 
 var _SideBar2 = _interopRequireDefault(_SideBar);
 
@@ -1666,6 +1666,258 @@ exports.default = (0, _reactRouterDom.withRouter)(NoMessages);
 
 /***/ }),
 
+/***/ "./client/components/SideBar/ChannelList.js":
+/*!**************************************************!*\
+  !*** ./client/components/SideBar/ChannelList.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactExpandAnimated = __webpack_require__(/*! react-expand-animated */ "./node_modules/react-expand-animated/build/Expand.js");
+
+var _reactExpandAnimated2 = _interopRequireDefault(_reactExpandAnimated);
+
+var _KeyboardArrowRightRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowRightRounded */ "./node_modules/@material-ui/icons/KeyboardArrowRightRounded.js");
+
+var _KeyboardArrowRightRounded2 = _interopRequireDefault(_KeyboardArrowRightRounded);
+
+var _KeyboardArrowDownRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowDownRounded */ "./node_modules/@material-ui/icons/KeyboardArrowDownRounded.js");
+
+var _KeyboardArrowDownRounded2 = _interopRequireDefault(_KeyboardArrowDownRounded);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ChannelList = function (_Component) {
+  _inherits(ChannelList, _Component);
+
+  function ChannelList(props) {
+    _classCallCheck(this, ChannelList);
+
+    var _this = _possibleConstructorReturn(this, (ChannelList.__proto__ || Object.getPrototypeOf(ChannelList)).call(this, props));
+
+    _this.state = {
+      open: true
+    };
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(ChannelList, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      this.setState({
+        open: !this.state.open
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'channels_expand', onClick: this.handleClick },
+          this.state.open ? _react2.default.createElement(_KeyboardArrowDownRounded2.default, { fontSize: 'large' }) : _react2.default.createElement(_KeyboardArrowRightRounded2.default, { fontSize: 'large' }),
+          _react2.default.createElement(
+            'h5',
+            null,
+            'Channels'
+          )
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'channels_list' },
+          _react2.default.createElement(
+            _reactExpandAnimated2.default,
+            { open: this.state.open, duration: 100 },
+            _react2.default.createElement(
+              'div',
+              null,
+              this.props.channels.map(function (channel) {
+                return _react2.default.createElement(
+                  'li',
+                  { key: channel.id },
+                  _react2.default.createElement(
+                    _reactRouterDom.NavLink,
+                    {
+                      to: '/channels/' + channel.id,
+                      activeClassName: 'active'
+                    },
+                    _react2.default.createElement(
+                      'span',
+                      null,
+                      '# ',
+                      channel.name
+                    ),
+                    _react2.default.createElement(
+                      'span',
+                      { className: 'badge' },
+                      _this2.props.messages.filter(function (message) {
+                        return message.channelId === channel.id;
+                      }).length
+                    )
+                  )
+                );
+              }),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  _reactRouterDom.NavLink,
+                  { to: '/new-channel' },
+                  'Create a channel ...'
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return ChannelList;
+}(_react.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.messages,
+    channels: state.channels
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(ChannelList));
+
+/***/ }),
+
+/***/ "./client/components/SideBar/ColumnTools.js":
+/*!**************************************************!*\
+  !*** ./client/components/SideBar/ColumnTools.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
+
+var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
+
+var _People = __webpack_require__(/*! @material-ui/icons/People */ "./node_modules/@material-ui/icons/People.js");
+
+var _People2 = _interopRequireDefault(_People);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ColumnTools = function (_Component) {
+  _inherits(ColumnTools, _Component);
+
+  function ColumnTools() {
+    _classCallCheck(this, ColumnTools);
+
+    return _possibleConstructorReturn(this, (ColumnTools.__proto__ || Object.getPrototypeOf(ColumnTools)).apply(this, arguments));
+  }
+
+  _createClass(ColumnTools, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h5',
+          null,
+          'Menu'
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'tool_list' },
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.NavLink,
+              { to: '/saved', activeClassName: 'active' },
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                _react2.default.createElement(_BookmarkRounded2.default, null),
+                'Saved Items'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.NavLink,
+              { to: '/people', activeClassName: 'active' },
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                _react2.default.createElement(_People2.default, null),
+                'People'
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return ColumnTools;
+}(_react.Component);
+
+exports.default = ColumnTools;
+
+/***/ }),
+
 /***/ "./client/components/SideBar/NewChannelEntry.js":
 /*!******************************************************!*\
   !*** ./client/components/SideBar/NewChannelEntry.js ***!
@@ -1977,261 +2229,9 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SaveItems);
 
 /***/ }),
 
-/***/ "./client/components/Sidebar/ChannelList.js":
-/*!**************************************************!*\
-  !*** ./client/components/Sidebar/ChannelList.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-
-var _reactExpandAnimated = __webpack_require__(/*! react-expand-animated */ "./node_modules/react-expand-animated/build/Expand.js");
-
-var _reactExpandAnimated2 = _interopRequireDefault(_reactExpandAnimated);
-
-var _KeyboardArrowRightRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowRightRounded */ "./node_modules/@material-ui/icons/KeyboardArrowRightRounded.js");
-
-var _KeyboardArrowRightRounded2 = _interopRequireDefault(_KeyboardArrowRightRounded);
-
-var _KeyboardArrowDownRounded = __webpack_require__(/*! @material-ui/icons/KeyboardArrowDownRounded */ "./node_modules/@material-ui/icons/KeyboardArrowDownRounded.js");
-
-var _KeyboardArrowDownRounded2 = _interopRequireDefault(_KeyboardArrowDownRounded);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ChannelList = function (_Component) {
-  _inherits(ChannelList, _Component);
-
-  function ChannelList(props) {
-    _classCallCheck(this, ChannelList);
-
-    var _this = _possibleConstructorReturn(this, (ChannelList.__proto__ || Object.getPrototypeOf(ChannelList)).call(this, props));
-
-    _this.state = {
-      open: true
-    };
-    _this.handleClick = _this.handleClick.bind(_this);
-    return _this;
-  }
-
-  _createClass(ChannelList, [{
-    key: 'handleClick',
-    value: function handleClick() {
-      this.setState({
-        open: !this.state.open
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'channels_expand', onClick: this.handleClick },
-          this.state.open ? _react2.default.createElement(_KeyboardArrowDownRounded2.default, { fontSize: 'large' }) : _react2.default.createElement(_KeyboardArrowRightRounded2.default, { fontSize: 'large' }),
-          _react2.default.createElement(
-            'h5',
-            null,
-            'Channels'
-          )
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'channels_list' },
-          _react2.default.createElement(
-            _reactExpandAnimated2.default,
-            { open: this.state.open, duration: 100 },
-            _react2.default.createElement(
-              'div',
-              null,
-              this.props.channels.map(function (channel) {
-                return _react2.default.createElement(
-                  'li',
-                  { key: channel.id },
-                  _react2.default.createElement(
-                    _reactRouterDom.NavLink,
-                    {
-                      to: '/channels/' + channel.id,
-                      activeClassName: 'active'
-                    },
-                    _react2.default.createElement(
-                      'span',
-                      null,
-                      '# ',
-                      channel.name
-                    ),
-                    _react2.default.createElement(
-                      'span',
-                      { className: 'badge' },
-                      _this2.props.messages.filter(function (message) {
-                        return message.channelId === channel.id;
-                      }).length
-                    )
-                  )
-                );
-              }),
-              _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                  _reactRouterDom.NavLink,
-                  { to: '/new-channel' },
-                  'Create a channel ...'
-                )
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ChannelList;
-}(_react.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    messages: state.messages,
-    channels: state.channels
-  };
-};
-
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(ChannelList));
-
-/***/ }),
-
-/***/ "./client/components/Sidebar/ColumnTools.js":
-/*!**************************************************!*\
-  !*** ./client/components/Sidebar/ColumnTools.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounded */ "./node_modules/@material-ui/icons/BookmarkRounded.js");
-
-var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
-
-var _People = __webpack_require__(/*! @material-ui/icons/People */ "./node_modules/@material-ui/icons/People.js");
-
-var _People2 = _interopRequireDefault(_People);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ColumnTools = function (_Component) {
-  _inherits(ColumnTools, _Component);
-
-  function ColumnTools() {
-    _classCallCheck(this, ColumnTools);
-
-    return _possibleConstructorReturn(this, (ColumnTools.__proto__ || Object.getPrototypeOf(ColumnTools)).apply(this, arguments));
-  }
-
-  _createClass(ColumnTools, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h5',
-          null,
-          'Menu'
-        ),
-        _react2.default.createElement(
-          'ul',
-          { className: 'tool_list' },
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/saved', activeClassName: 'active' },
-              _react2.default.createElement(
-                'span',
-                null,
-                ' ',
-                _react2.default.createElement(_BookmarkRounded2.default, null),
-                'Saved Items'
-              )
-            )
-          ),
-          _react2.default.createElement(
-            'li',
-            null,
-            _react2.default.createElement(
-              _reactRouterDom.NavLink,
-              { to: '/people', activeClassName: 'active' },
-              _react2.default.createElement(
-                'span',
-                null,
-                ' ',
-                _react2.default.createElement(_People2.default, null),
-                'People'
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ColumnTools;
-}(_react.Component);
-
-exports.default = ColumnTools;
-
-/***/ }),
-
-/***/ "./client/components/Sidebar/SideBar.js":
+/***/ "./client/components/SideBar/SideBar.js":
 /*!**********************************************!*\
-  !*** ./client/components/Sidebar/SideBar.js ***!
+  !*** ./client/components/SideBar/SideBar.js ***!
   \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2248,11 +2248,11 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ChannelList = __webpack_require__(/*! ./ChannelList */ "./client/components/Sidebar/ChannelList.js");
+var _ChannelList = __webpack_require__(/*! ./ChannelList */ "./client/components/SideBar/ChannelList.js");
 
 var _ChannelList2 = _interopRequireDefault(_ChannelList);
 
-var _ColumnTools = __webpack_require__(/*! ./ColumnTools */ "./client/components/Sidebar/ColumnTools.js");
+var _ColumnTools = __webpack_require__(/*! ./ColumnTools */ "./client/components/SideBar/ColumnTools.js");
 
 var _ColumnTools2 = _interopRequireDefault(_ColumnTools);
 

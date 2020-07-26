@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import SideBar from './Sidebar/SideBar';
+import SideBar from './SideBar/SideBar';
 import Navbar from './Navbar';
 import MessagesList from './Message/MessagesList';
 import NewChannelEntry from './SideBar/NewChannelEntry';
