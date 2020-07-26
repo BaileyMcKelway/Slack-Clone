@@ -4,6 +4,7 @@ body {
   height: 100vh;
   display: flex;
   flex: 1, 1, auto;
+  background-color: #3f0e40;
 }
 
 #app {

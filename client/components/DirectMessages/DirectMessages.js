@@ -35,7 +35,7 @@ class DirectMessages extends Component {
     return (
       <div id="direct-main">
         <ul className="media-list">
-          {filteredMessages.length > 1 ? (
+          {filteredMessages.length > 0 ? (
             filteredMessages.map((message) => (
               <Message message={message} key={message.id} />
             ))

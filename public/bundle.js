@@ -172,7 +172,7 @@ var DirectMessages = function (_Component) {
         _react2.default.createElement(
           'ul',
           { className: 'media-list' },
-          filteredMessages.length > 1 ? filteredMessages.map(function (message) {
+          filteredMessages.length > 0 ? filteredMessages.map(function (message) {
             return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
           }) : _react2.default.createElement(_NoMessages2.default, null)
         ),
@@ -554,6 +554,7 @@ var Main = function (_Component) {
   _createClass(Main, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      document.body.style.backgroundColor = 'white';
       this.props.fetchInitialMessages();
       this.props.fetchInitialChannels();
       this.props.fetchInitialUsers();
@@ -1176,19 +1177,15 @@ var MessagesList = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
-        filteredMessages.length > 0 ? _react2.default.createElement(
-          'div',
-          { id: 'media-list-main' },
-          _react2.default.createElement(
-            'ul',
-            { className: 'media-list' },
-            filteredMessages.map(function (message) {
-              return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
-            })
-          ),
-          _react2.default.createElement(_NewMessageEntry2.default, { channelId: channelId })
-        ) : _react2.default.createElement(_NoMessages2.default, null)
+        { id: 'media-list-main' },
+        _react2.default.createElement(
+          'ul',
+          { className: 'media-list' },
+          filteredMessages.length > 0 ? filteredMessages.map(function (message) {
+            return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
+          }) : _react2.default.createElement(_NoMessages2.default, null)
+        ),
+        _react2.default.createElement(_NewMessageEntry2.default, { channelId: channelId })
       );
     }
   }]);
@@ -1814,6 +1811,10 @@ var _Message = __webpack_require__(/*! ../Message/Message */ "./client/component
 
 var _Message2 = _interopRequireDefault(_Message);
 
+var _NoMessages = __webpack_require__(/*! ../NoMessages */ "./client/components/NoMessages.js");
+
+var _NoMessages2 = _interopRequireDefault(_NoMessages);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1842,7 +1843,7 @@ var SaveItems = function (_Component) {
       var savedMessages = this.props.user.saved;
       var messages = this.state.messages;
       var newMessages = [];
-      console.log(this.props.user);
+
       messages.map(function (message) {
         if (savedMessages.indexOf(message.id) !== -1) {
           newMessages.push(message);
@@ -1861,9 +1862,9 @@ var SaveItems = function (_Component) {
         _react2.default.createElement(
           'ul',
           { className: 'media-list' },
-          this.state.messages.map(function (message) {
+          this.state.messages.length > 0 ? this.state.messages.map(function (message) {
             return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
-          })
+          }) : _react2.default.createElement(_NoMessages2.default, null)
         )
       );
     }
@@ -13792,7 +13793,7 @@ var grid = Object(_compose__WEBPACK_IMPORTED_MODULE_1__["default"])(gridGap, gri
 /*!*******************************************************!*\
   !*** ./node_modules/@material-ui/system/esm/index.js ***!
   \*******************************************************/
-/*! exports provided: borders, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, breakpoints, compose, css, display, flexbox, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, grid, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, palette, color, bgcolor, positions, position, zIndex, top, right, bottom, left, shadows, sizing, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, spacing, createUnarySpacing, style, typography, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
+/*! exports provided: borders, breakpoints, compose, css, display, flexbox, grid, palette, positions, shadows, sizing, spacing, style, typography, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, color, bgcolor, position, zIndex, top, right, bottom, left, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, createUnarySpacing, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29681,7 +29682,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  position: fixed;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* people */\n#people {\n  display: flex;\n  flex-wrap: wrap;\n}\n#people_card {\n  margin: 20px;\n}\n\n#people_card_content {\n  padding: 10px;\n  text-align: center;\n  border: 1px solid rgb(145, 145, 145);\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  display: flex;\n  overflow-y: scroll;\n}\n#direct-main {\n  margin-left: 200px;\n}\n\n#saved-main {\n  margin-left: 200px;\n}\n\n#media-list-main {\n  margin-left: 200px;\n  position: relative;\n}\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n.no-messages-main {\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  margin-left: 200px;\n  margin-right: auto;\n  width: 75%;\n  height: 75%;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
+exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n  background-color: #3f0e40;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  position: fixed;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* people */\n#people {\n  display: flex;\n  flex-wrap: wrap;\n}\n#people_card {\n  margin: 20px;\n}\n\n#people_card_content {\n  padding: 10px;\n  text-align: center;\n  border: 1px solid rgb(145, 145, 145);\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  display: flex;\n  overflow-y: scroll;\n}\n#direct-main {\n  margin-left: 200px;\n}\n\n#saved-main {\n  margin-left: 200px;\n}\n\n#media-list-main {\n  margin-left: 200px;\n  position: relative;\n}\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n.no-messages-main {\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  margin-left: 200px;\n  margin-right: auto;\n  width: 75%;\n  height: 75%;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
 
 // exports
 
