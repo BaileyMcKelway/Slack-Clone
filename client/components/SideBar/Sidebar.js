@@ -5,7 +5,7 @@ import DirectMessagesList from '../DirectMessages/DirectMessagesList';
 import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
 import GroupIcon from '@material-ui/icons/Group';
 
-export default function Sidebar(props) {
+export default function SideBar(props) {
   return (
     <section className="sidebar">
       <div id="sidebar-scroll">

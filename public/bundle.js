@@ -2242,7 +2242,7 @@ exports.default = ColumnTools;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Sidebar;
+exports.default = SideBar;
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
@@ -2270,7 +2270,7 @@ var _Group2 = _interopRequireDefault(_Group);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Sidebar(props) {
+function SideBar(props) {
   return _react2.default.createElement(
     'section',
     { className: 'sidebar' },
