@@ -9,15 +9,21 @@ import 'emoji-mart/css/emoji-mart.css';
 function MessageSave(props) {
   const message = props.message;
 
+  const date = new Date();
+  const CurrentDate = `${date.getFullYear()}${date.getMonth()}${date.getDay()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+
   const user = props.user;
 
   const handleSave = (userId, messageId) => {
     props.save(userId, messageId);
   };
-
+  console.log(CurrentDate, message.sortTime);
   return (
     <div className="media-date">
       <h6>{message.date}</h6>
+
+      {CurrentDate - message.sortTime < 60 ? <p id="new_tag">New</p> : ''}
+
       <IconButton
         aria-label="save"
         onClick={() => {

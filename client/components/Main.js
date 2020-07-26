@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Sidebar from './Sidebar/Sidebar';
+import SideBar from './Sidebar/SideBar';
 import Navbar from './Navbar';
 import MessagesList from './Message/MessagesList';
 import NewChannelEntry from './SideBar/NewChannelEntry';
@@ -29,9 +29,8 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Sidebar user={this.props.user} users={this.props.users} />
+        <SideBar user={this.props.user} users={this.props.users} />
         <Navbar />
-
         <main id="main" className="main">
           <Switch>
             <Route path="/new-channel" component={NewChannelEntry} />

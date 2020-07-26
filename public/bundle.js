@@ -500,9 +500,9 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _Sidebar = __webpack_require__(/*! ./Sidebar/Sidebar */ "./client/components/Sidebar/Sidebar.js");
+var _SideBar = __webpack_require__(/*! ./Sidebar/SideBar */ "./client/components/Sidebar/SideBar.js");
 
-var _Sidebar2 = _interopRequireDefault(_Sidebar);
+var _SideBar2 = _interopRequireDefault(_SideBar);
 
 var _Navbar = __webpack_require__(/*! ./Navbar */ "./client/components/Navbar.js");
 
@@ -557,7 +557,7 @@ var Main = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Sidebar2.default, { user: this.props.user, users: this.props.users }),
+        _react2.default.createElement(_SideBar2.default, { user: this.props.user, users: this.props.users }),
         _react2.default.createElement(_Navbar2.default, null),
         _react2.default.createElement(
           'main',
@@ -1052,12 +1052,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function MessageSave(props) {
   var message = props.message;
 
+  var date = new Date();
+  var CurrentDate = '' + date.getFullYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds();
+
   var user = props.user;
 
   var handleSave = function handleSave(userId, messageId) {
     props.save(userId, messageId);
   };
-
+  console.log(CurrentDate, message.sortTime);
   return _react2.default.createElement(
     'div',
     { className: 'media-date' },
@@ -1066,6 +1069,11 @@ function MessageSave(props) {
       null,
       message.date
     ),
+    CurrentDate - message.sortTime < 60 ? _react2.default.createElement(
+      'p',
+      { id: 'new_tag' },
+      'New'
+    ) : '',
     _react2.default.createElement(
       _IconButton2.default,
       {
@@ -1945,9 +1953,9 @@ exports.default = ColumnTools;
 
 /***/ }),
 
-/***/ "./client/components/Sidebar/Sidebar.js":
+/***/ "./client/components/Sidebar/SideBar.js":
 /*!**********************************************!*\
-  !*** ./client/components/Sidebar/Sidebar.js ***!
+  !*** ./client/components/Sidebar/SideBar.js ***!
   \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -29377,7 +29385,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  flex: 1 1 auto;\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n}\n\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n  width: 100%;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n", ""]);
+exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  flex: 1 1 auto;\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n}\n\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n  width: 100%;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
 
 // exports
 
