@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Message from '../Message/Message';
 import NewDirectEntry from './NewDirectEntry';
+import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
 import { fetchDirects } from '../../store.js';
 
@@ -34,9 +35,13 @@ class DirectMessages extends Component {
     return (
       <div id="direct-main">
         <ul className="media-list">
-          {filteredMessages.map((message) => (
-            <Message message={message} key={message.id} />
-          ))}
+          {filteredMessages.length > 0 ? (
+            filteredMessages.map((message) => (
+              <Message message={message} key={message.id} />
+            ))
+          ) : (
+            <NoMessages />
+          )}
         </ul>
 
         <NewDirectEntry />

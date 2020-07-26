@@ -7,11 +7,7 @@ function NoMessages(props) {
 
   return (
     <div className="no-messages-main">
-      <Paper elevation={3}>
-        <div id="no-messages-content">
-          <h1>No Messages Yet</h1>
-        </div>
-      </Paper>
+      <img src="https://i.imgur.com/0fAd5JV.png" />
     </div>
   );
 }

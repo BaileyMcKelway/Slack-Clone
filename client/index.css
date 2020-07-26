@@ -4,6 +4,7 @@ body {
   height: 100vh;
   display: flex;
   flex: 1, 1, auto;
+  background-color: #3f0e40;
 }
 
 #app {
@@ -248,16 +249,15 @@ main > div {
 .message_hover {
   background-color: whitesmoke;
 }
-.no-messages-main {
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  justify-content: center;
-}
 
-#no-messages-content {
-  width: 400px;
-  height: 400px;
+.no-messages-main {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  margin-left: 200px;
+  margin-right: auto;
+  width: 75%;
+  height: 75%;
 }
 
 #new-message-form {

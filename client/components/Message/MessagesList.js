@@ -31,7 +31,7 @@ class MessagesList extends Component {
     const messages = this.props.messages;
     const filteredMessages = messages
       .filter((message) => message.channelId === channelId)
-      .sort((a, b) => Number(a.sortTime) - Number(b.sortTime));
+      .sort((a, b) => a.sortTime - b.sortTime);
 
     return (
       <div id="media-list-main">

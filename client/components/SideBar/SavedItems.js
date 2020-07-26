@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Message from '../Message/Message';
+import NoMessages from '../NoMessages';
 
 class SaveItems extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class SaveItems extends Component {
     const savedMessages = this.props.user.saved;
     const messages = this.state.messages;
     let newMessages = [];
-    console.log(this.props.user);
+
     messages.map((message) => {
       if (savedMessages.indexOf(message.id) !== -1) {
         newMessages.push(message);
@@ -28,9 +29,13 @@ class SaveItems extends Component {
     return (
       <div id="saved-main">
         <ul className="media-list">
-          {this.state.messages.map((message) => (
-            <Message message={message} key={message.id} />
-          ))}
+          {this.state.messages.length > 0 ? (
+            this.state.messages.map((message) => (
+              <Message message={message} key={message.id} />
+            ))
+          ) : (
+            <NoMessages />
+          )}
         </ul>
       </div>
     );

@@ -17,7 +17,7 @@ function MessageSave(props) {
   const handleSave = (userId, messageId) => {
     props.save(userId, messageId);
   };
-  console.log(CurrentDate, message.sortTime);
+
   return (
     <div className="media-date">
       <h6>{message.date}</h6>
