@@ -7,6 +7,7 @@
       name="Description"
       content="This is a clone of the popular messaging app Slack made with React, Node.js, and Redux"
     />
+    <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -14,9 +15,14 @@
       href="https://fonts.googleapis.com/css?family=Lato"
     />
     <link rel="icon" type="image/png" href="https://i.imgur.com/lMVHADL.png" />
+
     <script src="/bundle.js" defer></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" class="loading">
+      <div id="loading-content">
+        <img src="/Slack_Mark_Web.png" />
+      </div>
+    </div>
   </body>
 </html>

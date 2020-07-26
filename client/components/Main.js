@@ -21,6 +21,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
+    document.body.style.backgroundColor = 'white';
     this.props.fetchInitialMessages();
     this.props.fetchInitialChannels();
     this.props.fetchInitialUsers();

@@ -1,0 +1,15 @@
+#loading-content img {
+  display: block;
+  margin: auto;
+  margin-top: 200px;
+  animation: rotation 4s infinite linear;
+  filter: drop-shadow(0px 10px 0px #4444dd);
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
