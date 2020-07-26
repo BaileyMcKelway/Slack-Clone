@@ -17,6 +17,7 @@ const GET_CHANNEL = 'GET_CHANNEL';
 const ADD_LIKE = 'ADD_LIKE';
 const ADD_SAVED = 'ADD_SAVED';
 const GET_SAVED = 'GET_SAVED';
+const ADD_EMOJI = 'ADD_EMOJI';
 
 //ACTION CREATORS
 export const gotMessagesFromServer = (messages) => ({
@@ -82,6 +83,12 @@ export const addSaved = (messageId) => ({
 export const getSaved = (messages) => ({
   type: GET_SAVED,
   messages,
+});
+
+export const addEmoji = (messageid, emoji) => ({
+  type: ADD_EMOJI,
+  messageid,
+  emoji,
 });
 
 // THUNKS
@@ -162,6 +169,15 @@ export const postLikes = (messageId, channelId) => {
   };
 };
 
+export const postEmoji = (messageId, emoji) => {
+  return async (dispatch) => {
+    // const data = { messageId: messageId, channelId: channelId };
+    // const response = await axios.put(`/api/messages/${messageId}`, data);
+    dispatch(addEmoji(messageId, emoji));
+    // socket.emit('new-like', messageId);
+  };
+};
+
 export const postSaved = (userId, messageId) => {
   return async (dispatch) => {
     const data = { userId: userId, messageId: messageId };
@@ -215,6 +231,30 @@ const reducer = (state = initialState, action) => {
         return message;
       });
       return { ...state, messages: filteredMessages };
+
+    case ADD_EMOJI:
+      const handleEmojiQuanitity = (emoji, message) => {
+        if (!message.emojis) {
+          message.emojis = [];
+        }
+        let newSelectedEmojis = message.emojis;
+        for (let selectedEmoji of newSelectedEmojis) {
+          if (selectedEmoji.name === emoji.name) {
+            selectedEmoji.quan += 1;
+            return newSelectedEmojis;
+          }
+        }
+        emoji.quan = 1;
+        return [...message.emojis, emoji];
+      };
+
+      const filteredEmojiMessages = state.messages.map((message) => {
+        if (message.id === action.messageid) {
+          message.emojis = handleEmojiQuanitity(action.emoji, message);
+        }
+        return message;
+      });
+      return { ...state, messages: filteredEmojiMessages };
     case ADD_SAVED:
       let newSaved = state.user.saved;
       if (newSaved.indexOf(action.messageId.toString()) === -1) {

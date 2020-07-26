@@ -26,7 +26,7 @@ class SaveItems extends Component {
 
   render() {
     return (
-      <div>
+      <div id="saved-main">
         <ul className="media-list">
           {this.state.messages.map((message) => (
             <Message message={message} key={message.id} />

@@ -34,7 +34,7 @@ function Message(props) {
         <MessageSave message={message} user={user} />
         <MessageAuthorImage message={message} />
         <MessageBody message={message} />
-        <MessageEmoji />
+        <MessageEmoji message={message} />
       </li>
     </Container>
   );

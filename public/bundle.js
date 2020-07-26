@@ -114,6 +114,10 @@ var _NewDirectEntry = __webpack_require__(/*! ./NewDirectEntry */ "./client/comp
 
 var _NewDirectEntry2 = _interopRequireDefault(_NewDirectEntry);
 
+var _NoMessages = __webpack_require__(/*! ../NoMessages */ "./client/components/NoMessages.js");
+
+var _NoMessages2 = _interopRequireDefault(_NoMessages);
+
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
 var _store = __webpack_require__(/*! ../../store.js */ "./client/store.js");
@@ -164,13 +168,13 @@ var DirectMessages = function (_Component) {
       });
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'direct-main' },
         _react2.default.createElement(
           'ul',
           { className: 'media-list' },
-          filteredMessages.map(function (message) {
+          filteredMessages.length > 1 ? filteredMessages.map(function (message) {
             return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
-          })
+          }) : _react2.default.createElement(_NoMessages2.default, null)
         ),
         _react2.default.createElement(_NewDirectEntry2.default, null)
       );
@@ -524,6 +528,10 @@ var _SavedItems = __webpack_require__(/*! ./SideBar/SavedItems */ "./client/comp
 
 var _SavedItems2 = _interopRequireDefault(_SavedItems);
 
+var _People = __webpack_require__(/*! ./SideBar/People */ "./client/components/SideBar/People.js");
+
+var _People2 = _interopRequireDefault(_People);
+
 var _store = __webpack_require__(/*! ../store */ "./client/store.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -567,8 +575,9 @@ var Main = function (_Component) {
             null,
             _react2.default.createElement(_reactRouterDom.Route, { path: '/new-channel', component: _NewChannelEntry2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/channels/:channelId', component: _MessagesList2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/directs/:directId', component: _DirectMessages2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/saved', component: _SavedItems2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/directs/:directId', component: _DirectMessages2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/people', component: _People2.default }),
             _react2.default.createElement(_reactRouterDom.Redirect, { to: '/channels/1' })
           )
         )
@@ -688,7 +697,7 @@ function Message(props) {
       _react2.default.createElement(_MessageSave2.default, { message: message, user: user }),
       _react2.default.createElement(_MessageAuthorImage2.default, { message: message }),
       _react2.default.createElement(_MessageBody2.default, { message: message }),
-      _react2.default.createElement(_MessageEmoji2.default, null)
+      _react2.default.createElement(_MessageEmoji2.default, { message: message })
     )
   );
 }
@@ -823,13 +832,15 @@ __webpack_require__(/*! emoji-mart/css/emoji-mart.css */ "./node_modules/emoji-m
 
 var _emojiMart = __webpack_require__(/*! emoji-mart */ "./node_modules/emoji-mart/dist-es/index.js");
 
+var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 var _Popover = __webpack_require__(/*! @material-ui/core/Popover */ "./node_modules/@material-ui/core/esm/Popover/index.js");
 
 var _Popover2 = _interopRequireDefault(_Popover);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function MessageEmoji(props) {
   var message = props.message;
@@ -908,53 +919,19 @@ function MessageEmoji(props) {
   };
 
   var handleEmojiSelect = function handleEmojiSelect(emoji) {
-    setSelectedEmojis(handleEmojiQuanitity(emoji));
-  };
-
-  var handleEmojiQuanitity = function handleEmojiQuanitity(emoji) {
-    var newSelectedEmojis = selectedEmojis;
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = newSelectedEmojis[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var selectedEmoji = _step.value;
-
-        console.log(emoji, selectedEmoji);
-        if (selectedEmoji.name === emoji.name) {
-          selectedEmoji.quan += 1;
-          return newSelectedEmojis;
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-
-    emoji.quan = 1;
-    return [].concat(_toConsumableArray(selectedEmojis), [emoji]);
+    props.emoji(message.id, emoji);
   };
 
   var open = Boolean(anchorEl);
   var id = open ? 'simple-popover' : undefined;
+
   return _react2.default.createElement(
     'div',
     null,
     _react2.default.createElement(
       'div',
       { className: 'media-right' },
-      selectedEmojis.map(function (emoji) {
+      message.emojis && message.emojis.map(function (emoji) {
         var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
         return _react2.default.createElement(
@@ -1009,7 +986,15 @@ function MessageEmoji(props) {
   );
 }
 
-exports.default = (0, _reactRouterDom.withRouter)(MessageEmoji);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    emoji: function emoji(messageId, _emoji) {
+      return dispatch((0, _store.postEmoji)(messageId, _emoji));
+    }
+  };
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(null, mapDispatchToProps)(MessageEmoji));
 
 /***/ }),
 
@@ -1060,7 +1045,7 @@ function MessageSave(props) {
   var handleSave = function handleSave(userId, messageId) {
     props.save(userId, messageId);
   };
-  console.log(CurrentDate, message.sortTime);
+
   return _react2.default.createElement(
     'div',
     { className: 'media-date' },
@@ -1095,9 +1080,6 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    like: function like(messageId, channelId) {
-      return dispatch((0, _store.postLikes)(messageId, channelId));
-    },
     save: function save(userId, messageId) {
       return dispatch((0, _store.postSaved)(userId, messageId));
     }
@@ -1135,6 +1117,10 @@ var _Message2 = _interopRequireDefault(_Message);
 var _NewMessageEntry = __webpack_require__(/*! ./NewMessageEntry */ "./client/components/Message/NewMessageEntry.js");
 
 var _NewMessageEntry2 = _interopRequireDefault(_NewMessageEntry);
+
+var _NoMessages = __webpack_require__(/*! ../NoMessages */ "./client/components/NoMessages.js");
+
+var _NoMessages2 = _interopRequireDefault(_NoMessages);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
@@ -1185,20 +1171,24 @@ var MessagesList = function (_Component) {
       var filteredMessages = messages.filter(function (message) {
         return message.channelId === channelId;
       }).sort(function (a, b) {
-        return Number(a.sortTime) - Number(b.sortTime);
+        return a.sortTime - b.sortTime;
       });
 
       return _react2.default.createElement(
         'div',
-        { id: 'media-list-main' },
-        _react2.default.createElement(
-          'ul',
-          { className: 'media-list' },
-          filteredMessages.map(function (message) {
-            return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
-          })
-        ),
-        _react2.default.createElement(_NewMessageEntry2.default, { channelId: channelId })
+        null,
+        filteredMessages.length > 0 ? _react2.default.createElement(
+          'div',
+          { id: 'media-list-main' },
+          _react2.default.createElement(
+            'ul',
+            { className: 'media-list' },
+            filteredMessages.map(function (message) {
+              return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
+            })
+          ),
+          _react2.default.createElement(_NewMessageEntry2.default, { channelId: channelId })
+        ) : _react2.default.createElement(_NoMessages2.default, null)
       );
     }
   }]);
@@ -1546,6 +1536,46 @@ exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapSt
 
 /***/ }),
 
+/***/ "./client/components/NoMessages.js":
+/*!*****************************************!*\
+  !*** ./client/components/NoMessages.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _Paper = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/index.js");
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function NoMessages(props) {
+  var message = props.message;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'no-messages-main' },
+    _react2.default.createElement('img', { src: 'https://i.imgur.com/0fAd5JV.png' })
+  );
+}
+
+exports.default = (0, _reactRouterDom.withRouter)(NoMessages);
+
+/***/ }),
+
 /***/ "./client/components/SideBar/NewChannelEntry.js":
 /*!******************************************************!*\
   !*** ./client/components/SideBar/NewChannelEntry.js ***!
@@ -1587,7 +1617,7 @@ var NewChannelEntry = function NewChannelEntry(props) {
     { onSubmit: handleSubmit(onSubmit) },
     _react2.default.createElement(
       'div',
-      { className: 'form-group' },
+      { id: 'media-list-main', className: 'form-group' },
       _react2.default.createElement(
         'label',
         { htmlFor: 'name' },
@@ -1622,6 +1652,139 @@ var mapDispatchToProps = function mapDispatchToProps(dispath) {
 };
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(NewChannelEntry);
+
+/***/ }),
+
+/***/ "./client/components/SideBar/People.js":
+/*!*********************************************!*\
+  !*** ./client/components/SideBar/People.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _PeopleCard = __webpack_require__(/*! ./PeopleCard */ "./client/components/SideBar/PeopleCard.js");
+
+var _PeopleCard2 = _interopRequireDefault(_PeopleCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function People(props) {
+  var users = props.users;
+  return _react2.default.createElement(
+    'div',
+    { className: 'media-list' },
+    _react2.default.createElement(
+      'div',
+      { id: 'people' },
+      users.map(function (user) {
+        return _react2.default.createElement(_PeopleCard2.default, { key: user.id, user: user });
+      })
+    )
+  );
+}
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    users: state.users,
+    user: state.user
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(People);
+
+/***/ }),
+
+/***/ "./client/components/SideBar/PeopleCard.js":
+/*!*************************************************!*\
+  !*** ./client/components/SideBar/PeopleCard.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Paper = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/index.js");
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PeopleCard = function (_Component) {
+  _inherits(PeopleCard, _Component);
+
+  function PeopleCard(props) {
+    _classCallCheck(this, PeopleCard);
+
+    return _possibleConstructorReturn(this, (PeopleCard.__proto__ || Object.getPrototypeOf(PeopleCard)).call(this, props));
+  }
+  // const user = props.user;
+
+
+  _createClass(PeopleCard, [{
+    key: 'render',
+    value: function render() {
+      var user = this.props.user;
+      return _react2.default.createElement(
+        'div',
+        { id: 'people_card' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/directs/' + user.id },
+          _react2.default.createElement(
+            _Paper2.default,
+            { elevation: 3 },
+            _react2.default.createElement(
+              'div',
+              { id: 'people_card_content' },
+              _react2.default.createElement('img', { src: user.image }),
+              _react2.default.createElement(
+                'h5',
+                null,
+                user.name
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return PeopleCard;
+}(_react.Component);
+
+exports.default = PeopleCard;
 
 /***/ }),
 
@@ -1694,7 +1857,7 @@ var SaveItems = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'saved-main' },
         _react2.default.createElement(
           'ul',
           { className: 'media-list' },
@@ -2031,7 +2194,11 @@ function Sidebar(props) {
             null,
             'Slackin'
           ),
-          _react2.default.createElement('img', { alt: 'Brand', src: 'https://i.imgur.com/oO7j1nt.png' })
+          _react2.default.createElement('img', {
+            alt: 'Brand',
+            src: 'https://i.imgur.com/lMVHADL.png',
+            style: { width: '25%' }
+          })
         ),
         _react2.default.createElement(
           'span',
@@ -2221,7 +2388,7 @@ exports.default = socket;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.postSaved = exports.postLikes = exports.postChannel = exports.sendMessage = exports.fetchChannels = exports.fetchMessages = exports.fetchDirects = exports.fetchUsers = exports.createUser = exports.getSaved = exports.addSaved = exports.addLike = exports.getChannel = exports.getChannels = exports.getUsers = exports.userSet = exports.gotNewDirect = exports.gotDirect = exports.gotNewMessageFromServer = exports.writeMessage = exports.gotNewMessage = exports.gotMessagesFromServer = undefined;
+exports.postSaved = exports.postEmoji = exports.postLikes = exports.postChannel = exports.sendMessage = exports.fetchChannels = exports.fetchMessages = exports.fetchDirects = exports.fetchUsers = exports.createUser = exports.addEmoji = exports.getSaved = exports.addSaved = exports.addLike = exports.getChannel = exports.getChannels = exports.getUsers = exports.userSet = exports.gotNewDirect = exports.gotDirect = exports.gotNewMessageFromServer = exports.writeMessage = exports.gotNewMessage = exports.gotMessagesFromServer = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -2259,6 +2426,7 @@ var GET_CHANNEL = 'GET_CHANNEL';
 var ADD_LIKE = 'ADD_LIKE';
 var ADD_SAVED = 'ADD_SAVED';
 var GET_SAVED = 'GET_SAVED';
+var ADD_EMOJI = 'ADD_EMOJI';
 
 //ACTION CREATORS
 var gotMessagesFromServer = exports.gotMessagesFromServer = function gotMessagesFromServer(messages) {
@@ -2349,6 +2517,14 @@ var getSaved = exports.getSaved = function getSaved(messages) {
   return {
     type: GET_SAVED,
     messages: messages
+  };
+};
+
+var addEmoji = exports.addEmoji = function addEmoji(messageid, emoji) {
+  return {
+    type: ADD_EMOJI,
+    messageid: messageid,
+    emoji: emoji
   };
 };
 
@@ -2636,24 +2812,19 @@ var postLikes = exports.postLikes = function postLikes(messageId, channelId) {
   }();
 };
 
-var postSaved = exports.postSaved = function postSaved(userId, messageId) {
+var postEmoji = exports.postEmoji = function postEmoji(messageId, emoji) {
   return function () {
     var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
-      var data, response;
       return regeneratorRuntime.wrap(function _callee9$(_context9) {
         while (1) {
           switch (_context9.prev = _context9.next) {
             case 0:
-              data = { userId: userId, messageId: messageId };
-              _context9.next = 3;
-              return _axios2.default.put('/api/authors/' + userId, data);
+              // const data = { messageId: messageId, channelId: channelId };
+              // const response = await axios.put(`/api/messages/${messageId}`, data);
+              dispatch(addEmoji(messageId, emoji));
+              // socket.emit('new-like', messageId);
 
-            case 3:
-              response = _context9.sent;
-
-              dispatch(addSaved(messageId));
-
-            case 5:
+            case 1:
             case 'end':
               return _context9.stop();
           }
@@ -2663,6 +2834,37 @@ var postSaved = exports.postSaved = function postSaved(userId, messageId) {
 
     return function (_x10) {
       return _ref11.apply(this, arguments);
+    };
+  }();
+};
+
+var postSaved = exports.postSaved = function postSaved(userId, messageId) {
+  return function () {
+    var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
+      var data, response;
+      return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              data = { userId: userId, messageId: messageId };
+              _context10.next = 3;
+              return _axios2.default.put('/api/authors/' + userId, data);
+
+            case 3:
+              response = _context10.sent;
+
+              dispatch(addSaved(messageId));
+
+            case 5:
+            case 'end':
+              return _context10.stop();
+          }
+        }
+      }, _callee10, undefined);
+    }));
+
+    return function (_x11) {
+      return _ref12.apply(this, arguments);
     };
   }();
 };
@@ -2715,6 +2917,52 @@ var reducer = function reducer() {
         return message;
       });
       return _extends({}, state, { messages: filteredMessages });
+
+    case ADD_EMOJI:
+      var handleEmojiQuanitity = function handleEmojiQuanitity(emoji, message) {
+        if (!message.emojis) {
+          message.emojis = [];
+        }
+        var newSelectedEmojis = message.emojis;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = newSelectedEmojis[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var selectedEmoji = _step.value;
+
+            if (selectedEmoji.name === emoji.name) {
+              selectedEmoji.quan += 1;
+              return newSelectedEmojis;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        emoji.quan = 1;
+        return [].concat(_toConsumableArray(message.emojis), [emoji]);
+      };
+
+      var filteredEmojiMessages = state.messages.map(function (message) {
+        if (message.id === action.messageid) {
+          message.emojis = handleEmojiQuanitity(action.emoji, message);
+        }
+        return message;
+      });
+      return _extends({}, state, { messages: filteredEmojiMessages });
     case ADD_SAVED:
       var newSaved = state.user.saved;
       if (newSaved.indexOf(action.messageId.toString()) === -1) {
@@ -13544,7 +13792,7 @@ var grid = Object(_compose__WEBPACK_IMPORTED_MODULE_1__["default"])(gridGap, gri
 /*!*******************************************************!*\
   !*** ./node_modules/@material-ui/system/esm/index.js ***!
   \*******************************************************/
-/*! exports provided: borders, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, breakpoints, compose, css, display, flexbox, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, grid, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, palette, color, bgcolor, positions, position, zIndex, top, right, bottom, left, shadows, sizing, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, spacing, createUnarySpacing, style, typography, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
+/*! exports provided: borders, breakpoints, compose, css, display, flexbox, grid, palette, positions, shadows, sizing, spacing, style, typography, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, color, bgcolor, position, zIndex, top, right, bottom, left, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, createUnarySpacing, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29433,7 +29681,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  flex: 1 1 auto;\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n}\n\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n  width: 100%;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
+exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  position: fixed;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* people */\n#people {\n  display: flex;\n  flex-wrap: wrap;\n}\n#people_card {\n  margin: 20px;\n}\n\n#people_card_content {\n  padding: 10px;\n  text-align: center;\n  border: 1px solid rgb(145, 145, 145);\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  display: flex;\n  overflow-y: scroll;\n}\n#direct-main {\n  margin-left: 200px;\n}\n\n#saved-main {\n  margin-left: 200px;\n}\n\n#media-list-main {\n  margin-left: 200px;\n  position: relative;\n}\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n.no-messages-main {\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  margin-left: 200px;\n  margin-right: auto;\n  width: 75%;\n  height: 75%;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
 
 // exports
 

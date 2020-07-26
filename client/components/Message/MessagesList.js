@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
+import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
 import { fetchMessages } from '../../store.js';
 import { animateScroll } from 'react-scroll';
@@ -30,16 +31,22 @@ class MessagesList extends Component {
     const messages = this.props.messages;
     const filteredMessages = messages
       .filter((message) => message.channelId === channelId)
-      .sort((a, b) => Number(a.sortTime) - Number(b.sortTime));
+      .sort((a, b) => a.sortTime - b.sortTime);
 
     return (
-      <div id="media-list-main">
-        <ul className="media-list">
-          {filteredMessages.map((message) => (
-            <Message message={message} key={message.id} />
-          ))}
-        </ul>
-        <NewMessageEntry channelId={channelId} />
+      <div>
+        {filteredMessages.length > 0 ? (
+          <div id="media-list-main">
+            <ul className="media-list">
+              {filteredMessages.map((message) => (
+                <Message message={message} key={message.id} />
+              ))}
+            </ul>
+            <NewMessageEntry channelId={channelId} />
+          </div>
+        ) : (
+          <NoMessages />
+        )}
       </div>
     );
   }

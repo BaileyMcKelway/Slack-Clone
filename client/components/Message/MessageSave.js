@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import IconButton from '@material-ui/core/IconButton';
-import { postLikes, postSaved } from '../../store';
+import { postSaved } from '../../store';
 import { connect } from 'react-redux';
 import 'emoji-mart/css/emoji-mart.css';
 
@@ -17,7 +17,7 @@ function MessageSave(props) {
   const handleSave = (userId, messageId) => {
     props.save(userId, messageId);
   };
-  console.log(CurrentDate, message.sortTime);
+
   return (
     <div className="media-date">
       <h6>{message.date}</h6>
@@ -43,7 +43,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  like: (messageId, channelId) => dispatch(postLikes(messageId, channelId)),
   save: (userId, messageId) => dispatch(postSaved(userId, messageId)),
 });
 

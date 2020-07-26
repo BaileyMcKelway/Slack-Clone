@@ -4,6 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker, Emoji } from 'emoji-mart';
+import { postEmoji } from '../../store';
+import { connect } from 'react-redux';
 import Popover from '@material-ui/core/Popover';
 
 function MessageEmoji(props) {
@@ -76,40 +78,28 @@ function MessageEmoji(props) {
   };
 
   const handleEmojiSelect = (emoji) => {
-    setSelectedEmojis(handleEmojiQuanitity(emoji));
-  };
-
-  const handleEmojiQuanitity = (emoji) => {
-    let newSelectedEmojis = selectedEmojis;
-    for (let selectedEmoji of newSelectedEmojis) {
-      console.log(emoji, selectedEmoji);
-      if (selectedEmoji.name === emoji.name) {
-        selectedEmoji.quan += 1;
-        return newSelectedEmojis;
-      }
-    }
-
-    emoji.quan = 1;
-    return [...selectedEmojis, emoji];
+    props.emoji(message.id, emoji);
   };
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+
   return (
     <div>
       <div className="media-right">
-        {selectedEmojis.map((emoji, index = 0) => {
-          return (
-            <IconButton
-              aria-label="reaction"
-              disableFocusRipple="true"
-              disableRipple="true"
-              size="small"
-            >
-              <Emoji key={index} emoji={emoji} size={18} /> {emoji.quan}
-            </IconButton>
-          );
-        })}
+        {message.emojis &&
+          message.emojis.map((emoji, index = 0) => {
+            return (
+              <IconButton
+                aria-label="reaction"
+                disableFocusRipple="true"
+                disableRipple="true"
+                size="small"
+              >
+                <Emoji key={index} emoji={emoji} size={18} /> {emoji.quan}
+              </IconButton>
+            );
+          })}
         <IconButton aria-label="reaction" onClick={handleClick}>
           <EmojiEmotionsIcon />
           {'+'}
@@ -145,4 +135,8 @@ function MessageEmoji(props) {
   );
 }
 
-export default withRouter(MessageEmoji);
+const mapDispatchToProps = (dispatch) => ({
+  emoji: (messageId, emoji) => dispatch(postEmoji(messageId, emoji)),
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(MessageEmoji));
