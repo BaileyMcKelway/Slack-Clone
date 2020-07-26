@@ -1176,19 +1176,15 @@ var MessagesList = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
-        filteredMessages.length > 0 ? _react2.default.createElement(
-          'div',
-          { id: 'media-list-main' },
-          _react2.default.createElement(
-            'ul',
-            { className: 'media-list' },
-            filteredMessages.map(function (message) {
-              return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
-            })
-          ),
-          _react2.default.createElement(_NewMessageEntry2.default, { channelId: channelId })
-        ) : _react2.default.createElement(_NoMessages2.default, null)
+        { id: 'media-list-main' },
+        _react2.default.createElement(
+          'ul',
+          { className: 'media-list' },
+          filteredMessages.length > 0 ? filteredMessages.map(function (message) {
+            return _react2.default.createElement(_Message2.default, { message: message, key: message.id });
+          }) : _react2.default.createElement(_NoMessages2.default, null)
+        ),
+        _react2.default.createElement(_NewMessageEntry2.default, { channelId: channelId })
       );
     }
   }]);
@@ -13792,7 +13788,7 @@ var grid = Object(_compose__WEBPACK_IMPORTED_MODULE_1__["default"])(gridGap, gri
 /*!*******************************************************!*\
   !*** ./node_modules/@material-ui/system/esm/index.js ***!
   \*******************************************************/
-/*! exports provided: borders, breakpoints, compose, css, display, flexbox, grid, palette, positions, shadows, sizing, spacing, style, typography, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, color, bgcolor, position, zIndex, top, right, bottom, left, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, createUnarySpacing, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
+/*! exports provided: borders, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, breakpoints, compose, css, display, flexbox, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, grid, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, palette, color, bgcolor, positions, position, zIndex, top, right, bottom, left, shadows, sizing, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, spacing, createUnarySpacing, style, typography, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

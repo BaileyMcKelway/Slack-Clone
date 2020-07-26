@@ -34,19 +34,17 @@ class MessagesList extends Component {
       .sort((a, b) => a.sortTime - b.sortTime);
 
     return (
-      <div>
-        {filteredMessages.length > 0 ? (
-          <div id="media-list-main">
-            <ul className="media-list">
-              {filteredMessages.map((message) => (
-                <Message message={message} key={message.id} />
-              ))}
-            </ul>
-            <NewMessageEntry channelId={channelId} />
-          </div>
-        ) : (
-          <NoMessages />
-        )}
+      <div id="media-list-main">
+        <ul className="media-list">
+          {filteredMessages.length > 0 ? (
+            filteredMessages.map((message) => (
+              <Message message={message} key={message.id} />
+            ))
+          ) : (
+            <NoMessages />
+          )}
+        </ul>
+        <NewMessageEntry channelId={channelId} />
       </div>
     );
   }
