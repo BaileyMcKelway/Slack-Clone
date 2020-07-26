@@ -4,9 +4,6 @@ const MinifyPlugin = require('babel-minify-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-  optimization: {
-    minimizer: [new MinifyPlugin()],
-  },
   entry: ['babel-polyfill', './client/index.js'],
   output: {
     path: __dirname,
