@@ -44,7 +44,9 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.15.1",
-    "socket.io": "^1.7.2"
+    "socket.io": "^1.7.2",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -60,8 +62,6 @@
     "nodemon": "^1.18.9",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.3.11"
+    "uglifyjs-webpack-plugin": "^2.2.0"
   }
 }
