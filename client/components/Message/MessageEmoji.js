@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import 'emoji-mart/css/emoji-mart.css';
+import '../../../public/emoji.css';
 import { Picker, Emoji } from 'emoji-mart';
 import { postEmoji } from '../../store';
 import { connect } from 'react-redux';
@@ -55,11 +55,25 @@ function MessageEmoji(props) {
       keywords: ['fire'],
     },
     {
-      name: 'hammer_and_wrench',
-      short_names: ['hammer_and_wrench'],
+      name: 'Smiling Face with Open Mouth',
+      short_names: ['smiley'],
+      text: ':)',
+      emoticons: ['=)', '=-)'],
+      keywords: ['smiley'],
+    },
+    {
+      name: 'clap',
+      short_names: ['clap'],
       text: '',
       emoticons: [],
-      keywords: ['hammer_and_wrench'],
+      keywords: ['clap'],
+    },
+    {
+      name: 'mega',
+      short_names: ['mega'],
+      text: '',
+      emoticons: [],
+      keywords: ['mega', 'cheering megaphone'],
     },
   ];
 

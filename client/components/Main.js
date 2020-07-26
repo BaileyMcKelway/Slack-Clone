@@ -38,8 +38,6 @@ class Main extends Component {
         loading: false,
       });
       document.body.style.background = 'white';
-      // document.getElementByTagName('body').style.display = 'flex';
-      // document.getElementByTagName('body').style.flex = '1, 1, auto';
     }, 2000);
   }
 
