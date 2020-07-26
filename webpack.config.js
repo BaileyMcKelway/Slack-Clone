@@ -1,10 +1,11 @@
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   optimization: {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [new MinifyPlugin()],
   },
   entry: ['babel-polyfill', './client/index.js'],
   output: {
@@ -18,7 +19,12 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: [path.resolve(__dirname, 'client')],
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+          },
+        },
       },
       {
         test: /\.css$/,
