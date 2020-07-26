@@ -38,34 +38,58 @@ class Main extends Component {
         loading: false,
       });
       document.body.style.background = 'white';
-      document.getElementByTag('body').style.display = 'flex';
-      document.getElementByTag('body').style.flex = '1, 1, auto';
+      // document.getElementByTagName('body').style.display = 'flex';
+      // document.getElementByTagName('body').style.flex = '1, 1, auto';
     }, 2000);
   }
 
   render() {
-    return (
-      <div>
-        {this.state.loading ? (
+    if (this.state.loading) {
+      return (
+        <div>
           <Loading />
-        ) : (
-          <div>
-            <SideBar user={this.props.user} users={this.props.users} />
-            <Navbar />
-            <main id="main" className="main">
-              <Switch>
-                <Route path="/new-channel" component={NewChannelEntry} />
-                <Route path="/channels/:channelId" component={MessagesList} />
-                <Route path="/saved" component={SavedItems} />
-                <Route path="/directs/:directId" component={DirectMessages} />
-                <Route path="/people" component={People} />
-                <Redirect to="/channels/1" />
-              </Switch>
-            </main>
-          </div>
-        )}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <SideBar user={this.props.user} users={this.props.users} />
+          <Navbar />
+          <main id="main" className="main">
+            <Switch>
+              <Route path="/new-channel" component={NewChannelEntry} />
+              <Route path="/channels/:channelId" component={MessagesList} />
+              <Route path="/saved" component={SavedItems} />
+              <Route path="/directs/:directId" component={DirectMessages} />
+              <Route path="/people" component={People} />
+              <Redirect to="/channels/1" />
+            </Switch>
+          </main>
+        </div>
+      );
+    }
+    // return (
+    //   <div>
+    //     {this.state.loading ? (
+    //       <Loading />
+    //     ) : (
+    //       <div>
+    //         <SideBar user={this.props.user} users={this.props.users} />
+    //         <Navbar />
+    //         <main id="main" className="main">
+    //           <Switch>
+    //             <Route path="/new-channel" component={NewChannelEntry} />
+    //             <Route path="/channels/:channelId" component={MessagesList} />
+    //             <Route path="/saved" component={SavedItems} />
+    //             <Route path="/directs/:directId" component={DirectMessages} />
+    //             <Route path="/people" component={People} />
+    //             <Redirect to="/channels/1" />
+    //           </Switch>
+    //         </main>
+    //       </div>
+    //     )}
+    //   </div>
+    // );
   }
 }
 
