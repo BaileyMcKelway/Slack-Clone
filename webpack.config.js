@@ -3,9 +3,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-  // optimization: {
-  //   minimizer: [new UglifyJsPlugin()],
-  // },
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
+  },
   entry: ['babel-polyfill', './client/index.js'],
   output: {
     path: __dirname,
