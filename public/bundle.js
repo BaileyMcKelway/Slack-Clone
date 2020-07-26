@@ -164,7 +164,7 @@ var DirectMessages = function (_Component) {
       });
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'direct-main' },
         _react2.default.createElement(
           'ul',
           { className: 'media-list' },
@@ -524,6 +524,10 @@ var _SavedItems = __webpack_require__(/*! ./SideBar/SavedItems */ "./client/comp
 
 var _SavedItems2 = _interopRequireDefault(_SavedItems);
 
+var _People = __webpack_require__(/*! ./SideBar/People */ "./client/components/SideBar/People.js");
+
+var _People2 = _interopRequireDefault(_People);
+
 var _store = __webpack_require__(/*! ../store */ "./client/store.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -556,7 +560,7 @@ var Main = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'test' },
         _react2.default.createElement(_SideBar2.default, { user: this.props.user, users: this.props.users }),
         _react2.default.createElement(_Navbar2.default, null),
         _react2.default.createElement(
@@ -567,8 +571,9 @@ var Main = function (_Component) {
             null,
             _react2.default.createElement(_reactRouterDom.Route, { path: '/new-channel', component: _NewChannelEntry2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/channels/:channelId', component: _MessagesList2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/directs/:directId', component: _DirectMessages2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/saved', component: _SavedItems2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/directs/:directId', component: _DirectMessages2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/people', component: _People2.default }),
             _react2.default.createElement(_reactRouterDom.Redirect, { to: '/channels/1' })
           )
         )
@@ -1625,6 +1630,139 @@ exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(NewChannelE
 
 /***/ }),
 
+/***/ "./client/components/SideBar/People.js":
+/*!*********************************************!*\
+  !*** ./client/components/SideBar/People.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _PeopleCard = __webpack_require__(/*! ./PeopleCard */ "./client/components/SideBar/PeopleCard.js");
+
+var _PeopleCard2 = _interopRequireDefault(_PeopleCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function People(props) {
+  var users = props.users;
+  return _react2.default.createElement(
+    'div',
+    { className: 'media-list' },
+    _react2.default.createElement(
+      'div',
+      { id: 'people' },
+      users.map(function (user) {
+        return _react2.default.createElement(_PeopleCard2.default, { key: user.id, user: user });
+      })
+    )
+  );
+}
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    users: state.users,
+    user: state.user
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(People);
+
+/***/ }),
+
+/***/ "./client/components/SideBar/PeopleCard.js":
+/*!*************************************************!*\
+  !*** ./client/components/SideBar/PeopleCard.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Paper = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/index.js");
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PeopleCard = function (_Component) {
+  _inherits(PeopleCard, _Component);
+
+  function PeopleCard(props) {
+    _classCallCheck(this, PeopleCard);
+
+    return _possibleConstructorReturn(this, (PeopleCard.__proto__ || Object.getPrototypeOf(PeopleCard)).call(this, props));
+  }
+  // const user = props.user;
+
+
+  _createClass(PeopleCard, [{
+    key: 'render',
+    value: function render() {
+      var user = this.props.user;
+      return _react2.default.createElement(
+        'div',
+        { id: 'people_card' },
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/directs/' + user.id },
+          _react2.default.createElement(
+            _Paper2.default,
+            { elevation: 3 },
+            _react2.default.createElement(
+              'div',
+              { id: 'people_card_content' },
+              _react2.default.createElement('img', { src: user.image }),
+              _react2.default.createElement(
+                'h5',
+                null,
+                user.name
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return PeopleCard;
+}(_react.Component);
+
+exports.default = PeopleCard;
+
+/***/ }),
+
 /***/ "./client/components/SideBar/SavedItems.js":
 /*!*************************************************!*\
   !*** ./client/components/SideBar/SavedItems.js ***!
@@ -1694,7 +1832,7 @@ var SaveItems = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'saved-main' },
         _react2.default.createElement(
           'ul',
           { className: 'media-list' },
@@ -1895,6 +2033,10 @@ var _BookmarkRounded = __webpack_require__(/*! @material-ui/icons/BookmarkRounde
 
 var _BookmarkRounded2 = _interopRequireDefault(_BookmarkRounded);
 
+var _People = __webpack_require__(/*! @material-ui/icons/People */ "./node_modules/@material-ui/icons/People.js");
+
+var _People2 = _interopRequireDefault(_People);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1938,6 +2080,21 @@ var ColumnTools = function (_Component) {
                 ' ',
                 _react2.default.createElement(_BookmarkRounded2.default, null),
                 'Saved Items'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'li',
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.NavLink,
+              { to: '/people', activeClassName: 'active' },
+              _react2.default.createElement(
+                'span',
+                null,
+                ' ',
+                _react2.default.createElement(_People2.default, null),
+                'People'
               )
             )
           )
@@ -10189,6 +10346,35 @@ var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/crea
 var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
   d: "M9.29 15.88L13.17 12 9.29 8.12a.9959.9959 0 010-1.41c.39-.39 1.02-.39 1.41 0l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3c-.39.39-1.02.39-1.41 0-.38-.39-.39-1.03 0-1.42z"
 }), 'KeyboardArrowRightRounded');
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/People.js":
+/*!***************************************************!*\
+  !*** ./node_modules/@material-ui/icons/People.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@material-ui/icons/utils/createSvgIcon.js"));
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement("path", {
+  d: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
+}), 'People');
 
 exports.default = _default;
 
@@ -29385,7 +29571,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  flex: 1 1 auto;\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n}\n\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n  width: 100%;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
+exports.push([module.i, "/* global */\n\nbody {\n  height: 100vh;\n  display: flex;\n  flex: 1, 1, auto;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  position: fixed;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* people */\n#people {\n  display: flex;\n  flex-wrap: wrap;\n}\n#people_card {\n  margin: 20px;\n}\n\n#people_card_content {\n  padding: 10px;\n  text-align: center;\n  border: 1px solid rgb(145, 145, 145);\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  display: flex;\n  overflow-y: scroll;\n}\n#direct-main {\n  margin-left: 200px;\n}\n\n#saved-main {\n  margin-left: 200px;\n}\n\n#media-list-main {\n  margin-left: 200px;\n  position: relative;\n}\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
 
 // exports
 

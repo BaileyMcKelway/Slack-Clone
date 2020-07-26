@@ -7,6 +7,7 @@ import MessagesList from './Message/MessagesList';
 import NewChannelEntry from './SideBar/NewChannelEntry';
 import DirectMessages from './DirectMessages/DirectMessages';
 import SavedItems from './SideBar/SavedItems';
+import People from './SideBar/People';
 import {
   fetchMessages,
   fetchChannels,
@@ -28,15 +29,16 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
+      <div id="test">
         <SideBar user={this.props.user} users={this.props.users} />
         <Navbar />
         <main id="main" className="main">
           <Switch>
             <Route path="/new-channel" component={NewChannelEntry} />
             <Route path="/channels/:channelId" component={MessagesList} />
-            <Route path="/directs/:directId" component={DirectMessages} />
             <Route path="/saved" component={SavedItems} />
+            <Route path="/directs/:directId" component={DirectMessages} />
+            <Route path="/people" component={People} />
             <Redirect to="/channels/1" />
           </Switch>
         </main>
