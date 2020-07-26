@@ -19,6 +19,7 @@ body {
 
 .sidebar {
   background-color: #3f0e40;
+  position: fixed;
   color: #e4cfe4;
   font-weight: 100;
   font-size: 15px;
@@ -143,6 +144,21 @@ body {
   border-width: 0.3;
 }
 
+/* people */
+#people {
+  display: flex;
+  flex-wrap: wrap;
+}
+#people_card {
+  margin: 20px;
+}
+
+#people_card_content {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid rgb(145, 145, 145);
+}
+
 /* nav */
 
 nav {
@@ -178,16 +194,24 @@ nav form {
 
 main {
   margin: 78px 25px 25px 25px;
-  flex: 1 1 auto;
   display: flex;
-  flex-direction: column;
   overflow-y: scroll;
 }
+#direct-main {
+  margin-left: 200px;
+}
 
+#saved-main {
+  margin-left: 200px;
+}
+
+#media-list-main {
+  margin-left: 200px;
+  position: relative;
+}
 main .media-list {
   flex: 1 1 auto;
   padding-bottom: 15px;
-  width: 100%;
 }
 
 main .media-date {
@@ -224,6 +248,17 @@ main > div {
 .message_hover {
   background-color: whitesmoke;
 }
+.no-messages-main {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+}
+
+#no-messages-content {
+  width: 400px;
+  height: 400px;
+}
 
 #new-message-form {
   position: fixed;
@@ -237,4 +272,16 @@ main > div {
 
 #new-message-form.btn {
   border-width: 3px;
+}
+
+#new_tag {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: center;
+  color: rgb(233, 95, 53);
+  font-size: xx-small;
+}
+hr {
+  border: 1px solid rgb(233, 95, 53);
 }

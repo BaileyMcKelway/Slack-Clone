@@ -12,7 +12,7 @@ const NewChannelEntry = (props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="form-group">
+      <div id="media-list-main" className="form-group">
         <label htmlFor="name">Create a Channel</label>
         <input
           className="form-control"

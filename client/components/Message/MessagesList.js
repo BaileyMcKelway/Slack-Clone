@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
+import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
 import { fetchMessages } from '../../store.js';
 import { animateScroll } from 'react-scroll';
@@ -35,9 +36,13 @@ class MessagesList extends Component {
     return (
       <div id="media-list-main">
         <ul className="media-list">
-          {filteredMessages.map((message) => (
-            <Message message={message} key={message.id} />
-          ))}
+          {filteredMessages.length > 0 ? (
+            filteredMessages.map((message) => (
+              <Message message={message} key={message.id} />
+            ))
+          ) : (
+            <NoMessages />
+          )}
         </ul>
         <NewMessageEntry channelId={channelId} />
       </div>

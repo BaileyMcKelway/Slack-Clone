@@ -32,7 +32,7 @@ class DirectMessages extends Component {
       (a, b) => Number(a.sortTime) - Number(b.sortTime)
     );
     return (
-      <div>
+      <div id="direct-main">
         <ul className="media-list">
           {filteredMessages.map((message) => (
             <Message message={message} key={message.id} />
