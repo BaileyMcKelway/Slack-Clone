@@ -11,6 +11,8 @@
     "start": "npm run start-server & npm run build-watch",
     "start-server": "nodemon server -w server",
     "build-watch": "webpack -w",
+    "deploy": "script/deploy",
+    "production": "webpack -p",
     "seed": "node seed.js"
   },
   "author": "",
