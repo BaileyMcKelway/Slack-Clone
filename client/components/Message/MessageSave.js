@@ -11,7 +11,7 @@ function MessageSave(props) {
 
   const moment = require('moment');
   const CurrentDate = moment().format('YYYYMMDDhhmmss');
-
+  const timeDifference = CurrentDate - message.sortTime;
   const user = props.user;
 
   const handleSave = (userId, messageId) => {
@@ -22,7 +22,11 @@ function MessageSave(props) {
     <div className="media-date">
       <h6>{message.date}</h6>
 
-      {CurrentDate - message.sortTime < 1 ? <p id="new_tag">New</p> : ''}
+      {timeDifference < 20 && timeDifference >= 0 ? (
+        <p id="new_tag">New</p>
+      ) : (
+        ''
+      )}
 
       <IconButton
         aria-label="save"
