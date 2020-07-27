@@ -11,8 +11,6 @@ function MessageSave(props) {
 
   const moment = require('moment');
   const CurrentDate = moment().format('YYYYMMDDhhmmss');
-  // const date = new Date();
-  // const CurrentDate = `${date.getFullYear()}${date.getMonth()}${date.getDay()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
 
   const user = props.user;
 
@@ -24,7 +22,7 @@ function MessageSave(props) {
     <div className="media-date">
       <h6>{message.date}</h6>
 
-      {CurrentDate - message.sortTime < 60 ? <p id="new_tag">New</p> : ''}
+      {CurrentDate - message.sortTime < 1 ? <p id="new_tag">New</p> : ''}
 
       <IconButton
         aria-label="save"
