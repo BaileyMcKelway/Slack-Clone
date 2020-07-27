@@ -26,6 +26,7 @@
     "emoji-mart": "^3.0.0",
     "emoji-picker-react": "^3.2.1",
     "express": "^4.16.4",
+    "js-to-ts-converter": "^0.16.3",
     "moment": "^2.27.0",
     "morgan": "^1.9.1",
     "pg": "^6.1.2",

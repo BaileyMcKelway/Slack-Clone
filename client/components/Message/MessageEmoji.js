@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import '../../../public/emoji.css';
+import '../../../public/style/emoji.css';
 import { Picker, Emoji } from 'emoji-mart';
-import { postEmoji } from '../../store';
+import { postEmoji } from '../../Store/store';
 import { connect } from 'react-redux';
 import Popover from '@material-ui/core/Popover';
 

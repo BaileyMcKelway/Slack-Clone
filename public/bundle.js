@@ -971,7 +971,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
+var _store = __webpack_require__(/*! ../../Store/store */ "./client/Store/store.js");
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
@@ -1104,8 +1104,7 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import logo from './Slack_Mark_Web.png';
-function Loading(props) {
+function Loading() {
   var logo = __webpack_require__(/*! ./Slack_Mark_Web.png */ "./client/components/Slack_Mark_Web.png");
   return _react2.default.createElement(
     'div',
@@ -1530,11 +1529,11 @@ var _EmojiEmotions = __webpack_require__(/*! @material-ui/icons/EmojiEmotions */
 
 var _EmojiEmotions2 = _interopRequireDefault(_EmojiEmotions);
 
-__webpack_require__(/*! ../../../public/emoji.css */ "./public/emoji.css");
+__webpack_require__(/*! ../../../public/style/emoji.css */ "./public/style/emoji.css");
 
 var _emojiMart = __webpack_require__(/*! emoji-mart */ "./node_modules/emoji-mart/dist-es/index.js");
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
+var _store = __webpack_require__(/*! ../../Store/store */ "./client/Store/store.js");
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
@@ -1740,7 +1739,7 @@ var _IconButton = __webpack_require__(/*! @material-ui/core/IconButton */ "./nod
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
+var _store = __webpack_require__(/*! ../../Store/store */ "./client/Store/store.js");
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
@@ -1945,7 +1944,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
+var _store = __webpack_require__(/*! ../../Store/store */ "./client/Store/store.js");
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
@@ -2554,7 +2553,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
+var _store = __webpack_require__(/*! ../../Store/store */ "./client/Store/store.js");
 
 var _reactHookForm = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/react-hook-form.es.js");
 
@@ -3070,7 +3069,7 @@ var _socket = __webpack_require__(/*! socket.io-client */ "./node_modules/socket
 
 var _socket2 = _interopRequireDefault(_socket);
 
-var _store = __webpack_require__(/*! ./store */ "./client/store/index.js");
+var _store = __webpack_require__(/*! ./Store/store */ "./client/Store/store.js");
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -3095,42 +3094,6 @@ socket.on('new-direct', function (message) {
 });
 
 exports.default = socket;
-
-/***/ }),
-
-/***/ "./client/store/index.js":
-/*!*******************************!*\
-  !*** ./client/store/index.js ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// import { createStore, combineReducers, applyMiddleware } from 'redux';
-// import { createLogger } from 'redux-logger';
-// import thunkMiddleware from 'redux-thunk';
-// import { composeWithDevTools } from 'redux-devtools-extension';
-
-// const reducer = combineReducers({
-//   //   userInfo: userInfo,
-//   //   user: user,
-//   //   cars: cars,
-//   //   cartItems: cartItems,
-//   //   singleCar: singleCarReducer
-// });
-
-// const middleware = composeWithDevTools(
-//   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
-// );
-// const store = createStore(reducer, middleware);
-
-// export default store;
-// export * from './user';
-// export * from './singleCar';
-// export * from './cars';
-// export * from './cartItems';
-// export * from './userInfo';
-
 
 /***/ }),
 
@@ -13944,7 +13907,7 @@ var grid = Object(_compose__WEBPACK_IMPORTED_MODULE_1__["default"])(gridGap, gri
 /*!*******************************************************!*\
   !*** ./node_modules/@material-ui/system/esm/index.js ***!
   \*******************************************************/
-/*! exports provided: borders, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, breakpoints, compose, css, display, flexbox, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, grid, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, palette, color, bgcolor, positions, position, zIndex, top, right, bottom, left, shadows, sizing, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, spacing, createUnarySpacing, style, typography, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
+/*! exports provided: borders, breakpoints, compose, css, display, flexbox, grid, palette, positions, shadows, sizing, spacing, style, typography, border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderRadius, flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf, gridGap, gridColumnGap, gridRowGap, gridColumn, gridRow, gridAutoFlow, gridAutoColumns, gridAutoRows, gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridArea, color, bgcolor, position, zIndex, top, right, bottom, left, width, maxWidth, minWidth, height, maxHeight, minHeight, sizeWidth, sizeHeight, boxSizing, createUnarySpacing, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29859,14 +29822,14 @@ exports.push([module.i, ".emoji-mart,\n.emoji-mart * {\n  box-sizing: border-box
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./public/emoji.css":
-/*!****************************************************!*\
-  !*** ./node_modules/css-loader!./public/emoji.css ***!
-  \****************************************************/
+/***/ "./node_modules/css-loader/index.js!./public/style/emoji.css":
+/*!**********************************************************!*\
+  !*** ./node_modules/css-loader!./public/style/emoji.css ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
@@ -86017,15 +85980,15 @@ module.exports = yeast;
 
 /***/ }),
 
-/***/ "./public/emoji.css":
-/*!**************************!*\
-  !*** ./public/emoji.css ***!
-  \**************************/
+/***/ "./public/style/emoji.css":
+/*!********************************!*\
+  !*** ./public/style/emoji.css ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../node_modules/css-loader!./emoji.css */ "./node_modules/css-loader/index.js!./public/emoji.css");
+var content = __webpack_require__(/*! !../../node_modules/css-loader!./emoji.css */ "./node_modules/css-loader/index.js!./public/style/emoji.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -86039,7 +86002,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 

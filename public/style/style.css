@@ -1,0 +1,30 @@
+body {
+  display: block;
+  height: 100vh;
+  background-color: #3f0e40;
+}
+
+.loading {
+  display: block;
+  margin: auto;
+  margin-top: 200px;
+  animation: rotation 4s infinite linear;
+  filter: drop-shadow(0px 10px 0px #4444dd);
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+#app {
+  height: 100%;
+}
+
+#app > div {
+  height: 100%;
+  display: flex;
+}

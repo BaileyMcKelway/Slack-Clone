@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { sendMessage, writeMessage } from '../../store';
+import { sendMessage, writeMessage } from '../../Store/store';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 

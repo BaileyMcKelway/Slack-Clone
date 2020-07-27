@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import IconButton from '@material-ui/core/IconButton';
-import { postSaved } from '../../store';
+import { postSaved } from '../../Store/store';
 import { connect } from 'react-redux';
 import 'emoji-mart/css/emoji-mart.css';
 
