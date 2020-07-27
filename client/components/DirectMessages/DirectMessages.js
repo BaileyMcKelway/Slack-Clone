@@ -4,6 +4,7 @@ import NewDirectEntry from './NewDirectEntry';
 import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
 import { fetchDirects } from '../../Store/store.js';
+import { animateScroll } from 'react-scroll';
 
 class DirectMessages extends Component {
   constructor(props) {
@@ -15,6 +16,15 @@ class DirectMessages extends Component {
 
   componentDidMount() {
     this.props.fetchInitialDirects();
+    this.scrollToBottom();
+  }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  scrollToBottom() {
+    animateScroll.scrollToBottom({
+      containerId: 'main',
+    });
   }
 
   render() {

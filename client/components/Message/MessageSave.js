@@ -13,7 +13,7 @@ function MessageSave(props) {
   const CurrentDate = moment().format('YYYYMMDDhhmmss');
   const timeDifference = CurrentDate - message.sortTime;
   const user = props.user;
-
+  console.log(moment(message.sortTime, 'YYYYMMDDhhmmss').fromNow());
   const handleSave = (userId, messageId) => {
     props.save(userId, messageId);
   };
@@ -22,7 +22,8 @@ function MessageSave(props) {
     <div className="media-date">
       <h6>{message.date}</h6>
 
-      {timeDifference < 20 && timeDifference >= 0 ? (
+      {moment(message.sortTime, 'YYYYMMDDhhmmss').fromNow() ===
+      '12 hours ago' ? (
         <p id="new_tag">New</p>
       ) : (
         ''

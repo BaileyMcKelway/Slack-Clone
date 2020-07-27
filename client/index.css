@@ -22,6 +22,7 @@ body {
 
 #app {
   height: 100%;
+  min-height: 100%;
 }
 
 #app > div {
@@ -222,6 +223,7 @@ main {
 #media-list-main {
   margin-left: 200px;
   position: relative;
+  width: 100%;
 }
 main .media-list {
   flex: 1 1 auto;
@@ -274,7 +276,8 @@ main > div {
 }
 
 #new-message-form {
-  position: relative;
+  position: fixed;
+  width: 1250px;
   bottom: 0;
   margin-bottom: 10px;
 }
