@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import store, { createUser, userSet } from '../store';
+import store, { createUser, userSet } from '../Store/store';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 

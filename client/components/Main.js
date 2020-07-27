@@ -14,7 +14,7 @@ import {
   fetchChannels,
   fetchUsers,
   fetchDirects,
-} from '../store';
+} from '../Store/store';
 
 class Main extends Component {
   constructor(props) {
@@ -52,6 +52,7 @@ class Main extends Component {
       return (
         <div>
           <SideBar user={this.props.user} users={this.props.users} />
+
           <Navbar />
           <main id="main" className="main">
             <Switch>
@@ -66,28 +67,6 @@ class Main extends Component {
         </div>
       );
     }
-    // return (
-    //   <div>
-    //     {this.state.loading ? (
-    //       <Loading />
-    //     ) : (
-    //       <div>
-    //         <SideBar user={this.props.user} users={this.props.users} />
-    //         <Navbar />
-    //         <main id="main" className="main">
-    //           <Switch>
-    //             <Route path="/new-channel" component={NewChannelEntry} />
-    //             <Route path="/channels/:channelId" component={MessagesList} />
-    //             <Route path="/saved" component={SavedItems} />
-    //             <Route path="/directs/:directId" component={DirectMessages} />
-    //             <Route path="/people" component={People} />
-    //             <Redirect to="/channels/1" />
-    //           </Switch>
-    //         </main>
-    //       </div>
-    //     )}
-    //   </div>
-    // );
   }
 }
 

@@ -86,6 +86,608 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/Store/store.js":
+/*!*******************************!*\
+  !*** ./client/Store/store.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.postSaved = exports.postEmoji = exports.postLikes = exports.postChannel = exports.sendMessage = exports.fetchChannels = exports.fetchMessages = exports.fetchDirects = exports.fetchUsers = exports.createUser = exports.addEmoji = exports.getSaved = exports.addSaved = exports.addLike = exports.getChannel = exports.getChannels = exports.getUsers = exports.userSet = exports.gotNewDirect = exports.gotDirect = exports.gotNewMessageFromServer = exports.writeMessage = exports.gotNewMessage = exports.gotMessagesFromServer = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+
+var _reduxThunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _socket = __webpack_require__(/*! ../socket */ "./client/socket.js");
+
+var _socket2 = _interopRequireDefault(_socket);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//ACTION
+var GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
+var GOT_NEW_MESSAGE_FROM_SERVER = 'GOT_NEW_MESSAGE_FROM_SERVER';
+var GOT_NEW_MESSAGE = 'GOT_NEW_MESSAGE';
+var WRITE_MESSAGE = 'WRITE_MESSAGE';
+var GOT_DIRECT = 'GOT_DIRECT';
+var GOT_NEW_DIRECT = 'GOT_NEW_DIRECT';
+var USER_SET = 'USER_SET';
+var GET_USERS = 'GET_USERS';
+var GET_CHANNELS = 'GET_CHANNELS';
+var GET_CHANNEL = 'GET_CHANNEL';
+var ADD_LIKE = 'ADD_LIKE';
+var ADD_SAVED = 'ADD_SAVED';
+var GET_SAVED = 'GET_SAVED';
+var ADD_EMOJI = 'ADD_EMOJI';
+
+//ACTION CREATORS
+var gotMessagesFromServer = exports.gotMessagesFromServer = function gotMessagesFromServer(messages) {
+  return {
+    type: GOT_MESSAGES_FROM_SERVER,
+    messages: messages
+  };
+};
+
+var gotNewMessage = exports.gotNewMessage = function gotNewMessage(message) {
+  return {
+    type: GOT_NEW_MESSAGE,
+    message: message
+  };
+};
+
+var writeMessage = exports.writeMessage = function writeMessage(inputContent) {
+  return {
+    type: WRITE_MESSAGE,
+    newMessageEntry: inputContent
+  };
+};
+
+var gotNewMessageFromServer = exports.gotNewMessageFromServer = function gotNewMessageFromServer(message) {
+  return {
+    type: GOT_NEW_MESSAGE_FROM_SERVER,
+    message: message
+  };
+};
+
+var gotDirect = exports.gotDirect = function gotDirect(messages) {
+  return {
+    type: GOT_DIRECT,
+    messages: messages
+  };
+};
+
+var gotNewDirect = exports.gotNewDirect = function gotNewDirect(message) {
+  return {
+    type: GOT_NEW_DIRECT,
+    message: message
+  };
+};
+
+var userSet = exports.userSet = function userSet(user) {
+  return {
+    type: USER_SET,
+    payload: user
+  };
+};
+
+var getUsers = exports.getUsers = function getUsers(users) {
+  return {
+    type: GET_USERS,
+    users: users
+  };
+};
+
+var getChannels = exports.getChannels = function getChannels(channels) {
+  return {
+    type: GET_CHANNELS,
+    channels: channels
+  };
+};
+
+var getChannel = exports.getChannel = function getChannel(channel) {
+  return {
+    type: GET_CHANNEL,
+    channel: channel
+  };
+};
+
+var addLike = exports.addLike = function addLike(messageid) {
+  return {
+    type: ADD_LIKE,
+    messageid: messageid
+  };
+};
+
+var addSaved = exports.addSaved = function addSaved(messageId) {
+  return {
+    type: ADD_SAVED,
+    messageId: messageId
+  };
+};
+
+var getSaved = exports.getSaved = function getSaved(messages) {
+  return {
+    type: GET_SAVED,
+    messages: messages
+  };
+};
+
+var addEmoji = exports.addEmoji = function addEmoji(messageid, emoji) {
+  return {
+    type: ADD_EMOJI,
+    messageid: messageid,
+    emoji: emoji
+  };
+};
+
+// THUNKS
+var createUser = exports.createUser = function createUser(name) {
+  return function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
+      var user;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _axios2.default.post('/api/authors', { name: name });
+
+            case 2:
+              user = _context.sent;
+
+              dispatch(userSet(user.data[0]));
+
+            case 4:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchUsers = exports.fetchUsers = function fetchUsers() {
+  return function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
+      var response, users, action;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _axios2.default.get('/api/authors');
+
+            case 2:
+              response = _context2.sent;
+              users = response.data;
+              action = getUsers(users);
+
+              dispatch(action);
+
+            case 6:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchDirects = exports.fetchDirects = function fetchDirects() {
+  return function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
+      var response, messages, action;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return _axios2.default.get('/api/directs');
+
+            case 2:
+              response = _context3.sent;
+              messages = response.data;
+              action = gotDirect(messages);
+
+              dispatch(action);
+
+            case 6:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchMessages = exports.fetchMessages = function fetchMessages() {
+  return function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
+      var response, messages, action;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return _axios2.default.get('/api/messages');
+
+            case 2:
+              response = _context4.sent;
+              messages = response.data;
+              action = gotMessagesFromServer(messages);
+
+              dispatch(action);
+
+            case 6:
+            case 'end':
+              return _context4.stop();
+          }
+        }
+      }, _callee4, undefined);
+    }));
+
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+};
+
+var fetchChannels = exports.fetchChannels = function fetchChannels() {
+  return function () {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
+      var response, channels;
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return _axios2.default.get('/api/channels');
+
+            case 2:
+              response = _context5.sent;
+              channels = response.data;
+
+              dispatch(getChannels(channels));
+
+            case 5:
+            case 'end':
+              return _context5.stop();
+          }
+        }
+      }, _callee5, undefined);
+    }));
+
+    return function (_x5) {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+};
+
+var sendMessage = exports.sendMessage = function sendMessage(message) {
+  return function () {
+    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch, getState) {
+      var _ref7, newMessage, _ref8, _newMessage;
+
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              if (!(message.type === 'message')) {
+                _context6.next = 11;
+                break;
+              }
+
+              message.name = getState().user.name;
+              _context6.next = 4;
+              return _axios2.default.post('/api/messages', message);
+
+            case 4:
+              _ref7 = _context6.sent;
+              newMessage = _ref7.data;
+
+              console.log(newMessage, 'MAIN');
+              dispatch(gotNewMessage(newMessage));
+              _socket2.default.emit('new-message', newMessage);
+              _context6.next = 19;
+              break;
+
+            case 11:
+              if (!(message.type === 'direct')) {
+                _context6.next = 19;
+                break;
+              }
+
+              message.name = getState().user.name;
+              _context6.next = 15;
+              return _axios2.default.post('/api/directs', message);
+
+            case 15:
+              _ref8 = _context6.sent;
+              _newMessage = _ref8.data;
+
+              dispatch(gotNewDirect(_newMessage));
+              _socket2.default.emit('new-direct', _newMessage);
+
+            case 19:
+            case 'end':
+              return _context6.stop();
+          }
+        }
+      }, _callee6, undefined);
+    }));
+
+    return function (_x6, _x7) {
+      return _ref6.apply(this, arguments);
+    };
+  }();
+};
+
+var postChannel = exports.postChannel = function postChannel(channel) {
+  return function () {
+    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
+      var data, response, newChannel;
+      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              data = { channel: channel };
+              _context7.next = 3;
+              return _axios2.default.post('/api/channels', data);
+
+            case 3:
+              response = _context7.sent;
+              newChannel = response.data;
+
+              dispatch(getChannel(newChannel));
+              _socket2.default.emit('new-channel', newChannel);
+
+            case 7:
+            case 'end':
+              return _context7.stop();
+          }
+        }
+      }, _callee7, undefined);
+    }));
+
+    return function (_x8) {
+      return _ref9.apply(this, arguments);
+    };
+  }();
+};
+
+var postLikes = exports.postLikes = function postLikes(messageId, channelId) {
+  return function () {
+    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
+      var data, response;
+      return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              data = { messageId: messageId, channelId: channelId };
+              _context8.next = 3;
+              return _axios2.default.put('/api/messages/' + messageId, data);
+
+            case 3:
+              response = _context8.sent;
+
+              dispatch(addLike(messageId));
+              _socket2.default.emit('new-like', messageId);
+
+            case 6:
+            case 'end':
+              return _context8.stop();
+          }
+        }
+      }, _callee8, undefined);
+    }));
+
+    return function (_x9) {
+      return _ref10.apply(this, arguments);
+    };
+  }();
+};
+
+var postEmoji = exports.postEmoji = function postEmoji(messageId, emoji) {
+  return function () {
+    var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
+      return regeneratorRuntime.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              dispatch(addEmoji(messageId, emoji));
+
+            case 1:
+            case 'end':
+              return _context9.stop();
+          }
+        }
+      }, _callee9, undefined);
+    }));
+
+    return function (_x10) {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+};
+
+var postSaved = exports.postSaved = function postSaved(userId, messageId) {
+  return function () {
+    var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
+      var data, response;
+      return regeneratorRuntime.wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              data = { userId: userId, messageId: messageId };
+              _context10.next = 3;
+              return _axios2.default.put('/api/authors/' + userId, data);
+
+            case 3:
+              response = _context10.sent;
+
+              dispatch(addSaved(messageId));
+
+            case 5:
+            case 'end':
+              return _context10.stop();
+          }
+        }
+      }, _callee10, undefined);
+    }));
+
+    return function (_x11) {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+};
+
+var initialState = {
+  messages: [],
+  newMessageEntry: '',
+  user: {
+    id: 1,
+    name: 'Cody Hardy',
+    image: '/images/avataaars (1).png',
+    saved: [1]
+  },
+  users: [],
+  channels: [],
+  directs: [],
+  currentPage: {}
+};
+
+var reducer = function reducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case GOT_MESSAGES_FROM_SERVER:
+      return _extends({}, state, { messages: action.messages });
+    case GOT_NEW_MESSAGE:
+      return _extends({}, state, { messages: [].concat(_toConsumableArray(state.messages), [action.message]) });
+    case WRITE_MESSAGE:
+      return _extends({}, state, { newMessageEntry: action.newMessageEntry });
+    case GOT_NEW_MESSAGE_FROM_SERVER:
+      return _extends({}, state, { messages: [].concat(_toConsumableArray(state.messages), [action.message]) });
+    case GOT_DIRECT:
+      return _extends({}, state, { directs: action.messages });
+    case GOT_NEW_DIRECT:
+      return _extends({}, state, { directs: [].concat(_toConsumableArray(state.directs), [action.message]) });
+    case USER_SET:
+      return _extends({}, state, { user: action.payload });
+    case GET_USERS:
+      return _extends({}, state, { users: action.users });
+    case GET_CHANNEL:
+      return _extends({}, state, { channels: [].concat(_toConsumableArray(state.channels), [action.channel]) });
+    case GET_CHANNELS:
+      return _extends({}, state, { channels: action.channels });
+    case ADD_LIKE:
+      var filteredMessages = state.messages.map(function (message) {
+        if (message.id === action.messageid) {
+          message.likes = message.likes + 1;
+        }
+        return message;
+      });
+      return _extends({}, state, { messages: filteredMessages });
+
+    case ADD_EMOJI:
+      var handleEmojiQuanitity = function handleEmojiQuanitity(emoji, message) {
+        if (!message.emojis) {
+          message.emojis = [];
+        }
+        var newSelectedEmojis = message.emojis;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = newSelectedEmojis[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var selectedEmoji = _step.value;
+
+            if (selectedEmoji.name === emoji.name) {
+              selectedEmoji.quan += 1;
+              return newSelectedEmojis;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        emoji.quan = 1;
+        return [].concat(_toConsumableArray(message.emojis), [emoji]);
+      };
+
+      var filteredEmojiMessages = state.messages.map(function (message) {
+        if (message.id === action.messageid) {
+          message.emojis = handleEmojiQuanitity(action.emoji, message);
+        }
+        return message;
+      });
+      return _extends({}, state, { messages: filteredEmojiMessages });
+    case ADD_SAVED:
+      var newSaved = state.user.saved;
+      if (newSaved.indexOf(action.messageId.toString()) === -1) {
+        newSaved = [].concat(_toConsumableArray(newSaved), [action.messageId]);
+      }
+      state.user.saved = newSaved;
+      return _extends({}, state, { user: state.user });
+    default:
+      return state;
+  }
+};
+
+var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
+
+var store = (0, _redux.createStore)(reducer, middleware);
+exports.default = store;
+
+/***/ }),
+
 /***/ "./client/components/DirectMessages/DirectMessages.js":
 /*!************************************************************!*\
   !*** ./client/components/DirectMessages/DirectMessages.js ***!
@@ -120,7 +722,7 @@ var _NoMessages2 = _interopRequireDefault(_NoMessages);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../../store.js */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../Store/store.js */ "./client/Store/store.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -369,7 +971,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
@@ -572,7 +1174,7 @@ var _Loading = __webpack_require__(/*! ./Loading */ "./client/components/Loading
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _store = __webpack_require__(/*! ../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../Store/store */ "./client/Store/store.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -682,28 +1284,6 @@ var Main = function (_Component) {
           )
         );
       }
-      // return (
-      //   <div>
-      //     {this.state.loading ? (
-      //       <Loading />
-      //     ) : (
-      //       <div>
-      //         <SideBar user={this.props.user} users={this.props.users} />
-      //         <Navbar />
-      //         <main id="main" className="main">
-      //           <Switch>
-      //             <Route path="/new-channel" component={NewChannelEntry} />
-      //             <Route path="/channels/:channelId" component={MessagesList} />
-      //             <Route path="/saved" component={SavedItems} />
-      //             <Route path="/directs/:directId" component={DirectMessages} />
-      //             <Route path="/people" component={People} />
-      //             <Redirect to="/channels/1" />
-      //           </Switch>
-      //         </main>
-      //       </div>
-      //     )}
-      //   </div>
-      // );
     }
   }]);
 
@@ -954,7 +1534,7 @@ __webpack_require__(/*! ../../../public/emoji.css */ "./public/emoji.css");
 
 var _emojiMart = __webpack_require__(/*! emoji-mart */ "./node_modules/emoji-mart/dist-es/index.js");
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
@@ -1160,7 +1740,7 @@ var _IconButton = __webpack_require__(/*! @material-ui/core/IconButton */ "./nod
 
 var _IconButton2 = _interopRequireDefault(_IconButton);
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
@@ -1258,7 +1838,7 @@ var _NoMessages2 = _interopRequireDefault(_NoMessages);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../../store.js */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../Store/store.js */ "./client/Store/store.js");
 
 var _reactScroll = __webpack_require__(/*! react-scroll */ "./node_modules/react-scroll/modules/index.js");
 
@@ -1365,7 +1945,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
@@ -1494,7 +2074,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _store = __webpack_require__(/*! ../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../Store/store */ "./client/Store/store.js");
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -1974,7 +2554,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ../../store */ "./client/store.js");
+var _store = __webpack_require__(/*! ../../store */ "./client/store/index.js");
 
 var _reactHookForm = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/react-hook-form.es.js");
 
@@ -2454,7 +3034,7 @@ var _components = __webpack_require__(/*! ./components */ "./client/components/i
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ./store */ "./client/store.js");
+var _store = __webpack_require__(/*! ./Store/store */ "./client/Store/store.js");
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -2490,7 +3070,7 @@ var _socket = __webpack_require__(/*! socket.io-client */ "./node_modules/socket
 
 var _socket2 = _interopRequireDefault(_socket);
 
-var _store = __webpack_require__(/*! ./store */ "./client/store.js");
+var _store = __webpack_require__(/*! ./store */ "./client/store/index.js");
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -2518,610 +3098,39 @@ exports.default = socket;
 
 /***/ }),
 
-/***/ "./client/store.js":
-/*!*************************!*\
-  !*** ./client/store.js ***!
-  \*************************/
+/***/ "./client/store/index.js":
+/*!*******************************!*\
+  !*** ./client/store/index.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// import { createStore, combineReducers, applyMiddleware } from 'redux';
+// import { createLogger } from 'redux-logger';
+// import thunkMiddleware from 'redux-thunk';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+
+// const reducer = combineReducers({
+//   //   userInfo: userInfo,
+//   //   user: user,
+//   //   cars: cars,
+//   //   cartItems: cartItems,
+//   //   singleCar: singleCarReducer
+// });
+
+// const middleware = composeWithDevTools(
+//   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+// );
+// const store = createStore(reducer, middleware);
+
+// export default store;
+// export * from './user';
+// export * from './singleCar';
+// export * from './cars';
+// export * from './cartItems';
+// export * from './userInfo';
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.postSaved = exports.postEmoji = exports.postLikes = exports.postChannel = exports.sendMessage = exports.fetchChannels = exports.fetchMessages = exports.fetchDirects = exports.fetchUsers = exports.createUser = exports.addEmoji = exports.getSaved = exports.addSaved = exports.addLike = exports.getChannel = exports.getChannels = exports.getUsers = exports.userSet = exports.gotNewDirect = exports.gotDirect = exports.gotNewMessageFromServer = exports.writeMessage = exports.gotNewMessage = exports.gotMessagesFromServer = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-
-var _reduxThunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _socket = __webpack_require__(/*! ./socket */ "./client/socket.js");
-
-var _socket2 = _interopRequireDefault(_socket);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-//ACTION
-var GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
-var GOT_NEW_MESSAGE_FROM_SERVER = 'GOT_NEW_MESSAGE_FROM_SERVER';
-var GOT_NEW_MESSAGE = 'GOT_NEW_MESSAGE';
-var WRITE_MESSAGE = 'WRITE_MESSAGE';
-var GOT_DIRECT = 'GOT_DIRECT';
-var GOT_NEW_DIRECT = 'GOT_NEW_DIRECT';
-var USER_SET = 'USER_SET';
-var GET_USERS = 'GET_USERS';
-var GET_CHANNELS = 'GET_CHANNELS';
-var GET_CHANNEL = 'GET_CHANNEL';
-var ADD_LIKE = 'ADD_LIKE';
-var ADD_SAVED = 'ADD_SAVED';
-var GET_SAVED = 'GET_SAVED';
-var ADD_EMOJI = 'ADD_EMOJI';
-
-//ACTION CREATORS
-var gotMessagesFromServer = exports.gotMessagesFromServer = function gotMessagesFromServer(messages) {
-  return {
-    type: GOT_MESSAGES_FROM_SERVER,
-    messages: messages
-  };
-};
-
-var gotNewMessage = exports.gotNewMessage = function gotNewMessage(message) {
-  return {
-    type: GOT_NEW_MESSAGE,
-    message: message
-  };
-};
-
-var writeMessage = exports.writeMessage = function writeMessage(inputContent) {
-  return {
-    type: WRITE_MESSAGE,
-    newMessageEntry: inputContent
-  };
-};
-
-var gotNewMessageFromServer = exports.gotNewMessageFromServer = function gotNewMessageFromServer(message) {
-  return {
-    type: GOT_NEW_MESSAGE_FROM_SERVER,
-    message: message
-  };
-};
-
-var gotDirect = exports.gotDirect = function gotDirect(messages) {
-  return {
-    type: GOT_DIRECT,
-    messages: messages
-  };
-};
-
-var gotNewDirect = exports.gotNewDirect = function gotNewDirect(message) {
-  return {
-    type: GOT_NEW_DIRECT,
-    message: message
-  };
-};
-
-var userSet = exports.userSet = function userSet(user) {
-  return {
-    type: USER_SET,
-    payload: user
-  };
-};
-
-var getUsers = exports.getUsers = function getUsers(users) {
-  return {
-    type: GET_USERS,
-    users: users
-  };
-};
-
-var getChannels = exports.getChannels = function getChannels(channels) {
-  return {
-    type: GET_CHANNELS,
-    channels: channels
-  };
-};
-
-var getChannel = exports.getChannel = function getChannel(channel) {
-  return {
-    type: GET_CHANNEL,
-    channel: channel
-  };
-};
-
-var addLike = exports.addLike = function addLike(messageid) {
-  return {
-    type: ADD_LIKE,
-    messageid: messageid
-  };
-};
-
-var addSaved = exports.addSaved = function addSaved(messageId) {
-  return {
-    type: ADD_SAVED,
-    messageId: messageId
-  };
-};
-
-var getSaved = exports.getSaved = function getSaved(messages) {
-  return {
-    type: GET_SAVED,
-    messages: messages
-  };
-};
-
-var addEmoji = exports.addEmoji = function addEmoji(messageid, emoji) {
-  return {
-    type: ADD_EMOJI,
-    messageid: messageid,
-    emoji: emoji
-  };
-};
-
-// THUNKS
-var createUser = exports.createUser = function createUser(name) {
-  return function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
-      var user;
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return _axios2.default.post('/api/authors', { name: name });
-
-            case 2:
-              user = _context.sent;
-
-
-              dispatch(userSet(user.data[0]));
-              // socket.emit('new-message', newMessage);
-
-            case 4:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, undefined);
-    }));
-
-    return function (_x) {
-      return _ref.apply(this, arguments);
-    };
-  }();
-};
-
-var fetchUsers = exports.fetchUsers = function fetchUsers() {
-  return function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
-      var response, users, action;
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return _axios2.default.get('/api/authors');
-
-            case 2:
-              response = _context2.sent;
-              users = response.data;
-              action = getUsers(users);
-
-              dispatch(action);
-
-            case 6:
-            case 'end':
-              return _context2.stop();
-          }
-        }
-      }, _callee2, undefined);
-    }));
-
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-};
-
-var fetchDirects = exports.fetchDirects = function fetchDirects() {
-  return function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
-      var response, messages, action;
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return _axios2.default.get('/api/directs');
-
-            case 2:
-              response = _context3.sent;
-              messages = response.data;
-              action = gotDirect(messages);
-
-              dispatch(action);
-
-            case 6:
-            case 'end':
-              return _context3.stop();
-          }
-        }
-      }, _callee3, undefined);
-    }));
-
-    return function (_x3) {
-      return _ref3.apply(this, arguments);
-    };
-  }();
-};
-
-var fetchMessages = exports.fetchMessages = function fetchMessages() {
-  return function () {
-    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
-      var response, messages, action;
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.next = 2;
-              return _axios2.default.get('/api/messages');
-
-            case 2:
-              response = _context4.sent;
-              messages = response.data;
-              action = gotMessagesFromServer(messages);
-
-              dispatch(action);
-
-            case 6:
-            case 'end':
-              return _context4.stop();
-          }
-        }
-      }, _callee4, undefined);
-    }));
-
-    return function (_x4) {
-      return _ref4.apply(this, arguments);
-    };
-  }();
-};
-
-var fetchChannels = exports.fetchChannels = function fetchChannels() {
-  return function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
-      var response, channels;
-      return regeneratorRuntime.wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.next = 2;
-              return _axios2.default.get('/api/channels');
-
-            case 2:
-              response = _context5.sent;
-              channels = response.data;
-
-              dispatch(getChannels(channels));
-
-            case 5:
-            case 'end':
-              return _context5.stop();
-          }
-        }
-      }, _callee5, undefined);
-    }));
-
-    return function (_x5) {
-      return _ref5.apply(this, arguments);
-    };
-  }();
-};
-
-var sendMessage = exports.sendMessage = function sendMessage(message) {
-  return function () {
-    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch, getState) {
-      var _ref7, newMessage, _ref8, _newMessage;
-
-      return regeneratorRuntime.wrap(function _callee6$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              if (!(message.type === 'message')) {
-                _context6.next = 11;
-                break;
-              }
-
-              message.name = getState().user.name;
-              _context6.next = 4;
-              return _axios2.default.post('/api/messages', message);
-
-            case 4:
-              _ref7 = _context6.sent;
-              newMessage = _ref7.data;
-
-              console.log(newMessage, 'MAIN');
-              dispatch(gotNewMessage(newMessage));
-              _socket2.default.emit('new-message', newMessage);
-              _context6.next = 19;
-              break;
-
-            case 11:
-              if (!(message.type === 'direct')) {
-                _context6.next = 19;
-                break;
-              }
-
-              message.name = getState().user.name;
-              _context6.next = 15;
-              return _axios2.default.post('/api/directs', message);
-
-            case 15:
-              _ref8 = _context6.sent;
-              _newMessage = _ref8.data;
-
-              dispatch(gotNewDirect(_newMessage));
-              _socket2.default.emit('new-direct', _newMessage);
-
-            case 19:
-            case 'end':
-              return _context6.stop();
-          }
-        }
-      }, _callee6, undefined);
-    }));
-
-    return function (_x6, _x7) {
-      return _ref6.apply(this, arguments);
-    };
-  }();
-};
-
-var postChannel = exports.postChannel = function postChannel(channel) {
-  return function () {
-    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
-      var data, response, newChannel;
-      return regeneratorRuntime.wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              data = { channel: channel };
-              _context7.next = 3;
-              return _axios2.default.post('/api/channels', data);
-
-            case 3:
-              response = _context7.sent;
-              newChannel = response.data;
-
-              dispatch(getChannel(newChannel));
-              _socket2.default.emit('new-channel', newChannel);
-
-            case 7:
-            case 'end':
-              return _context7.stop();
-          }
-        }
-      }, _callee7, undefined);
-    }));
-
-    return function (_x8) {
-      return _ref9.apply(this, arguments);
-    };
-  }();
-};
-
-var postLikes = exports.postLikes = function postLikes(messageId, channelId) {
-  return function () {
-    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
-      var data, response;
-      return regeneratorRuntime.wrap(function _callee8$(_context8) {
-        while (1) {
-          switch (_context8.prev = _context8.next) {
-            case 0:
-              data = { messageId: messageId, channelId: channelId };
-              _context8.next = 3;
-              return _axios2.default.put('/api/messages/' + messageId, data);
-
-            case 3:
-              response = _context8.sent;
-
-              dispatch(addLike(messageId));
-              _socket2.default.emit('new-like', messageId);
-
-            case 6:
-            case 'end':
-              return _context8.stop();
-          }
-        }
-      }, _callee8, undefined);
-    }));
-
-    return function (_x9) {
-      return _ref10.apply(this, arguments);
-    };
-  }();
-};
-
-var postEmoji = exports.postEmoji = function postEmoji(messageId, emoji) {
-  return function () {
-    var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
-      return regeneratorRuntime.wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              // const data = { messageId: messageId, channelId: channelId };
-              // const response = await axios.put(`/api/messages/${messageId}`, data);
-              dispatch(addEmoji(messageId, emoji));
-              // socket.emit('new-like', messageId);
-
-            case 1:
-            case 'end':
-              return _context9.stop();
-          }
-        }
-      }, _callee9, undefined);
-    }));
-
-    return function (_x10) {
-      return _ref11.apply(this, arguments);
-    };
-  }();
-};
-
-var postSaved = exports.postSaved = function postSaved(userId, messageId) {
-  return function () {
-    var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
-      var data, response;
-      return regeneratorRuntime.wrap(function _callee10$(_context10) {
-        while (1) {
-          switch (_context10.prev = _context10.next) {
-            case 0:
-              data = { userId: userId, messageId: messageId };
-              _context10.next = 3;
-              return _axios2.default.put('/api/authors/' + userId, data);
-
-            case 3:
-              response = _context10.sent;
-
-              dispatch(addSaved(messageId));
-
-            case 5:
-            case 'end':
-              return _context10.stop();
-          }
-        }
-      }, _callee10, undefined);
-    }));
-
-    return function (_x11) {
-      return _ref12.apply(this, arguments);
-    };
-  }();
-};
-
-var initialState = {
-  messages: [],
-  newMessageEntry: '',
-  user: {
-    id: 1,
-    name: 'Cody Hardy',
-    image: '/images/avataaars (1).png',
-    saved: [1]
-  },
-  users: [],
-  channels: [],
-  directs: [],
-  currentPage: {}
-};
-
-var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-  var action = arguments[1];
-
-  switch (action.type) {
-    case GOT_MESSAGES_FROM_SERVER:
-      return _extends({}, state, { messages: action.messages });
-    case GOT_NEW_MESSAGE:
-      return _extends({}, state, { messages: [].concat(_toConsumableArray(state.messages), [action.message]) });
-    case WRITE_MESSAGE:
-      return _extends({}, state, { newMessageEntry: action.newMessageEntry });
-    case GOT_NEW_MESSAGE_FROM_SERVER:
-      return _extends({}, state, { messages: [].concat(_toConsumableArray(state.messages), [action.message]) });
-    case GOT_DIRECT:
-      return _extends({}, state, { directs: action.messages });
-    case GOT_NEW_DIRECT:
-      return _extends({}, state, { directs: [].concat(_toConsumableArray(state.directs), [action.message]) });
-    case USER_SET:
-      return _extends({}, state, { user: action.payload });
-    case GET_USERS:
-      return _extends({}, state, { users: action.users });
-    case GET_CHANNEL:
-      return _extends({}, state, { channels: [].concat(_toConsumableArray(state.channels), [action.channel]) });
-    case GET_CHANNELS:
-      return _extends({}, state, { channels: action.channels });
-    case ADD_LIKE:
-      var filteredMessages = state.messages.map(function (message) {
-        if (message.id === action.messageid) {
-          message.likes = message.likes + 1;
-        }
-        return message;
-      });
-      return _extends({}, state, { messages: filteredMessages });
-
-    case ADD_EMOJI:
-      var handleEmojiQuanitity = function handleEmojiQuanitity(emoji, message) {
-        if (!message.emojis) {
-          message.emojis = [];
-        }
-        var newSelectedEmojis = message.emojis;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = newSelectedEmojis[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var selectedEmoji = _step.value;
-
-            if (selectedEmoji.name === emoji.name) {
-              selectedEmoji.quan += 1;
-              return newSelectedEmojis;
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        emoji.quan = 1;
-        return [].concat(_toConsumableArray(message.emojis), [emoji]);
-      };
-
-      var filteredEmojiMessages = state.messages.map(function (message) {
-        if (message.id === action.messageid) {
-          message.emojis = handleEmojiQuanitity(action.emoji, message);
-        }
-        return message;
-      });
-      return _extends({}, state, { messages: filteredEmojiMessages });
-    case ADD_SAVED:
-      var newSaved = state.user.saved;
-      if (newSaved.indexOf(action.messageId.toString()) === -1) {
-        newSaved = [].concat(_toConsumableArray(newSaved), [action.messageId]);
-      }
-      state.user.saved = newSaved;
-      return _extends({}, state, { user: state.user });
-    default:
-      return state;
-  }
-};
-
-var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default);
-
-var store = (0, _redux.createStore)(reducer, middleware);
-exports.default = store;
 
 /***/ }),
 
@@ -29824,7 +29833,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "/* global */\n.loading {\n  display: block;\n  margin: auto;\n  margin-top: 200px;\n  animation: rotation 4s infinite linear;\n  filter: drop-shadow(0px 10px 0px #4444dd);\n}\n@keyframes rotation {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(359deg);\n  }\n}\nbody {\n  display: block;\n  height: 100vh;\n  background-color: #3f0e40;\n  /* display: flex;\n  flex: 1, 1, auto; */\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  position: fixed;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* people */\n#people {\n  display: flex;\n  flex-wrap: wrap;\n}\n#people_card {\n  margin: 20px;\n}\n\n#people_card_content {\n  padding: 10px;\n  text-align: center;\n  border: 1px solid rgb(145, 145, 145);\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  display: flex;\n  overflow-y: scroll;\n}\n#direct-main {\n  margin-left: 200px;\n}\n\n#saved-main {\n  margin-left: 200px;\n}\n\n#media-list-main {\n  margin-left: 200px;\n  position: relative;\n}\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n.no-messages-main {\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  margin-left: 200px;\n  margin-right: auto;\n  width: 75%;\n  height: 75%;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
+exports.push([module.i, "/* global */\n.loading {\n  display: block;\n  margin: auto;\n  margin-top: 200px;\n  animation: rotation 4s infinite linear;\n  filter: drop-shadow(0px 10px 0px #4444dd);\n}\n@keyframes rotation {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(359deg);\n  }\n}\nbody {\n  display: block;\n  height: 100vh;\n  background-color: #3f0e40;\n}\n\n#app {\n  height: 100%;\n}\n\n#app > div {\n  height: 100%;\n  display: flex;\n}\n\n/* sidebar */\n\n.sidebar {\n  background-color: #3f0e40;\n  position: fixed;\n  color: #e4cfe4;\n  font-weight: 100;\n  font-size: 15px;\n  font-family: 'Lato-Regular';\n  z-index: 100;\n  height: 100%;\n  overflow-y: scroll;\n  padding-bottom: 25px;\n}\n\n.sidebar-currentuser {\n  display: flex;\n  align-items: center;\n  padding-left: 10px;\n}\n.sidebar-totalusers {\n  margin-left: 25px;\n  display: flex;\n  align-items: center;\n}\n\n.sidebar-header {\n  height: auto;\n  width: 220px;\n  background-color: #3f0e40;\n  border-bottom: 1px solid #584b58;\n  color: white;\n  display: flex;\n  flex-direction: column;\n}\n.sidebar-header h3 {\n  display: flex;\n  align-items: center;\n  margin: 0;\n  padding: 12px;\n}\n\n.sidebar-header h3 div {\n  margin-right: 10px;\n}\n\n.sidebar h5 {\n  font-size: 16px;\n}\n\n.sidebar .channels_list {\n  text-transform: lowercase;\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .channels_expand {\n  display: flex;\n  flex-direction: row;\n}\n\n.sidebar .channels_exapand .channels_arrow {\n  padding-top: 15px;\n  align-self: flex-end;\n}\n.sidebar .channels_exapand .channels_title {\n  align-self: flex-start;\n}\n\n.sidebar .direct_messages_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar .tool_list {\n  list-style-type: none;\n  margin: 0;\n  padding: 0;\n}\n\n.sidebar ul li {\n  height: 28px;\n  width: 205px;\n}\n\n.sidebar ul li .badge {\n  color: #c4b3c4;\n  background-color: #2c162c;\n}\n\n.sidebar ul li a {\n  color: #c4b3c4;\n  padding-left: 16px;\n  padding-top: 3px;\n  display: list-item;\n  height: 100%;\n  width: 100%;\n}\n\n.sidebar ul li a:hover,\n.sidebar ul li a:focus {\n  color: #afb1b6;\n  background-color: #330733;\n  text-decoration: none;\n}\n\n.sidebar ul li a.active {\n  background-color: #1865a3;\n  color: #c4b3c4;\n  border-radius: 0 5px 5px 0;\n}\n\n.sidebar ul li a span:first-child {\n  margin-right: 10px;\n}\n\n.sidebar ul li .onlineCircle {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  background-color: #06be78;\n}\n.sidebar ul li .offlineCircle {\n  border-color: white;\n  border-width: 0.3;\n}\n\n/* people */\n#people {\n  display: flex;\n  flex-wrap: wrap;\n}\n#people_card {\n  margin: 20px;\n}\n\n#people_card_content {\n  padding: 10px;\n  text-align: center;\n  border: 1px solid rgb(145, 145, 145);\n}\n\n/* nav */\n\nnav {\n  position: fixed;\n  height: 53px;\n  width: 100%;\n  background-color: white;\n  z-index: 1;\n  border-bottom: 1px solid gray;\n  display: flex;\n  align-items: center;\n}\n\nnav h5 {\n  margin: 0 0 0 240px;\n  justify-content: flex-end;\n  flex: 1 1 auto;\n  letter-spacing: -1px;\n  font-weight: bold;\n  font-size: medium;\n}\n\nnav form {\n  margin: 0 10px 0 0;\n}\n\n#nav-left {\n  display: flex;\n  justify-content: space-evenly;\n}\n\n/* main */\n\nmain {\n  margin: 78px 25px 25px 25px;\n  display: flex;\n  overflow-y: scroll;\n}\n#direct-main {\n  margin-left: 200px;\n}\n\n#saved-main {\n  margin-left: 200px;\n}\n\n#media-list-main {\n  margin-left: 200px;\n  position: relative;\n}\nmain .media-list {\n  flex: 1 1 auto;\n  padding-bottom: 15px;\n}\n\nmain .media-date {\n  display: flex;\n  align-items: flex-end;\n  justify-content: space-between;\n}\n\nmain .media-body p {\n  font-size: 10px;\n}\n\nmain .media img {\n  height: 64px;\n  width: 64px;\n}\nmain .media-right {\n  display: flex;\n  justify-content: end;\n}\n\nmain .media-object {\n  border-radius: 5px;\n}\n\nmain > div {\n  display: flex;\n  flex-direction: column;\n  flex: 1 1 auto;\n}\n\n/* message form */\n\n.message_hover {\n  background-color: whitesmoke;\n}\n\n.no-messages-main {\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  margin-left: 200px;\n  margin-right: auto;\n  width: 75%;\n  height: 75%;\n}\n\n#new-message-form {\n  position: fixed;\n  bottom: 0;\n  margin-bottom: 10px;\n}\n\n#new-message-form .form-control {\n  border-width: 3px 1.5px 3px 3px;\n}\n\n#new-message-form.btn {\n  border-width: 3px;\n}\n\n#new_tag {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  text-align: center;\n  color: rgb(233, 95, 53);\n  font-size: xx-small;\n}\nhr {\n  border: 1px solid rgb(233, 95, 53);\n}\n", ""]);
 
 // exports
 

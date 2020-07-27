@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
-import socket from './socket';
+import socket from '../socket';
 
 //ACTION
 const GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
@@ -94,9 +94,7 @@ export const addEmoji = (messageid, emoji) => ({
 // THUNKS
 export const createUser = (name) => async (dispatch) => {
   const user = await axios.post('/api/authors', { name: name });
-
   dispatch(userSet(user.data[0]));
-  // socket.emit('new-message', newMessage);
 };
 
 export const fetchUsers = () => {
@@ -171,10 +169,7 @@ export const postLikes = (messageId, channelId) => {
 
 export const postEmoji = (messageId, emoji) => {
   return async (dispatch) => {
-    // const data = { messageId: messageId, channelId: channelId };
-    // const response = await axios.put(`/api/messages/${messageId}`, data);
     dispatch(addEmoji(messageId, emoji));
-    // socket.emit('new-like', messageId);
   };
 };
 

@@ -3,7 +3,7 @@ import Message from '../Message/Message';
 import NewDirectEntry from './NewDirectEntry';
 import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
-import { fetchDirects } from '../../store.js';
+import { fetchDirects } from '../../Store/store.js';
 
 class DirectMessages extends Component {
   constructor(props) {
