@@ -9,8 +9,10 @@ import 'emoji-mart/css/emoji-mart.css';
 function MessageSave(props) {
   const message = props.message;
 
-  const date = new Date();
-  const CurrentDate = `${date.getFullYear()}${date.getMonth()}${date.getDay()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+  const moment = require('moment');
+  const CurrentDate = moment().format('YYYYMMDDhhmmss');
+  // const date = new Date();
+  // const CurrentDate = `${date.getFullYear()}${date.getMonth()}${date.getDay()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
 
   const user = props.user;
 

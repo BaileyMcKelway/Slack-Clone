@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 const Author = require('./author');
+const moment = require('moment');
 
 const Direct = db.define(
   'direct',
@@ -33,16 +34,9 @@ const Direct = db.define(
     },
     hooks: {
       beforeValidate: function (message) {
-        const date = new Date();
-        const current_hour = date.getHours();
-        const current_minute = date.getMinutes();
-        const current_seconds = date.getSeconds();
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const day = date.getDay();
-        message.sortTime = `${year}${month}${day}${current_hour}${current_minute}${current_seconds}`;
-        message.time = `${current_hour}:${current_minute}:${current_seconds}`;
-        message.date = `${year}-${month}-${day}`;
+        message.sortTime = moment().format('YYYYMMDDhhmmss');
+        message.time = moment().format('hh:mm:ss a');
+        message.date = moment().format('MMMM Do YYYY');
       },
     },
   }
