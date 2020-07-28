@@ -52,7 +52,6 @@ class Main extends Component {
       return (
         <div>
           <SideBar user={this.props.user} users={this.props.users} />
-
           <Navbar />
           <main id="main" className="main">
             <Switch>
