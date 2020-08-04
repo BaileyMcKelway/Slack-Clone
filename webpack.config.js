@@ -6,7 +6,10 @@ module.exports = {
   optimization: {
     minimizer: [new MinifyPlugin()],
   },
-  entry: ['babel-polyfill', './client/index.js'],
+  entry: ['babel-polyfill', './client/index.tsx'],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
   output: {
     path: __dirname,
     filename: './public/bundle.js',
@@ -34,6 +37,14 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
+          },
+        ],
+      },
+      {
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: 'awesome-typescript-loader',
           },
         ],
       },
