@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class NameEntry extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { store: store.getState() };
 
     this.handleSubmit = this.handleSubmit.bind(this);

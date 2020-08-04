@@ -3,6 +3,11 @@ import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 import socket from '../socket';
 
+import { Message } from '../Models/Messages';
+import { Direct } from '../Models/Directs';
+import { User } from '../Models/Users';
+import { Channel } from '../Models/Channels';
+
 //ACTION
 const GOT_MESSAGES_FROM_SERVER = 'GOT_MESSAGES_FROM_SERVER';
 const GOT_NEW_MESSAGE_FROM_SERVER = 'GOT_NEW_MESSAGE_FROM_SERVER';
@@ -35,72 +40,72 @@ const ADD_EMOJI = 'ADD_EMOJI';
 // };
 
 //ACTION CREATORS
-export const gotMessagesFromServer = (messages) => ({
+export const gotMessagesFromServer = (messages: Message[]) => ({
   type: GOT_MESSAGES_FROM_SERVER,
   messages,
 });
 
-export const gotNewMessage = (message) => ({
+export const gotNewMessage = (message: Message) => ({
   type: GOT_NEW_MESSAGE,
   message,
 });
 
-export const writeMessage = (inputContent) => ({
+export const writeMessage = (inputContent: any) => ({
   type: WRITE_MESSAGE,
   newMessageEntry: inputContent,
 });
 
-export const gotNewMessageFromServer = (message) => ({
+export const gotNewMessageFromServer = (message: Message) => ({
   type: GOT_NEW_MESSAGE_FROM_SERVER,
   message,
 });
 
-export const gotDirect = (messages) => ({
+export const gotDirect = (messages: Direct[]) => ({
   type: GOT_DIRECT,
   messages,
 });
 
-export const gotNewDirect = (message) => ({
+export const gotNewDirect = (message: Direct) => ({
   type: GOT_NEW_DIRECT,
   message,
 });
 
-export const userSet = (user) => ({
+export const userSet = (user: string) => ({
   type: USER_SET,
   payload: user,
 });
 
-export const getUsers = (users) => ({
+export const getUsers = (users: User[]) => ({
   type: GET_USERS,
   users,
 });
 
-export const getChannels = (channels) => ({
+export const getChannels = (channels: Channel[]) => ({
   type: GET_CHANNELS,
   channels,
 });
 
-export const getChannel = (channel) => ({
+export const getChannel = (channel: Channel) => ({
   type: GET_CHANNEL,
   channel,
 });
 
-export const addLike = (messageid) => ({
+export const addLike = (messageid: number) => ({
   type: ADD_LIKE,
   messageid,
 });
 
-export const addSaved = (messageId) => ({
+export const addSaved = (messageId: number) => ({
   type: ADD_SAVED,
   messageId,
 });
 
-export const getSaved = (messages) => ({
+export const getSaved = (messages: Message[]) => ({
   type: GET_SAVED,
   messages,
 });
 
-export const addEmoji = (messageid, emoji) => ({
+export const addEmoji = (messageid: number, emoji: any) => ({
   type: ADD_EMOJI,
   messageid,
   emoji,
@@ -148,7 +153,10 @@ export const fetchChannels = () => {
   };
 };
 
-export const sendMessage = (message) => async (dispatch: any, getState) => {
+export const sendMessage = (message) => async (
+  dispatch: any,
+  getState: any
+) => {
   if (message.type === 'message') {
     message.name = getState().user.name;
     const { data: newMessage } = await axios.post('/api/messages', message);
@@ -162,8 +170,8 @@ export const sendMessage = (message) => async (dispatch: any, getState) => {
   }
 };
 
-export const postChannel = (channel) => {
-  return async (dispatch) => {
+export const postChannel = (channel: any) => {
+  return async (dispatch: any) => {
     const data = { channel: channel };
     const response = await axios.post('/api/channels', data);
     const newChannel = response.data;
@@ -172,8 +180,8 @@ export const postChannel = (channel) => {
   };
 };
 
-export const postLikes = (messageId, channelId) => {
-  return async (dispatch) => {
+export const postLikes = (messageId: number, channelId: number) => {
+  return async (dispatch: any) => {
     const data = { messageId: messageId, channelId: channelId };
     const response = await axios.put(`/api/messages/${messageId}`, data);
     dispatch(addLike(messageId));
@@ -181,14 +189,14 @@ export const postLikes = (messageId, channelId) => {
   };
 };
 
-export const postEmoji = (messageId, emoji) => {
-  return async (dispatch) => {
+export const postEmoji = (messageId: number, emoji: any) => {
+  return async (dispatch: any) => {
     dispatch(addEmoji(messageId, emoji));
   };
 };
 
-export const postSaved = (userId, messageId) => {
-  return async (dispatch) => {
+export const postSaved = (userId: number, messageId: number) => {
+  return async (dispatch: any) => {
     const data = { userId: userId, messageId: messageId };
     const response = await axios.put(`/api/authors/${userId}`, data);
     dispatch(addSaved(messageId));
@@ -210,7 +218,7 @@ const initialState = {
   currentPage: {},
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: any) => {
   switch (action.type) {
     case GOT_MESSAGES_FROM_SERVER:
       return { ...state, messages: action.messages };
