@@ -31,6 +31,7 @@ class DirectMessages extends Component {
     const receiver = Number(this.props.match.params.directId);
     const sender = this.props.user.id;
     const messages = this.props.directs;
+    console.log(messages);
     let filteredMessages = [];
     messages.map((message) => {
       if (message.sender === sender || message.sender === receiver) {

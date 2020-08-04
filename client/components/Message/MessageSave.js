@@ -10,10 +10,7 @@ function MessageSave(props) {
   const message = props.message;
 
   const moment = require('moment');
-  const CurrentDate = moment().format('YYYYMMDDhhmmss');
-  const timeDifference = CurrentDate - message.sortTime;
   const user = props.user;
-  console.log(moment(message.sortTime, 'YYYYMMDDhhmmss').fromNow());
   const handleSave = (userId, messageId) => {
     props.save(userId, messageId);
   };
