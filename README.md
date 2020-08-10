@@ -1,5 +1,8 @@
 # Slack Clone
 
+
+![](https://media.giphy.com/media/SrzqaMOMZdIgJ9yXWG/giphy.gif)
+
 A fullstack Slack Clone written in React, Redux, Node.js, and Postgres
 
 https://slackin-slack-clone.herokuapp.com
