@@ -1,7 +1,7 @@
 # Slack Clone
 
 
-![](https://media.giphy.com/media/SrzqaMOMZdIgJ9yXWG/giphy.gif | width=100)
+![](https://media.giphy.com/media/SrzqaMOMZdIgJ9yXWG/giphy.gif)
 
 A fullstack Slack Clone written in React, Redux, Node.js, and Postgres
 
