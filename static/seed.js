@@ -1,8 +1,8 @@
-const db = require('./server/db');
-const Author = require('./server/db/models/author');
-const Message = require('./server/db/models/message');
-const Channel = require('./server/db/models/channel');
-const Direct = require('./server/db/models/direct');
+const db = require('../server/db');
+const Author = require('../server/db/models/author');
+const Message = require('../server/db/models/message');
+const Channel = require('../server/db/models/channel');
+const Direct = require('../server/db/models/direct');
 
 const channels = [
   { name: 'really_random' },
