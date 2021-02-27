@@ -5,7 +5,7 @@
 
 A fullstack Slack Clone written in React, Redux, Node.js, and Postgres
 
-Link to Repo:
+Link to Demo:
 https://slackin-slack-clone.herokuapp.com
 
 ![](https://i.imgur.com/qE5Z85x.png)
