@@ -11,7 +11,7 @@ https://slackin-slack-clone.herokuapp.com
 
 ![](https://media.giphy.com/media/SrzqaMOMZdIgJ9yXWG/giphy.gif)
 ## Articles
-[How I added a loading screen to my React App](https://javascript.plainenglish.io/how-i-added-a-loading-screen-to-my-react-slack-clone-a87a80c703aa)
+<a href="https://javascript.plainenglish.io/how-i-added-a-loading-screen-to-my-react-slack-clone-a87a80c703aa" target="_blank">How I added a loading screen to my React App</a>
 
 ## Setup
 
