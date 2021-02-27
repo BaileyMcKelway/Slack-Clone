@@ -10,6 +10,9 @@ https://slackin-slack-clone.herokuapp.com
 ![](https://i.imgur.com/qE5Z85x.png)
 
 ![](https://media.giphy.com/media/SrzqaMOMZdIgJ9yXWG/giphy.gif)
+## Articles
+[How I added a loading screen to my React App](https://javascript.plainenglish.io/how-i-added-a-loading-screen-to-my-react-slack-clone-a87a80c703aa)
+
 ## Setup
 
 ### MacOS/Linux
