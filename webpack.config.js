@@ -1,5 +1,4 @@
 const path = require('path');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MinifyPlugin = require('babel-minify-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 

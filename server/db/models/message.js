@@ -34,19 +34,6 @@ const Messages = db.define(
     },
     hooks: {
       beforeValidate: function (message) {
-        // const date = new Date();
-
-        // const current_hour = date.getHours();
-        // const current_minute = date.getMinutes();
-        // let current_seconds = date.getSeconds();
-        // if (current_seconds < 10) {
-        //   console.log('jo');
-        //   current_seconds = '0' + current_seconds.toString();
-        //   current_seconds = Number(current_seconds);
-        // }
-        // const year = date.getFullYear();
-        // const month = date.getMonth();
-        // const day = date.getDay();
         message.sortTime = moment().format('YYYYMMDDhhmmss');
         message.time = moment().format('hh:mm:ss a');
         message.date = moment().format('MMMM Do YYYY');

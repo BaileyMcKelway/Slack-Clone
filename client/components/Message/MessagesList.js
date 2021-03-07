@@ -3,7 +3,7 @@ import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
 import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
-import { fetchMessages } from '../../store.js';
+import { fetchMessages } from '../../Store/store.js';
 import { animateScroll } from 'react-scroll';
 
 class MessagesList extends Component {

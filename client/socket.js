@@ -4,7 +4,7 @@ import store, {
   getChannel,
   addLike,
   gotNewDirect,
-} from './store';
+} from './Store/store';
 
 const socket = io(window.location.origin);
 

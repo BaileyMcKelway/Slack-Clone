@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-// import logo from './Slack_Mark_Web.png';
-function Loading(props) {
+
+function Loading() {
   const logo = require('./Slack_Mark_Web.png');
   return (
     <div id="loading-content" className="loading">

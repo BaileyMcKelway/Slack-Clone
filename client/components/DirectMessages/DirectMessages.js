@@ -3,7 +3,8 @@ import Message from '../Message/Message';
 import NewDirectEntry from './NewDirectEntry';
 import NoMessages from '../NoMessages';
 import { connect } from 'react-redux';
-import { fetchDirects } from '../../store.js';
+import { fetchDirects } from '../../Store/store.js';
+import { animateScroll } from 'react-scroll';
 
 class DirectMessages extends Component {
   constructor(props) {
@@ -15,12 +16,22 @@ class DirectMessages extends Component {
 
   componentDidMount() {
     this.props.fetchInitialDirects();
+    this.scrollToBottom();
+  }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  scrollToBottom() {
+    animateScroll.scrollToBottom({
+      containerId: 'main',
+    });
   }
 
   render() {
     const receiver = Number(this.props.match.params.directId);
     const sender = this.props.user.id;
     const messages = this.props.directs;
+    console.log(messages);
     let filteredMessages = [];
     messages.map((message) => {
       if (message.sender === sender || message.sender === receiver) {

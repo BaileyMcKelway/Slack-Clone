@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import SideBar from './Sidebar/SideBar';
+import SideBar from './SideBarMain/SideBar';
 import Navbar from './Navbar';
 import MessagesList from './Message/MessagesList';
-import NewChannelEntry from './SideBar/NewChannelEntry';
+import NewChannelEntry from './SideBarMain/NewChannelEntry';
 import DirectMessages from './DirectMessages/DirectMessages';
-import SavedItems from './SideBar/SavedItems';
-import People from './SideBar/People';
+import SavedItems from './SideBarMain/SavedItems';
+import People from './SideBarMain/People';
 import Loading from './Loading';
 import {
   fetchMessages,
   fetchChannels,
   fetchUsers,
   fetchDirects,
-} from '../store';
+} from '../Store/store';
 
 class Main extends Component {
   constructor(props) {
@@ -38,34 +38,34 @@ class Main extends Component {
         loading: false,
       });
       document.body.style.background = 'white';
-      document.getElementByTag('body').style.display = 'flex';
-      document.getElementByTag('body').style.flex = '1, 1, auto';
     }, 2000);
   }
 
   render() {
-    return (
-      <div>
-        {this.state.loading ? (
+    if (this.state.loading) {
+      return (
+        <div>
           <Loading />
-        ) : (
-          <div>
-            <SideBar user={this.props.user} users={this.props.users} />
-            <Navbar />
-            <main id="main" className="main">
-              <Switch>
-                <Route path="/new-channel" component={NewChannelEntry} />
-                <Route path="/channels/:channelId" component={MessagesList} />
-                <Route path="/saved" component={SavedItems} />
-                <Route path="/directs/:directId" component={DirectMessages} />
-                <Route path="/people" component={People} />
-                <Redirect to="/channels/1" />
-              </Switch>
-            </main>
-          </div>
-        )}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <SideBar user={this.props.user} users={this.props.users} />
+          <Navbar />
+          <main id="main" className="main">
+            <Switch>
+              <Route path="/new-channel" component={NewChannelEntry} />
+              <Route path="/channels/:channelId" component={MessagesList} />
+              <Route path="/saved" component={SavedItems} />
+              <Route path="/directs/:directId" component={DirectMessages} />
+              <Route path="/people" component={People} />
+              <Redirect to="/channels/1" />
+            </Switch>
+          </main>
+        </div>
+      );
+    }
   }
 }
 
